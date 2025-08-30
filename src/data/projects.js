@@ -2,6 +2,15 @@
 export const projectsData = [
   {
     color: "#060010",
+    title: "Smart ETL - Workflow Automation Platform",
+    description: "Full-stack workflow automation platform combining n8n/Zapier-like capabilities with geospatial data processing (FME). Built modular Django backend with React/TypeScript frontend featuring visual workflow builder.",
+    label: "Product Development",
+    tech: ['Django', 'React', 'TypeScript', 'XYFlow', 'Material-UI', 'PostgreSQL', 'Redis', 'Celery', 'Docker', 'Firebase', 'AWS S3', 'NodeODM'],
+    period: '2024 - 2025',
+    highlights: ['Visual Workflow Builder', 'Geospatial Data Processing', 'Modular Architecture', 'AI/LLM Integration', 'Drone Mapping']
+  },
+  {
+    color: "#060010",
     title: "WISS - Enterprise Solution",
     description: "Led a cross-functional team of 5 developers (3 web, 2 mobile) in delivering enterprise-level solution. Architected full-stack web application and supervised mobile development.",
     label: "Team Leadership",
