@@ -5,7 +5,7 @@ import GlassSurface from './Components/GlassSurface/GlassSurface';
 import SpotlightCard from './Components/SpotlightCard/SpotlightCard';
 import Counter from './Components/Counter/Counter';
 import DarkVeil from './Backgrounds/DarkVeil/DarkVeil';
-import { projectsData, personalProjectsData } from './data/projects';
+import { projectsData } from './data/projects';
 import { navItems } from './data/navigation';
 import Lanyard from './Components/Lanyard/Lanyard';
 
@@ -276,59 +276,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Personal Projects Section */}
-      <section className="py-20 relative z-10">
-        <div className="max-w-6xl mx-auto px-6">
-          <SplitText
-            text="Personal Projects"
-            className="text-4xl md:text-5xl font-bold text-center mb-16"
-            splitType="chars"
-            delay={100}
-            duration={0.6}
-            ease="power3.out"
-            from={{ opacity: 0, y: 40 }}
-            to={{ opacity: 1, y: 0 }}
-          />
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {personalProjectsData.map((project, index) => (
-              <SpotlightCard key={index} className="p-6 h-full">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-sm font-medium px-3 py-1 bg-blue-600/20 rounded-full text-blue-300">
-                    {project.label}
-                  </span>
-                  <span className="text-xs text-gray-400">{project.period}</span>
-                </div>
-                
-                <h3 className="text-xl font-semibold text-white mb-3">{project.title}</h3>
-                <p className="text-gray-300 mb-8 leading-relaxed">{project.description}</p>
-                
-                <div className="mb-8">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <span key={techIndex} className="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="mt-auto">
-                  <div className="space-y-1">
-                    {project.highlights.map((highlight, highlightIndex) => (
-                      <div key={highlightIndex} className="text-white text-sm flex items-center">
-                        <span className="w-1 h-1 bg-blue-400 rounded-full mr-2"></span>
-                        {highlight}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </SpotlightCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Skills Section */}
       <section id="skills" className="py-20 relative z-10">
         <div className="max-w-6xl mx-auto px-6">
@@ -388,6 +335,23 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="py-8 relative z-10 border-t border-gray-800">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-gray-400 text-sm">
+            Built with React • Components from{' '}
+            <a 
+              href="https://reactbits.dev" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-300 hover:text-white transition-colors"
+            >
+              React Bits
+            </a>
+          </p>
+        </div>
+      </footer>
 
     </div>
   );

@@ -1,12 +1,75 @@
-# React + Vite
+# Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive portfolio website showcasing my professional experience, projects, and technical skills.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Responsive Design** - Optimized for all devices and screen sizes
+- **Interactive Animations** - Smooth text animations and transitions using GSAP
+- **WebGL Background** - Dynamic animated background effects
+- **Modern UI Components** - Glass morphism and spotlight card effects
+- **Project Showcase** - Detailed project cards with technologies and highlights
+- **Professional Experience** - Timeline of career progression and achievements
 
-## Expanding the ESLint configuration
+## Built With
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** - Frontend framework
+- **Vite** - Build tool and development server
+- **Tailwind CSS** - Utility-first CSS framework
+- **GSAP** - Animation library
+- **React Three Fiber** - 3D graphics and animations
+- **React Bits** - UI component library
+
+## Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/dev-portfolio.git
+cd dev-portfolio
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Start the development server
+```bash
+npm run dev
+```
+
+4. Build for production
+```bash
+npm run build
+```
+
+## Key Sections
+
+- **Hero Section** - Introduction with animated text and 3D elements
+- **About Me** - Professional background and experience
+- **Featured Projects** - Professional work and client projects
+- **Personal Projects** - Side projects and personal initiatives
+- **Technical Skills** - Technology stack and expertise areas
+- **Contact** - Get in touch section
+
+## Deployment
+
+This project is optimized for deployment on:
+- **Vercel** (Recommended)
+- **Netlify**
+- **GitHub Pages**
+
+## Components Used
+
+- Custom text animations (SplitText, TextType)
+- Interactive 3D Lanyard component
+- Glass surface navigation
+- Spotlight effect cards
+- Animated counters
+
+## Contact
+
+For any questions or collaboration opportunities, feel free to reach out:
+- Email: ikhmalhaziq2907@gmail.com
+- LinkedIn: [haziq-luffy](https://linkedin.com/in/haziq-luffy)
+- GitHub: [HaziqLucii](https://github.com/HaziqLucii)
