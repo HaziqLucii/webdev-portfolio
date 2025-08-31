@@ -83,12 +83,20 @@ export default function Home() {
       </div>
 
       {/* Desktop Weather Widget */}
-      <div className="fixed top-[100px] left-4 z-50 hidden sm:block">
-        <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl w-[160px] h-[85px]">
+      <div className="fixed top-[100px] left-4 z-50 hidden sm:block group">
+        <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl w-[160px] h-[85px] relative">
           <div className="h-full flex items-center justify-center p-3">
             <div className="text-center">
               <div className="text-xs text-gray-400 mb-1">Weather</div>
               <Weather />
+            </div>
+          </div>
+          
+          {/* Tooltip */}
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+            <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
+              Source: data.gov.my
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-900"></div>
             </div>
           </div>
         </div>
