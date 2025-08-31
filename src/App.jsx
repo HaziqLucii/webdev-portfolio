@@ -5,38 +5,14 @@ import GlassSurface from './Components/GlassSurface/GlassSurface';
 import SpotlightCard from './Components/SpotlightCard/SpotlightCard';
 import Counter from './Components/Counter/Counter';
 import DarkVeil from './Backgrounds/DarkVeil/DarkVeil';
-import { projectsData } from './data/projects';
+import { projectsData, personalProjectsData } from './data/projects';
 import { navItems } from './data/navigation';
+import { skills } from './data/skills';
+import { experiences } from './data/experiences';
 import Lanyard from './Components/Lanyard/Lanyard';
 
 
 
-const skills = [
-  { id: 'frontend', name: 'Frontend', items: ['Vue.js', 'React', 'Angular', 'Next.js'] },
-  { id: 'backend', name: 'Backend', items: ['Django', 'Laravel', 'FastAPI', 'Node.js'] },
-  { id: 'mobile', name: 'Mobile', items: ['React Native', 'Flutter', 'Ionic'] },
-  { id: 'devops', name: 'DevOps', items: ['Docker', 'Kubernetes', 'CI/CD', 'AWS'] },
-  { id: 'databases', name: 'Databases', items: ['MySQL', 'PostgreSQL', 'MongoDB'] }
-];
-
-const experiences = [
-  {
-    id: 'plisca-lead',
-    title: 'Technical Lead',
-    company: 'Plisca (M) Sdn Bhd',
-    period: '2024 - 2025',
-    location: 'Ukay Perdana',
-    description: 'Led development team, conducted code reviews, and established best practices. Designed CI/CD pipelines and managed Docker & Kubernetes deployments.'
-  },
-  {
-    id: 'plisca-dev',
-    title: 'Software Developer',
-    company: 'Plisca (M) Sdn Bhd',
-    period: '2023 - 2024',
-    location: 'Ukay Perdana',
-    description: 'Developed web applications using frontend and backend technologies. Built server-side applications and APIs with Node.JS, Python and PHP.'
-  }
-];
 
 export default function Home() {
   return (
@@ -120,7 +96,7 @@ export default function Home() {
           </div>
 
           {/* Right Side - Lanyard Component */}
-          <div className="hidden lg:flex justify-center items-center relative z-50" style={{ overflow: 'visible', height: '500px' }}>
+          <div className="lg:flex justify-center items-center relative z-50" style={{ overflow: 'visible', height: '500px' }}>
             <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
           </div>
         </div>
@@ -276,6 +252,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Personal Projects Section */}
+      <section className="py-20 relative z-10">
+        <div className="max-w-6xl mx-auto px-6">
+          <SplitText
+            text="Personal Projects"
+            className="text-4xl md:text-5xl font-bold text-center mb-16"
+            splitType="chars"
+            delay={100}
+            duration={0.6}
+            ease="power3.out"
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+          />
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            {personalProjectsData.map((project, index) => (
+              <SpotlightCard key={index} className="p-6 h-full">
+                <div className="flex justify-between items-start mb-4">
+                  <span className="text-sm font-medium px-3 py-1 bg-green-600/20 rounded-full text-green-300">
+                    {project.label}
+                  </span>
+                  <span className="text-xs text-gray-400">{project.period}</span>
+                </div>
+                
+                <h3 className="text-xl font-semibold text-white mb-3">{project.title}</h3>
+                <p className="text-gray-300 mb-8 leading-relaxed">{project.description}</p>
+                
+                <div className="mb-8">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, techIndex) => (
+                      <span key={techIndex} className="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="mt-auto">
+                  <div className="space-y-1">
+                    {project.highlights.map((highlight, highlightIndex) => (
+                      <div key={highlightIndex} className="text-white text-sm flex items-center">
+                        <span className="w-1 h-1 bg-green-400 rounded-full mr-2"></span>
+                        {highlight}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </SpotlightCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Skills Section */}
       <section id="skills" className="py-20 relative z-10">
         <div className="max-w-6xl mx-auto px-6">
@@ -295,11 +324,22 @@ export default function Home() {
               <SpotlightCard key={skill.id} className="p-6">
                 <h3 className="text-xl font-semibold text-white mb-4">{skill.name}</h3>
                 
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 gap-3">
                   {skill.items.map((item, index) => (
-                    <span key={index} className="px-3 py-1 bg-gray-800 text-gray-300 text-sm rounded-full">
-                      {item}
-                    </span>
+                    <div key={index} className="flex flex-col items-center gap-2 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-700/50 transition-colors w-full h-20">
+                      {item.icon ? (
+                        <img 
+                          src={item.icon} 
+                          alt={item.name} 
+                          className="w-8 h-8 object-contain"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                          <span className="text-xs font-bold">{item.name.charAt(0)}</span>
+                        </div>
+                      )}
+                      <span className="text-xs text-gray-300 text-center leading-tight">{item.name}</span>
+                    </div>
                   ))}
                 </div>
               </SpotlightCard>
