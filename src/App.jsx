@@ -70,26 +70,28 @@ export default function Home() {
         />
       </div>
       
-      {/* Desktop Info Widget - Combined Clock & Weather */}
+      {/* Desktop Clock Widget */}
       <div className="fixed top-4 left-4 z-50 hidden sm:block">
-        <GlassSurface
-          width={280}
-          height={100}
-          borderRadius={16}
-          className="backdrop-blur-md"
-        >
-          <div className="h-full flex items-center justify-around px-4 py-4">
+        <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl w-[160px] h-[70px]">
+          <div className="h-full flex items-center justify-center p-3">
             <div className="text-center">
-              <div className="text-xs text-gray-400 mb-2">Time</div>
+              <div className="text-xs text-gray-400 mb-1">Time</div>
               <Clock />
             </div>
-            <div className="w-px h-12 bg-gray-600 mx-6"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Weather Widget */}
+      <div className="fixed top-[100px] left-4 z-50 hidden sm:block">
+        <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl w-[160px] h-[85px]">
+          <div className="h-full flex items-center justify-center p-3">
             <div className="text-center">
-              <div className="text-xs text-gray-400 mb-2">Weather</div>
+              <div className="text-xs text-gray-400 mb-1">Weather</div>
               <Weather />
             </div>
           </div>
-        </GlassSurface>
+        </div>
       </div>
 
       {/* Mobile Dock */}
