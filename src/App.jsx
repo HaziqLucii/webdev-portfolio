@@ -57,7 +57,7 @@ export default function Home() {
             <div className="mb-6">
               <SplitText
                 text="Ikhmal Haziq"
-                className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
+                className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4"
                 splitType="chars"
                 delay={100}
                 duration={0.6}
@@ -68,7 +68,7 @@ export default function Home() {
             </div>
             
             <div className="mb-8">
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-white">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-white">
                 Fullstack Web Developer
               </h2>
             </div>
