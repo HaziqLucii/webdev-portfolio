@@ -6,12 +6,14 @@ import GlassSurface from './Components/GlassSurface/GlassSurface';
 import SpotlightCard from './Components/SpotlightCard/SpotlightCard';
 import Counter from './Components/Counter/Counter';
 import DarkVeil from './Backgrounds/DarkVeil/DarkVeil';
+import Galaxy from './Backgrounds/Galaxy/Galaxy';
 import { projectsData, personalProjectsData } from './data/projects';
 import { navItems } from './data/navigation';
 import { skills } from './data/skills';
 import { experiences } from './data/experiences';
 import Lanyard from './Components/Lanyard/Lanyard';
 import Clock from './Components/Clock/Clock';
+import Weather from './Components/Weather/Weather';
 import MobileDock from './Components/MobileDock/MobileDock';
 
 
@@ -49,9 +51,23 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white relative" style={{ overflowX: 'hidden', overflowY: 'visible' }}>
-      {/* Dark Veil Background */}
+      {/* Galaxy Background */}
       <div className="fixed inset-0 w-full h-full z-0">
-        <DarkVeil />
+        <Galaxy 
+          mouseInteraction={false}
+          mouseRepulsion={false}
+          density={1.4}
+          glowIntensity={0.06}
+          saturation={0}
+          hueShift={40}
+          twinkleIntensity={0}
+          rotationSpeed={0}
+          repulsionStrength={1}
+          autoCenterRepulsion={0}
+          starSpeed={0.2}
+          speed={0.1}
+          transparent={true}
+        />
       </div>
       
       {/* Desktop Clock Widget */}
@@ -64,6 +80,20 @@ export default function Home() {
         >
           <div className="h-full flex items-center justify-center p-3">
             <Clock />
+          </div>
+        </GlassSurface>
+      </div>
+
+      {/* Desktop Weather Widget */}
+      <div className="fixed top-4 right-4 z-50 hidden sm:block">
+        <GlassSurface
+          width={160}
+          height={85}
+          borderRadius={16}
+          className="backdrop-blur-md"
+        >
+          <div className="h-full flex items-center justify-center p-3">
+            <Weather />
           </div>
         </GlassSurface>
       </div>

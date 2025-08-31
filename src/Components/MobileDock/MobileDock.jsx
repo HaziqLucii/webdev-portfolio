@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaClock } from 'react-icons/fa';
 import GlassSurface from '../GlassSurface/GlassSurface';
 import Clock from '../Clock/Clock';
+import Weather from '../Weather/Weather';
 
 export default function MobileDock() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -33,20 +34,28 @@ export default function MobileDock() {
         </button>
       </div>
 
-      {/* Sliding Clock Panel */}
+      {/* Sliding Info Panel */}
       <div 
         className={`fixed bottom-6 z-40 sm:hidden transition-all duration-300 ease-in-out ${
-          isExpanded ? 'right-20' : 'right-[-200px]'
+          isExpanded ? 'right-20' : 'right-[-300px]'
         }`}
       >
         <GlassSurface
-          width={140}
-          height={80}
+          width={280}
+          height={120}
           borderRadius={16}
           className="backdrop-blur-md"
         >
-          <div className="h-full flex items-center justify-center p-4">
-            <Clock />
+          <div className="h-full flex items-center justify-around px-8 py-6">
+            <div className="text-center px-4">
+              <div className="text-xs text-gray-400 mb-2">Time</div>
+              <Clock />
+            </div>
+            <div className="w-px h-16 bg-gray-600 mx-4"></div>
+            <div className="text-center px-4">
+              <div className="text-xs text-gray-400 mb-2">Weather</div>
+              <Weather />
+            </div>
           </div>
         </GlassSurface>
       </div>
