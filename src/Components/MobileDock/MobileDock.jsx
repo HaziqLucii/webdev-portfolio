@@ -37,22 +37,22 @@ export default function MobileDock() {
       {/* Sliding Info Panel */}
       <div 
         className={`fixed bottom-6 z-40 sm:hidden transition-all duration-300 ease-in-out ${
-          isExpanded ? 'right-20' : 'right-[-300px]'
+          isExpanded ? 'right-20' : 'right-[-280px]'
         }`}
       >
         <GlassSurface
-          width={280}
+          width={260}
           height={120}
           borderRadius={16}
           className="backdrop-blur-md"
         >
-          <div className="h-full flex items-center justify-around px-8 py-6">
-            <div className="text-center px-4">
+          <div className="h-full flex items-center justify-around px-4 py-6">
+            <div className="text-center px-2">
               <div className="text-xs text-gray-400 mb-2">Time</div>
               <Clock />
             </div>
-            <div className="w-px h-16 bg-gray-600 mx-4"></div>
-            <div className="text-center px-4">
+            <div className="w-px h-16 bg-gray-600 mx-6"></div>
+            <div className="text-center px-2">
               <div className="text-xs text-gray-400 mb-2">Weather</div>
               <Weather />
             </div>
