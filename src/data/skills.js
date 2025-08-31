@@ -45,5 +45,12 @@ export const skills = [
       { name: 'PostgreSQL', icon: '/postgresql-logo-svgrepo-com.svg' },
       { name: 'MongoDB', icon: '/mongodb-svgrepo-com.svg' }
     ]
+  },
+  { 
+    id: 'others', 
+    name: 'Others', 
+    items: [
+      { name: 'n8n', icon: '/n8n-color.svg' }
+    ]
   }
 ];
