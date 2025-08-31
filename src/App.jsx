@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 import SplitText from './TextAnimations/SplitText/SplitText';
 import TextType from './TextAnimations/TextType/TextType';
 import GlassSurface from './Components/GlassSurface/GlassSurface';
@@ -10,11 +11,42 @@ import { navItems } from './data/navigation';
 import { skills } from './data/skills';
 import { experiences } from './data/experiences';
 import Lanyard from './Components/Lanyard/Lanyard';
+import Clock from './Components/Clock/Clock';
+import MobileDock from './Components/MobileDock/MobileDock';
 
 
 
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState('home');
+
+  // Track active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'projects', 'skills'];
+      const scrollY = window.scrollY + 100; // Offset for better detection
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollY >= offsetTop && scrollY < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Find current active nav item
+  const activeNavItem = navItems.find(item => item.sectionId === activeSection) || navItems[0];
+
   return (
     <div className="min-h-screen bg-black text-white relative" style={{ overflowX: 'hidden', overflowY: 'visible' }}>
       {/* Dark Veil Background */}
@@ -22,26 +54,74 @@ export default function Home() {
         <DarkVeil />
       </div>
       
-      {/* Navigation Bar */}
-      <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-        <GlassSurface 
-          width={550}
-          height={60}
-          borderRadius={30}
+      {/* Desktop Clock Widget */}
+      <div className="fixed top-4 left-4 z-50 hidden sm:block">
+        <GlassSurface
+          width={120}
+          height={70}
+          borderRadius={16}
           className="backdrop-blur-md"
         >
-          <div className="flex items-center justify-center gap-8 h-full px-6">
-            {/* <p className='font-bold'>haziq.</p> */}
+          <div className="h-full flex items-center justify-center p-3">
+            <Clock />
+          </div>
+        </GlassSurface>
+      </div>
+
+      {/* Mobile Dock */}
+      <MobileDock />
+
+      {/* Navigation Bar */}
+      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 sm:max-w-lg sm:px-0">
+        <GlassSurface 
+          width="100%"
+          height={56}
+          borderRadius={28}
+          className="backdrop-blur-md w-full"
+        >
+          {/* Mobile: Show all icons with active text */}
+          <div className="flex items-center justify-center gap-1 h-full px-3 sm:hidden">
             {navItems.map((item, index) => {
               const IconComponent = item.iconComponent;
+              const isActive = item.sectionId === activeSection;
               return (
                 <button
                   key={index}
                   onClick={item.onClick}
-                  className="flex items-center gap-2 px-3 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200 text-sm font-medium"
+                  className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 ease-in-out text-sm font-medium overflow-hidden ${
+                    isActive 
+                      ? 'text-white bg-white/20 min-w-fit' 
+                      : 'text-white/80 hover:text-white hover:bg-white/10 w-10'
+                  }`}
+                >
+                  <IconComponent size={14} className="flex-shrink-0" />
+                  <span className={`whitespace-nowrap transition-all duration-300 ease-in-out ${
+                    isActive ? 'opacity-100 w-auto translate-x-0' : 'opacity-0 w-0 -translate-x-2'
+                  }`}>
+                    {item.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Desktop: Show all navigation items */}
+          <div className="hidden sm:flex items-center justify-center gap-6 h-full px-6">
+            {navItems.map((item, index) => {
+              const IconComponent = item.iconComponent;
+              const isActive = item.sectionId === activeSection;
+              return (
+                <button
+                  key={index}
+                  onClick={item.onClick}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-200 text-sm font-medium ${
+                    isActive 
+                      ? 'text-white bg-white/20' 
+                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                  }`}
                 >
                   <IconComponent size={16} />
-                  <span className="hidden sm:inline">{item.label}</span>
+                  <span>{item.label}</span>
                 </button>
               );
             })}
@@ -96,7 +176,7 @@ export default function Home() {
           </div>
 
           {/* Right Side - Lanyard Component */}
-          <div className="lg:flex justify-center items-center relative z-50" style={{ overflow: 'visible', height: '500px' }}>
+          <div className="hidden lg:flex justify-center items-center relative z-50" style={{ overflow: 'visible', height: '500px' }}>
             <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
           </div>
         </div>
