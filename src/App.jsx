@@ -227,7 +227,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════ */}
       <section
         id="home"
-        className="min-h-screen flex items-center relative px-6 pt-14"
+        className="md:min-h-screen flex items-start md:items-center relative px-6 pt-24 pb-16 md:py-0 md:pt-14"
         style={{ overflow: 'visible' }}
       >
         <div
@@ -252,8 +252,8 @@ export default function Home() {
             <div className="mb-5">
               <SplitText
                 text="Ikhmal Haziq"
-                className="font-display text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight leading-none"
-                splitType="chars"
+                className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight leading-none"
+                splitType="words"
                 delay={65}
                 duration={0.85}
                 ease="power3.out"
@@ -736,11 +736,12 @@ export default function Home() {
                 </p>
                 <a
                   href="mailto:ikhmalhaziq2907@gmail.com"
-                  className="inline-flex items-center gap-3 px-8 py-4 text-xs tracking-[0.25em] uppercase transition-opacity duration-200 hover:opacity-75"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs tracking-[0.25em] uppercase transition-opacity duration-200 hover:opacity-75 w-full sm:w-auto"
                   style={{ backgroundColor: 'var(--accent)', color: 'var(--bg-primary)' }}
                 >
                   <FaEnvelope size={12} />
-                  ikhmalhaziq2907@gmail.com
+                  <span className="hidden sm:inline">ikhmalhaziq2907@gmail.com</span>
+                  <span className="sm:hidden">Get In Touch</span>
                 </a>
               </div>
             </div>
