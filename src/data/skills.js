@@ -34,7 +34,8 @@ export const skills = [
     items: [
       { name: 'Docker', icon: '/docker-svgrepo-com.svg' },
       { name: 'Kubernetes', icon: '/kubernetes-svgrepo-com.svg' },
-      { name: 'Digital Ocean', icon: '/digital-ocean-svgrepo-com.svg' }
+      { name: 'Digital Ocean', icon: '/digital-ocean-svgrepo-com.svg' },
+      { name: 'Webdock.io', icon: '/webdockio.svg' }
     ]
   },
   { 
@@ -46,9 +47,17 @@ export const skills = [
       { name: 'MongoDB', icon: '/mongodb-svgrepo-com.svg' }
     ]
   },
-  { 
-    id: 'others', 
-    name: 'Others', 
+  {
+    id: 'ecommerce',
+    name: 'E-Commerce',
+    items: [
+      { name: 'Shopify', icon: '/shopify.svg' },
+      { name: 'Gadget.dev', icon: '/gadget.dev.svg', invert: true }
+    ]
+  },
+  {
+    id: 'others',
+    name: 'Others',
     items: [
       { name: 'n8n', icon: '/n8n-color.svg' }
     ]
