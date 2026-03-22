@@ -3,25 +3,21 @@
 
 /* ── Design Tokens ────────────────────────────────── */
 :root {
-  --bg:        #000000;
-  --bg-2:      #0d0d0d;
-  --bg-3:      #161616;
-  --fg:        #ffffff;
-  --fg-2:      #999999;
-  --fg-3:      #555555;
-  --border:    rgba(255, 255, 255, 0.10);
-  --bdr-m:     rgba(255, 255, 255, 0.20);
-  --bdr-s:     rgba(255, 255, 255, 0.42);
+  --bg:     #000000;
+  --bg-2:   #0d0d0d;
+  --bg-3:   #161616;
+  --fg:     #ffffff;
+  --fg-2:   #999999;
+  --fg-3:   #444444;
+  --border: rgba(255, 255, 255, 0.12);
+  --bdr-m:  rgba(255, 255, 255, 0.22);
+  --bdr-s:  rgba(255, 255, 255, 0.45);
 }
 
 /* ── Base ─────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Space Mono', 'Courier New', monospace;
@@ -39,76 +35,56 @@ body::after {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.032;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
 }
 
 /* ── Font utilities ───────────────────────────────── */
 @layer utilities {
-  .font-display {
-    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  }
+  .font-display { font-family: 'Playfair Display', Georgia, serif; }
 }
 
 /* ── Scrollbar ────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 2px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--fg-3); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--fg-3); }
 ::-webkit-scrollbar-thumb:hover { background: var(--fg-2); }
 
 /* ── Selection ────────────────────────────────────── */
-::selection {
-  background: var(--fg);
-  color: var(--bg);
-}
+::selection { background: var(--fg); color: var(--bg); }
 
-/* ── Skill card hover cascade ─────────────────────── */
-/*
-  The skill card flips fully from dark→light on hover.
-  All child element color changes are handled here in CSS
-  rather than in JS, so the transition is one unified frame.
-*/
-.skill-card {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  transition: background 0.22s ease, border-color 0.22s ease;
+/* ══════════════════════════════════════════════════ */
+/* SKILL ROW HOVER — inverts entire row on hover      */
+/* ══════════════════════════════════════════════════ */
+.skill-row {
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
-.skill-card:hover {
+.skill-row:hover {
   background: #ffffff;
-  border-color: #ffffff;
 }
-
-.skill-card-title {
-  color: var(--fg-2);
-  transition: color 0.22s ease;
+.skill-row-label {
+  color: var(--fg-3);
+  transition: color 0.2s ease;
 }
-.skill-card:hover .skill-card-title {
-  color: #888888;
+.skill-row:hover .skill-row-label {
+  color: #777777;
 }
-
-.skill-item {
+.skill-pill {
   border: 1px solid var(--border);
-  background: var(--bg-3);
-  transition: border-color 0.22s ease, background 0.22s ease;
-}
-.skill-card:hover .skill-item {
-  border-color: rgba(0, 0, 0, 0.14);
-  background: rgba(0, 0, 0, 0.04);
-}
-
-.skill-icon {
-  filter: brightness(0) invert(1);
-  transition: filter 0.22s ease;
-}
-.skill-card:hover .skill-icon {
-  filter: brightness(0);
-}
-
-.skill-item-label {
   color: var(--fg-2);
-  transition: color 0.22s ease;
+  background: transparent;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
-.skill-card:hover .skill-item-label {
-  color: #444444;
+.skill-row:hover .skill-pill {
+  border-color: rgba(0,0,0,0.18);
+  color: #333333;
+  background: rgba(0,0,0,0.06);
+}
+.skill-pill-icon {
+  filter: brightness(0) invert(1);
+  transition: filter 0.2s ease;
+}
+.skill-row:hover .skill-pill-icon {
+  filter: brightness(0);
 }
