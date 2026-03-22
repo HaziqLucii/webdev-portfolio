@@ -91,6 +91,7 @@ const SECTIONS = [
   { id: 'about',    label: '02' },
   { id: 'projects', label: '03' },
   { id: 'skills',   label: '04' },
+  { id: 'contact',  label: '05' },
 ];
 
 function ScrollDots({ activeSection }) {
@@ -138,7 +139,7 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
-      const ids = ['home', 'about', 'projects', 'skills'];
+      const ids = ['home', 'about', 'projects', 'skills', 'contact'];
       const scrollY = window.scrollY + 120;
       for (const id of ids) {
         const el = document.getElementById(id);
@@ -670,7 +671,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════ */}
       {/* CONTACT — INVERTED white section              */}
       {/* ══════════════════════════════════════════════ */}
-      <section style={{ background: '#F0EEE9', color: '#000000' }} className="py-24 relative">
+      <section id="contact" style={{ background: '#F0EEE9', color: '#000000' }} className="py-24 relative">
         {/* Gradient bleed from black — softens the hard cut */}
         <div className="absolute top-0 left-0 right-0 h-16 pointer-events-none"
           style={{ background: 'linear-gradient(to bottom, #000000, transparent)' }} />
