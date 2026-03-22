@@ -171,13 +171,13 @@ export default function Home() {
       <ScrollDots activeSection={activeSection} />
 
       {/* ── Widgets ──────────────────────────────────── */}
-      <div className="fixed top-[72px] left-4 z-40 hidden lg:block">
+      <div className="fixed top-[72px] left-4 z-40 hidden 2xl:block">
         <div className="px-4 py-3 w-[148px]" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
           <div className="text-xs mb-1.5 tracking-[0.3em] uppercase" style={{ color: 'var(--fg-3)' }}>Time</div>
           <Clock />
         </div>
       </div>
-      <div className="fixed top-[168px] left-4 z-40 hidden lg:block group">
+      <div className="fixed top-[168px] left-4 z-40 hidden 2xl:block group">
         <div className="px-4 py-3 w-[148px] relative" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
           <div className="text-xs mb-1.5 tracking-[0.3em] uppercase" style={{ color: 'var(--fg-3)' }}>Weather</div>
           <Weather />
