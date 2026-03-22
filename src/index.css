@@ -6,12 +6,12 @@
   --bg:     #000000;
   --bg-2:   #0d0d0d;
   --bg-3:   #161616;
-  --fg:     #ffffff;
-  --fg-2:   #999999;
-  --fg-3:   #444444;
-  --border: rgba(255, 255, 255, 0.12);
-  --bdr-m:  rgba(255, 255, 255, 0.22);
-  --bdr-s:  rgba(255, 255, 255, 0.45);
+  --fg:     #EDE8D9;
+  --fg-2:   #9A9488;
+  --fg-3:   #4A4640;
+  --border: rgba(237, 232, 217, 0.12);
+  --bdr-m:  rgba(237, 232, 217, 0.22);
+  --bdr-s:  rgba(237, 232, 217, 0.45);
 }
 
 /* ── Base ─────────────────────────────────────────── */
@@ -61,7 +61,7 @@ body::after {
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 .skill-row:hover {
-  background: #ffffff;
+  background: #EDE8D9;
 }
 .skill-row-label {
   color: var(--fg-3);

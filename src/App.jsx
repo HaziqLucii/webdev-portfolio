@@ -121,7 +121,7 @@ function ScrollDots({ activeSection }) {
               animate={{
                 width: i === activeIndex ? '8px' : '4px',
                 height: i === activeIndex ? '8px' : '4px',
-                backgroundColor: i === activeIndex ? '#fff' : i < activeIndex ? '#555' : '#222',
+                backgroundColor: i === activeIndex ? '#EDE8D9' : i < activeIndex ? '#555' : '#222',
               }}
               transition={{ duration: 0.25 }}
             />
@@ -716,7 +716,7 @@ export default function Home() {
                 <a
                   href="mailto:ikhmalhaziq2907@gmail.com"
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs tracking-[0.25em] uppercase transition-opacity hover:opacity-75 w-full sm:w-auto"
-                  style={{ background: '#000', color: '#fff' }}
+                  style={{ background: '#000', color: '#EDE8D9' }}
                 >
                   <FaEnvelope size={12} />
                   <span className="hidden sm:inline">ikhmalhaziq2907@gmail.com</span>
