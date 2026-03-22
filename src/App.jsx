@@ -310,7 +310,7 @@ export default function Home() {
               <p className="text-xs tracking-[0.4em] uppercase mb-3" style={{ color: 'var(--fg-3)' }}>
                 Contact
               </p>
-              <div className="space-y-1">
+              <div className="flex flex-col items-start gap-1">
                 <InkLink href="mailto:ikhmalhaziq2907@gmail.com" icon={FaEnvelope}>
                   <span className="hidden sm:inline">ikhmalhaziq2907@gmail.com</span>
                   <span className="sm:hidden">Email</span>
