@@ -203,11 +203,17 @@ export default function Home() {
             {navItems.map((item, i) => {
               const isActive = item.sectionId === activeSection;
               return (
-                <button key={i} onClick={item.onClick}
+                <motion.button
+                  key={i}
+                  onClick={item.onClick}
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
                   className="relative px-4 py-3.5 text-xs tracking-[0.28em] uppercase transition-colors duration-200"
                   style={{ color: isActive ? 'var(--fg)' : 'var(--fg-3)' }}
                 >
                   {item.label}
+                  {/* Active underline — shared layout animation */}
                   {isActive && (
                     <motion.div layoutId="nav-line"
                       className="absolute bottom-2.5 left-4 right-4 h-px"
@@ -215,7 +221,16 @@ export default function Home() {
                       transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                     />
                   )}
-                </button>
+                  {/* Hover underline — slides in from left, hidden when active */}
+                  {!isActive && (
+                    <motion.div
+                      className="absolute bottom-2.5 left-4 right-4 h-px"
+                      style={{ background: 'var(--fg-3)', transformOrigin: 'left' }}
+                      variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  )}
+                </motion.button>
               );
             })}
           </nav>
