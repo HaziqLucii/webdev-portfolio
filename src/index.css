@@ -1,27 +1,22 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* ── Design Tokens ────────────────────────────────── */
 :root {
-  --bg-primary:    #0C0B09;
-  --bg-secondary:  #131210;
-  --bg-tertiary:   #1A1916;
-  --text-primary:  #EDE9E0;
-  --text-secondary:#B0AA9D;
-  --text-muted:    #7A746A;
-  --accent:        #C8A96E;
-  --accent-dim:    rgba(200, 169, 110, 0.10);
-  --accent-green:  #5A9A72;
-  --accent-green-dim: rgba(90, 154, 114, 0.10);
-  --border:        rgba(237, 233, 224, 0.07);
-  --border-mid:    rgba(237, 233, 224, 0.12);
-  --border-strong: rgba(237, 233, 224, 0.22);
+  --bg:        #000000;
+  --bg-2:      #0d0d0d;
+  --bg-3:      #161616;
+  --fg:        #ffffff;
+  --fg-2:      #999999;
+  --fg-3:      #555555;
+  --border:    rgba(255, 255, 255, 0.10);
+  --bdr-m:     rgba(255, 255, 255, 0.20);
+  --bdr-s:     rgba(255, 255, 255, 0.42);
 }
 
 /* ── Base ─────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
 }
 
 html {
@@ -29,13 +24,9 @@ html {
 }
 
 body {
-  background-color: var(--bg-primary);
-  /* Subtle warm ambient light */
-  background-image:
-    radial-gradient(ellipse 70% 55% at 8% 18%, rgba(200, 169, 110, 0.055) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 65% at 92% 82%, rgba(90, 154, 114, 0.03) 0%, transparent 65%);
-  color: var(--text-primary);
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  background: var(--bg);
+  color: var(--fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -48,7 +39,7 @@ body::after {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.028;
+  opacity: 0.032;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
 }
@@ -56,18 +47,68 @@ body::after {
 /* ── Font utilities ───────────────────────────────── */
 @layer utilities {
   .font-display {
-    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
   }
 }
 
 /* ── Scrollbar ────────────────────────────────────── */
-::-webkit-scrollbar       { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar       { width: 2px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--fg-3); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--fg-2); }
 
 /* ── Selection ────────────────────────────────────── */
 ::selection {
-  background: var(--accent);
-  color: var(--bg-primary);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ── Skill card hover cascade ─────────────────────── */
+/*
+  The skill card flips fully from dark→light on hover.
+  All child element color changes are handled here in CSS
+  rather than in JS, so the transition is one unified frame.
+*/
+.skill-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  transition: background 0.22s ease, border-color 0.22s ease;
+}
+.skill-card:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.skill-card-title {
+  color: var(--fg-2);
+  transition: color 0.22s ease;
+}
+.skill-card:hover .skill-card-title {
+  color: #888888;
+}
+
+.skill-item {
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  transition: border-color 0.22s ease, background 0.22s ease;
+}
+.skill-card:hover .skill-item {
+  border-color: rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.skill-icon {
+  filter: brightness(0) invert(1);
+  transition: filter 0.22s ease;
+}
+.skill-card:hover .skill-icon {
+  filter: brightness(0);
+}
+
+.skill-item-label {
+  color: var(--fg-2);
+  transition: color 0.22s ease;
+}
+.skill-card:hover .skill-item-label {
+  color: #444444;
 }
