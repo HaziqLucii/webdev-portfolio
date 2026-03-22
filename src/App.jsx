@@ -139,8 +139,13 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
+      // Near bottom — last section (contact) is always active
+      if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 60) {
+        setActiveSection('contact');
+        return;
+      }
       const ids = ['home', 'about', 'projects', 'skills', 'contact'];
-      const scrollY = window.scrollY + 120;
+      const scrollY = window.scrollY + 60;
       for (const id of ids) {
         const el = document.getElementById(id);
         if (el) {
