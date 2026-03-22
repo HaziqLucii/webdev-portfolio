@@ -9,6 +9,52 @@ import { experiences } from './data/experiences';
 import Clock from './Components/Clock/Clock';
 import Weather from './Components/Weather/Weather';
 
+/* ─── Newspaper ink-bleed link ─────────────────────── */
+/*
+  Background floods in from left (scaleX 0→1) on hover,
+  like ink soaking into newsprint. Text inverts to black
+  slightly after the fill starts — making the link feel
+  like a rubber stamp impression.
+*/
+function InkLink({ href, icon: Icon, children, target, rel }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <a
+      href={href}
+      target={target}
+      rel={rel}
+      className="relative inline-flex items-center gap-2.5 text-xs tracking-[0.2em] uppercase overflow-hidden px-2 py-1.5 -mx-2 cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Ink fill — slides in from left */}
+      <motion.span
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'var(--fg)', transformOrigin: 'left', zIndex: 0 }}
+        initial={false}
+        animate={{ scaleX: hovered ? 1 : 0 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+      />
+      {/* Icon */}
+      <motion.span
+        className="relative z-10 shrink-0"
+        animate={{ color: hovered ? 'var(--bg)' : 'var(--fg-3)' }}
+        transition={{ duration: 0.12, delay: hovered ? 0.08 : 0 }}
+      >
+        {Icon && <Icon size={11} />}
+      </motion.span>
+      {/* Label */}
+      <motion.span
+        className="relative z-10"
+        animate={{ color: hovered ? 'var(--bg)' : 'var(--fg)' }}
+        transition={{ duration: 0.12, delay: hovered ? 0.08 : 0 }}
+      >
+        {children}
+      </motion.span>
+    </a>
+  );
+}
+
 /* ─── Animated scaleX rule ─────────────────────────── */
 function Rule({ delay = 0, thick = false, color = 'var(--border)' }) {
   return (
@@ -264,23 +310,17 @@ export default function Home() {
               <p className="text-xs tracking-[0.4em] uppercase mb-3" style={{ color: 'var(--fg-3)' }}>
                 Contact
               </p>
-              <div className="space-y-3">
-                <a
-                  href="mailto:ikhmalhaziq2907@gmail.com"
-                  className="flex items-center gap-2.5 text-xs tracking-[0.2em] uppercase transition-opacity hover:opacity-60"
-                >
-                  <FaEnvelope size={10} />
+              <div className="space-y-1">
+                <InkLink href="mailto:ikhmalhaziq2907@gmail.com" icon={FaEnvelope}>
                   <span className="hidden sm:inline">ikhmalhaziq2907@gmail.com</span>
                   <span className="sm:hidden">Email</span>
-                </a>
-                <a href="https://github.com/HaziqLucii" target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 text-xs tracking-[0.2em] uppercase transition-opacity hover:opacity-60">
-                  <FaGithub size={10} /> GitHub / HaziqLucii
-                </a>
-                <a href="https://linkedin.com/in/haziq-luffy" target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 text-xs tracking-[0.2em] uppercase transition-opacity hover:opacity-60">
-                  <FaLinkedin size={10} /> LinkedIn
-                </a>
+                </InkLink>
+                <InkLink href="https://github.com/HaziqLucii" icon={FaGithub} target="_blank" rel="noopener noreferrer">
+                  GitHub / HaziqLucii
+                </InkLink>
+                <InkLink href="https://linkedin.com/in/haziq-luffy" icon={FaLinkedin} target="_blank" rel="noopener noreferrer">
+                  LinkedIn
+                </InkLink>
               </div>
             </div>
           </motion.div>
