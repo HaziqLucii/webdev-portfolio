@@ -618,7 +618,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════ */}
       {/* SKILLS — horizontal reference table rows      */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="skills" className="py-24 relative">
+      <section id="skills" className="py-24 relative min-h-screen">
         <div className="max-w-6xl mx-auto px-6">
 
           <div className="mb-10">
