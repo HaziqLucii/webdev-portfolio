@@ -96,7 +96,7 @@ const SECTIONS = [
 function ScrollDots({ activeSection }) {
   const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
   return (
-    <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center">
+    <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center" style={{ mixBlendMode: 'difference' }}>
       {SECTIONS.map((section, i) => (
         <div key={section.id} className="flex flex-col items-center">
           {i > 0 && (
@@ -670,7 +670,10 @@ export default function Home() {
       {/* ══════════════════════════════════════════════ */}
       {/* CONTACT — INVERTED white section              */}
       {/* ══════════════════════════════════════════════ */}
-      <section style={{ background: '#ffffff', color: '#000000' }} className="py-24 relative">
+      <section style={{ background: '#F0EEE9', color: '#000000' }} className="py-24 relative">
+        {/* Gradient bleed from black — softens the hard cut */}
+        <div className="absolute top-0 left-0 right-0 h-16 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, #000000, transparent)' }} />
         <div className="max-w-6xl mx-auto px-6">
 
           {/* Section header — inverted */}
