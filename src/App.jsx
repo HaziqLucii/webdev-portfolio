@@ -94,17 +94,23 @@ const SECTIONS = [
   { id: 'contact',  label: '05' },
 ];
 
-function ScrollDots({ activeSection }) {
+function ScrollDots({ activeSection, theme }) {
   const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
+  // In light mode on the dark contact section, flip to contact-fg colors
+  const onDarkBg = theme === 'light' && activeSection === 'contact';
+  const colorActive  = onDarkBg ? 'var(--contact-fg)'       : 'var(--fg)';
+  const colorInactive = onDarkBg ? 'var(--contact-fg-muted)' : 'var(--fg-3)';
+  const colorLine    = onDarkBg ? 'var(--contact-fg-muted)' : 'var(--border)';
+  const colorFill    = onDarkBg ? 'var(--contact-fg)'       : 'var(--fg)';
   return (
     <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center">
       {SECTIONS.map((section, i) => (
         <div key={section.id} className="flex flex-col items-center">
           {i > 0 && (
-            <div className="w-px h-12 relative" style={{ background: 'var(--border)' }}>
+            <div className="w-px h-12 relative" style={{ background: colorLine }}>
               <motion.div
                 className="absolute top-0 left-0 w-full"
-                style={{ background: 'var(--fg)' }}
+                style={{ background: colorFill }}
                 initial={{ height: '0%' }}
                 animate={{ height: i <= activeIndex ? '100%' : '0%' }}
                 transition={{ duration: 0.4 }}
@@ -121,11 +127,11 @@ function ScrollDots({ activeSection }) {
               animate={{
                 width: i === activeIndex ? '8px' : '4px',
                 height: i === activeIndex ? '8px' : '4px',
-                backgroundColor: i === activeIndex ? 'var(--fg)' : 'var(--fg-3)',
+                backgroundColor: i === activeIndex ? colorActive : colorInactive,
               }}
               whileHover={{
                 scale: 1.8,
-                backgroundColor: 'var(--fg)',
+                backgroundColor: colorActive,
               }}
               transition={{ duration: 0.2 }}
             />
@@ -178,7 +184,7 @@ export default function Home() {
     <div className="min-h-screen" style={{ color: 'var(--fg)' }}>
 
       {/* ── Scroll dots ──────────────────────────────── */}
-      <ScrollDots activeSection={activeSection} />
+      <ScrollDots activeSection={activeSection} theme={theme} />
 
       {/* ── Widgets ──────────────────────────────────── */}
       <div className="fixed top-[72px] left-4 z-40 hidden 2xl:block">

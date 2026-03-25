@@ -30,10 +30,10 @@ export default function Clock() {
 
   return (
     <div className="text-center">
-      <div className="text-lg font-semibold text-white mb-1">
+      <div className="text-lg font-semibold mb-1" style={{ color: 'var(--fg)' }}>
         {formatTime(time)}
       </div>
-      <div className="text-xs text-gray-300">
+      <div className="text-xs" style={{ color: 'var(--fg-2)' }}>
         {formatDate(time)}
       </div>
     </div>

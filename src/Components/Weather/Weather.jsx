@@ -112,13 +112,13 @@ export default function Weather() {
     if (lowerSummary.includes('sunny') || lowerSummary.includes('clear')) {
       return <FaSun className="text-yellow-400" size={16} />;
     } else if (lowerSummary.includes('cloud') || lowerSummary.includes('overcast')) {
-      return <FaCloud className="text-gray-300" size={16} />;
+      return <FaCloud style={{ color: 'var(--fg-2)' }} size={16} />;
     } else if (lowerSummary.includes('rain') || lowerSummary.includes('shower')) {
       return <FaCloudRain className="text-blue-400" size={16} />;
     } else if (lowerSummary.includes('thunder') || lowerSummary.includes('storm')) {
       return <FaBolt className="text-yellow-300" size={16} />;
     } else {
-      return <FaCloud className="text-gray-300" size={16} />;
+      return <FaCloud style={{ color: 'var(--fg-2)' }} size={16} />;
     }
   };
 
@@ -126,8 +126,8 @@ export default function Weather() {
     return (
       <div className="text-center">
         <div className="animate-pulse">
-          <div className="h-4 bg-gray-600 rounded w-16 mx-auto mb-2"></div>
-          <div className="h-3 bg-gray-600 rounded w-12 mx-auto"></div>
+          <div className="h-4 rounded w-16 mx-auto mb-2" style={{ background: 'var(--fg-3)' }}></div>
+          <div className="h-3 rounded w-12 mx-auto" style={{ background: 'var(--fg-3)' }}></div>
         </div>
       </div>
     );
@@ -136,24 +136,24 @@ export default function Weather() {
   if (error) {
     return (
       <div className="text-center">
-        <FaCloud className="text-gray-400 mx-auto mb-1" size={16} />
-        <div className="text-xs text-gray-400">Weather unavailable</div>
+        <FaCloud style={{ color: 'var(--fg-3)' }} className="mx-auto mb-1" size={16} />
+        <div className="text-xs" style={{ color: 'var(--fg-3)' }}>Weather unavailable</div>
       </div>
     );
   }
 
   return (
     <div className="text-center">
-      <div className="text-xs text-gray-400 mb-1">
+      <div className="text-xs mb-1" style={{ color: 'var(--fg-3)' }}>
         {weather?.location || 'Kuala Lumpur'}
       </div>
       <div className="flex items-center justify-center gap-2 mb-1">
         {getWeatherIcon(weather?.summary)}
-        <span className="text-sm font-semibold text-white">
+        <span className="text-sm font-semibold" style={{ color: 'var(--fg)' }}>
           {weather?.temperature?.min}°-{weather?.temperature?.max}°C
         </span>
       </div>
-      <div className="text-xs text-gray-300 capitalize leading-tight">
+      <div className="text-xs capitalize leading-tight" style={{ color: 'var(--fg-2)' }}>
         {weather?.summary || 'Loading...'}
       </div>
     </div>
