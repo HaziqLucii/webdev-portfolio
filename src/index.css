@@ -15,6 +15,7 @@
   --nav-bg:      rgba(0, 0, 0, 0.94);
   --contact-bg:  #F0EEE9;
   --contact-fg:  #0D0B09;
+  --contact-fg-muted: rgba(13, 11, 9, 0.55);
 }
 
 /* ── Light mode overrides ─────────────────────────── */
@@ -31,6 +32,7 @@
   --nav-bg:      rgba(237, 232, 217, 0.96);
   --contact-bg:  #0D0B09;
   --contact-fg:  #EDE8D9;
+  --contact-fg-muted: rgba(237, 232, 217, 0.55);
 }
 
 /* skill-row hover flips in light mode (dark row on light page) */
@@ -115,9 +117,31 @@ body::after {
   background: rgba(0,0,0,0.06);
 }
 .skill-pill-icon {
-  filter: brightness(0) invert(1);
   transition: filter 0.2s ease;
 }
 .skill-row:hover .skill-pill-icon {
   filter: brightness(0);
+}
+
+/* Contact section links — theme-aware hover */
+.contact-link {
+  color: var(--contact-fg-muted);
+  transition: color 0.2s ease;
+}
+.contact-link:hover {
+  color: var(--contact-fg);
+}
+
+/* Dark icons (Next.js, FastAPI, Django): invert in dark mode so they're visible */
+.skill-pill-icon--invert {
+  filter: invert(1);
+}
+[data-theme="light"] .skill-pill-icon--invert {
+  filter: none;
+}
+.skill-row:hover .skill-pill-icon--invert {
+  filter: brightness(0);
+}
+[data-theme="light"] .skill-row:hover .skill-pill-icon--invert {
+  filter: brightness(0) invert(1);
 }

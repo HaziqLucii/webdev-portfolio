@@ -6,16 +6,16 @@ export const skills = [
       { name: 'Vue.js', icon: '/vue-svgrepo-com.svg' },
       { name: 'React', icon: '/react-svgrepo-com.svg' },
       { name: 'Angular', icon: '/angular-svgrepo-com.svg' },
-      { name: 'Next.js', icon: '/nextjs-fill-svgrepo-com.svg' }
+      { name: 'Next.js', icon: '/nextjs-fill-svgrepo-com.svg', invert: true }
     ]
   },
   { 
     id: 'backend', 
     name: 'Backend', 
     items: [
-      { name: 'Django', icon: '/django-icon-svgrepo-com.svg' },
+      { name: 'Django', icon: '/django-icon-svgrepo-com.svg', invert: true },
       { name: 'Laravel', icon: '/laravel-svgrepo-com.svg' },
-      { name: 'FastAPI', icon: '/fastapi-svgrepo-com.svg' },
+      { name: 'FastAPI', icon: '/fastapi-svgrepo-com.svg', invert: true },
       { name: 'Node.js', icon: '/nodejs-icon-svgrepo-com.svg' }
     ]
   },

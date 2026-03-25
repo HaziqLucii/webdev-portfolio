@@ -679,7 +679,7 @@ export default function Home() {
                         <img
                           src={item.icon}
                           alt={item.name}
-                          className="skill-pill-icon h-4 w-auto max-w-[36px] object-contain"
+                          className={`skill-pill-icon${item.invert ? ' skill-pill-icon--invert' : ''} h-4 w-auto max-w-[36px] object-contain`}
                         />
                       )}
                       <span className="text-xs">{item.name}</span>
@@ -698,56 +698,56 @@ export default function Home() {
       <section id="contact" style={{ background: 'var(--contact-bg)', color: 'var(--contact-fg)' }} className="py-24 relative">
         {/* Gradient bleed — fades from page bg into contact section */}
         <div className="absolute top-0 left-0 right-0 h-16 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, var(--bg), transparent)' }} />
+          style={{ background: 'linear-gradient(to bottom, var(--contact-bg), transparent)' }} />
         <div className="max-w-6xl mx-auto px-6">
 
           {/* Section header — inverted */}
           <div className="mb-14">
-            <div className="h-[3px]" style={{ background: '#000' }} />
+            <div className="h-[3px]" style={{ background: 'var(--contact-fg)' }} />
             <div className="flex items-center justify-between py-2">
-              <h2 className="font-display text-xs font-black uppercase tracking-[0.5em]" style={{ color: '#888' }}>
+              <h2 className="font-display text-xs font-black uppercase tracking-[0.5em]" style={{ color: 'var(--contact-fg-muted)' }}>
                 Section 04 — Contact
               </h2>
             </div>
-            <div className="h-px" style={{ background: '#ddd' }} />
+            <div className="h-px" style={{ background: 'var(--contact-fg-muted)' }} />
           </div>
 
           <FadeUp>
             <div className="grid md:grid-cols-2 gap-16 items-end">
               <div>
-                <p className="text-xs tracking-[0.45em] uppercase mb-6" style={{ color: '#888' }}>
+                <p className="text-xs tracking-[0.45em] uppercase mb-6" style={{ color: 'var(--contact-fg-muted)' }}>
                   — Open to opportunities
                 </p>
                 <h2
                   className="font-display font-black leading-none"
-                  style={{ fontSize: 'clamp(48px, 8vw, 110px)', letterSpacing: '-0.03em', color: '#000' }}
+                  style={{ fontSize: 'clamp(48px, 8vw, 110px)', letterSpacing: '-0.03em', color: 'var(--contact-fg)' }}
                 >
                   Let's<br />
-                  <span className="italic" style={{ color: '#777' }}>Work</span><br />
+                  <span className="italic" style={{ color: 'var(--contact-fg-muted)' }}>Work</span><br />
                   Together
                 </h2>
               </div>
               <div>
-                <p className="text-sm leading-[1.9] mb-8" style={{ color: '#555' }}>
+                <p className="text-sm leading-[1.9] mb-8" style={{ color: 'var(--contact-fg-muted)' }}>
                   Ready to bring your ideas to life with cutting-edge technology
                   and proven expertise in fullstack development and cloud systems.
                 </p>
                 <a
                   href="mailto:ikhmalhaziq2907@gmail.com"
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs tracking-[0.25em] uppercase transition-opacity hover:opacity-75 w-full sm:w-auto"
-                  style={{ background: '#000', color: '#EDE8D9' }}
+                  style={{ background: 'var(--contact-fg)', color: 'var(--contact-bg)' }}
                 >
                   <FaEnvelope size={12} />
                   <span className="hidden sm:inline">ikhmalhaziq2907@gmail.com</span>
                   <span className="sm:hidden">Get In Touch</span>
                 </a>
-                <div className="flex items-center gap-6 mt-6" style={{ color: '#888' }}>
+                <div className="flex items-center gap-6 mt-6">
                   <a href="https://github.com/HaziqLucii" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs tracking-[0.2em] uppercase transition-colors hover:text-black">
+                    className="contact-link flex items-center gap-2 text-xs tracking-[0.2em] uppercase">
                     <FaGithub size={15} /> GitHub
                   </a>
                   <a href="https://linkedin.com/in/haziq-luffy" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs tracking-[0.2em] uppercase transition-colors hover:text-black">
+                    className="contact-link flex items-center gap-2 text-xs tracking-[0.2em] uppercase">
                     <FaLinkedin size={15} /> LinkedIn
                   </a>
                 </div>
