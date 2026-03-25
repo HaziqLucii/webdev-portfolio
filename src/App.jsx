@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaSun, FaMoon } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import Counter from './Components/Counter/Counter';
@@ -97,7 +97,7 @@ const SECTIONS = [
 function ScrollDots({ activeSection }) {
   const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
   return (
-    <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center" style={{ mixBlendMode: 'difference' }}>
+    <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center">
       {SECTIONS.map((section, i) => (
         <div key={section.id} className="flex flex-col items-center">
           {i > 0 && (
@@ -113,7 +113,7 @@ function ScrollDots({ activeSection }) {
           )}
           <button
             onClick={() => document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex flex-col items-center gap-1"
+            className="flex flex-col items-center gap-1 cursor-pointer"
             aria-label={section.label}
           >
             <motion.div
@@ -121,9 +121,13 @@ function ScrollDots({ activeSection }) {
               animate={{
                 width: i === activeIndex ? '8px' : '4px',
                 height: i === activeIndex ? '8px' : '4px',
-                backgroundColor: i === activeIndex ? '#EDE8D9' : i < activeIndex ? '#555' : '#222',
+                backgroundColor: i === activeIndex ? 'var(--fg)' : 'var(--fg-3)',
               }}
-              transition={{ duration: 0.25 }}
+              whileHover={{
+                scale: 1.8,
+                backgroundColor: 'var(--fg)',
+              }}
+              transition={{ duration: 0.2 }}
             />
           </button>
         </div>
@@ -135,6 +139,12 @@ function ScrollDots({ activeSection }) {
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -193,7 +203,7 @@ export default function Home() {
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? 'rgba(0,0,0,0.94)' : 'transparent',
+          background: scrolled ? 'var(--nav-bg)' : 'transparent',
           borderBottom: `1px solid ${scrolled ? 'var(--border)' : 'transparent'}`,
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
         }}
@@ -201,7 +211,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-12">
           <button
             onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
-            className="font-display text-sm font-black italic tracking-tight transition-opacity hover:opacity-55"
+            className="font-display text-sm font-black italic tracking-tight transition-opacity hover:opacity-55 cursor-pointer"
           >
             IH
           </button>
@@ -215,7 +225,7 @@ export default function Home() {
                   initial="rest"
                   whileHover="hover"
                   animate="rest"
-                  className="relative px-4 py-3.5 text-xs tracking-[0.28em] uppercase transition-colors duration-200"
+                  className="relative px-4 py-3.5 text-xs tracking-[0.28em] uppercase transition-colors duration-200 cursor-pointer"
                   style={{ color: isActive ? 'var(--fg)' : 'var(--fg-3)' }}
                 >
                   {item.label}
@@ -245,13 +255,22 @@ export default function Home() {
               const Icon = item.iconComponent;
               const isActive = item.sectionId === activeSection;
               return (
-                <button key={i} onClick={item.onClick} className="p-2.5"
+                <button key={i} onClick={item.onClick} className="p-2.5 cursor-pointer"
                   style={{ color: isActive ? 'var(--fg)' : 'var(--fg-3)' }}>
                   <Icon size={14} />
                 </button>
               );
             })}
           </nav>
+          {/* Theme toggle */}
+          <button
+            onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+            className="p-2.5 transition-opacity hover:opacity-55 cursor-pointer"
+            style={{ color: 'var(--fg-3)' }}
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <FaSun size={13} /> : <FaMoon size={13} />}
+          </button>
         </div>
       </header>
 
@@ -676,10 +695,10 @@ export default function Home() {
       {/* ══════════════════════════════════════════════ */}
       {/* CONTACT — INVERTED white section              */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="contact" style={{ background: '#F0EEE9', color: '#000000' }} className="py-24 relative">
-        {/* Gradient bleed from black — softens the hard cut */}
+      <section id="contact" style={{ background: 'var(--contact-bg)', color: 'var(--contact-fg)' }} className="py-24 relative">
+        {/* Gradient bleed — fades from page bg into contact section */}
         <div className="absolute top-0 left-0 right-0 h-16 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, #000000, transparent)' }} />
+          style={{ background: 'linear-gradient(to bottom, var(--bg), transparent)' }} />
         <div className="max-w-6xl mx-auto px-6">
 
           {/* Section header — inverted */}

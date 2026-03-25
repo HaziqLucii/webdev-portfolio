@@ -3,15 +3,48 @@
 
 /* ── Design Tokens ────────────────────────────────── */
 :root {
-  --bg:     #000000;
-  --bg-2:   #0d0d0d;
-  --bg-3:   #161616;
-  --fg:     #EDE8D9;
-  --fg-2:   #9A9488;
-  --fg-3:   #4A4640;
-  --border: rgba(237, 232, 217, 0.12);
-  --bdr-m:  rgba(237, 232, 217, 0.22);
-  --bdr-s:  rgba(237, 232, 217, 0.45);
+  --bg:          #000000;
+  --bg-2:        #0d0d0d;
+  --bg-3:        #161616;
+  --fg:          #EDE8D9;
+  --fg-2:        #9A9488;
+  --fg-3:        #4A4640;
+  --border:      rgba(237, 232, 217, 0.12);
+  --bdr-m:       rgba(237, 232, 217, 0.22);
+  --bdr-s:       rgba(237, 232, 217, 0.45);
+  --nav-bg:      rgba(0, 0, 0, 0.94);
+  --contact-bg:  #F0EEE9;
+  --contact-fg:  #0D0B09;
+}
+
+/* ── Light mode overrides ─────────────────────────── */
+[data-theme="light"] {
+  --bg:          #EDE8D9;
+  --bg-2:        #E3DDD0;
+  --bg-3:        #D8D2C4;
+  --fg:          #0D0B09;
+  --fg-2:        #5C5650;
+  --fg-3:        #A09890;
+  --border:      rgba(0, 0, 0, 0.10);
+  --bdr-m:       rgba(0, 0, 0, 0.18);
+  --bdr-s:       rgba(0, 0, 0, 0.38);
+  --nav-bg:      rgba(237, 232, 217, 0.96);
+  --contact-bg:  #0D0B09;
+  --contact-fg:  #EDE8D9;
+}
+
+/* skill-row hover flips in light mode (dark row on light page) */
+[data-theme="light"] .skill-row:hover {
+  background: #0D0B09;
+}
+[data-theme="light"] .skill-row:hover .skill-row-label { color: #888888; }
+[data-theme="light"] .skill-row:hover .skill-pill {
+  border-color: rgba(237, 232, 217, 0.22);
+  color: #CCC;
+  background: rgba(237, 232, 217, 0.06);
+}
+[data-theme="light"] .skill-row:hover .skill-pill-icon {
+  filter: brightness(0) invert(1);
 }
 
 /* ── Base ─────────────────────────────────────────── */
