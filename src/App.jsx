@@ -153,12 +153,18 @@ export default function Home() {
             </Sticker>
           </div>
 
-          {/* Name block — oversized, tilted, with offset shadow */}
+          {/* Name block — stamps onto the page: starts oversized + over-rotated,
+              squishes through neutral, settles at scale 1 / -1° tilt. */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            style={{ background: 'var(--main)', transform: 'rotate(-1deg)' }}
+            initial={{ opacity: 0, scale: 1.15, rotate: -3 }}
+            animate={{ opacity: 1, scale: [1.15, 0.97, 1], rotate: [-3, -0.5, -1] }}
+            transition={{
+              duration: 0.55,
+              times: [0, 0.65, 1],
+              ease: [0.16, 1, 0.3, 1],
+              opacity: { duration: 0.18 },
+            }}
+            style={{ background: 'var(--main)' }}
             className="border-4 border-border shadow-shadow-lg px-6 md:px-10 py-6 md:py-10 mb-10 md:mb-14"
           >
             <p className="text-xs tracking-[0.3em] uppercase font-black mb-2 opacity-70">— Portfolio of —</p>
