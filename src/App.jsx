@@ -12,7 +12,7 @@ import { experiences } from './data/experiences'
 import { projectsData, personalProjectsData } from './data/projects'
 import { skills } from './data/skills'
 
-/* ─── Stat block — colored brutalist card ──────────── */
+/* ─── Stat block - colored brutalist card ──────────── */
 function StatBlock({ value, suffix, label, bg, rotate = 0 }) {
   return (
     <motion.div
@@ -32,7 +32,7 @@ function StatBlock({ value, suffix, label, bg, rotate = 0 }) {
   )
 }
 
-/* ─── Sticker — rotated label tag ──────────────────── */
+/* ─── Sticker - rotated label tag ──────────────────── */
 function Sticker({ children, rotate = -3, bg = 'var(--main)', className = '' }) {
   return (
     <span
@@ -74,7 +74,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
 
       {/* ══════════════════════════════════════════════ */}
-      {/* NAV — thick-border sticky bar                 */}
+      {/* NAV - thick-border sticky bar                 */}
       {/* ══════════════════════════════════════════════ */}
       <header className="sticky top-0 z-50 bg-background border-b-4 border-border">
         <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
@@ -108,7 +108,7 @@ export default function Home() {
             })}
           </nav>
 
-          {/* Mobile nav — icon-only */}
+          {/* Mobile nav - icon-only */}
           <nav className="flex sm:hidden items-center gap-1.5">
             {navItems.map((item, i) => {
               const Icon = item.iconComponent
@@ -139,7 +139,7 @@ export default function Home() {
       </header>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* HERO — asymmetric brutalist grid              */}
+      {/* HERO - asymmetric brutalist grid              */}
       {/* ══════════════════════════════════════════════ */}
       <section id="home" className="px-5 py-12 md:py-20 relative overflow-hidden">
         <div className="max-w-6xl mx-auto">
@@ -153,7 +153,7 @@ export default function Home() {
             </Sticker>
           </div>
 
-          {/* Name block — stamps onto the page: starts oversized + over-rotated,
+          {/* Name block - stamps onto the page: starts oversized + over-rotated,
               squishes through neutral, settles at scale 1 / -1° tilt. */}
           <motion.div
             initial={{ opacity: 0, scale: 1.15, rotate: -3 }}
@@ -167,7 +167,7 @@ export default function Home() {
             style={{ background: 'var(--main)' }}
             className="border-4 border-border shadow-shadow-lg px-6 md:px-10 py-6 md:py-10 mb-10 md:mb-14"
           >
-            <p className="text-xs tracking-[0.3em] uppercase font-black mb-2 opacity-70">— Portfolio of —</p>
+            <p className="text-xs tracking-[0.3em] uppercase font-black mb-2 opacity-70">Portfolio of</p>
             <h1 className="font-display uppercase leading-[0.85]" style={{ fontSize: 'clamp(54px, 13vw, 180px)', letterSpacing: '-0.02em' }}>
               Ikhmal<br />Haziq
             </h1>
@@ -232,7 +232,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Stats row — colored cards, alternating tilt */}
+          {/* Stats row - colored cards, alternating tilt */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
             <StatBlock value="2" suffix="+"  label="Yrs Experience"  bg="var(--main)"            rotate={-1.5} />
             <StatBlock value="5" suffix="+"  label="Projects Shipped" bg="var(--accent-peach)"   rotate={1.5}  />
@@ -243,7 +243,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* MARQUEE — keyword ticker                       */}
+      {/* MARQUEE - keyword ticker                       */}
       {/* ══════════════════════════════════════════════ */}
       <Marquee items={[
         '◆ FULLSTACK',
@@ -257,7 +257,7 @@ export default function Home() {
       ]} />
 
       {/* ══════════════════════════════════════════════ */}
-      {/* ABOUT — Section 02                              */}
+      {/* ABOUT - Section 02                              */}
       {/* ══════════════════════════════════════════════ */}
       <section id="about" className="px-5 py-24 relative">
         <div className="max-w-6xl mx-auto">
@@ -265,7 +265,7 @@ export default function Home() {
           {/* Section header */}
           <div className="flex items-center gap-3 mb-6 flex-wrap">
             <Sticker rotate={-3} bg="var(--main)">Section 02</Sticker>
-            <Sticker rotate={2} bg="var(--accent-lavender)">— Background</Sticker>
+            <Sticker rotate={2} bg="var(--accent-lavender)">Background</Sticker>
           </div>
           <motion.h2
             initial={{ opacity: 0, x: -16 }}
@@ -281,7 +281,7 @@ export default function Home() {
           {/* Portrait + bio + meta grid */}
           <div className="grid md:grid-cols-12 gap-6 md:gap-8 mb-14 items-start">
 
-            {/* Portrait — already brutalist-framed, displayed bare with a sticker caption */}
+            {/* Portrait - already brutalist-framed, displayed bare with a sticker caption */}
             <motion.div
               initial={{ opacity: 0, y: 12, rotate: 0 }}
               whileInView={{ opacity: 1, y: 0, rotate: -2 }}
@@ -300,7 +300,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Right column — bio + meta */}
+            {/* Right column - bio + meta */}
             <div className="md:col-span-7 lg:col-span-8 flex flex-col gap-5">
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -310,9 +310,9 @@ export default function Home() {
                 style={{ background: 'var(--secondary-background)' }}
                 className="border-2 border-border shadow-shadow p-6 md:p-8"
               >
-                <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-3 opacity-60">— Bio</p>
+                <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-3 opacity-60">Bio</p>
                 <p className="font-display text-2xl md:text-3xl leading-tight mb-4 uppercase">
-                  "Experienced developer building scalable systems — web, mobile, DevOps, and beyond."
+                  "Experienced developer building scalable systems across web, mobile, DevOps, and beyond."
                 </p>
                 <p className="text-sm leading-relaxed mb-3">
                   Fullstack Developer & Technical Lead with strong background in web/mobile development,
@@ -356,7 +356,7 @@ export default function Home() {
           {/* Employment history accordion */}
           <div className="flex items-center gap-3 mb-5 flex-wrap">
             <Sticker rotate={-2} bg="var(--main)">Employment History</Sticker>
-            <span className="text-xs tracking-[0.25em] uppercase opacity-50">2023 — Present</span>
+            <span className="text-xs tracking-[0.25em] uppercase opacity-50">2023 / Present</span>
           </div>
           <Accordion type="single" collapsible defaultValue={experiences[0].id} className="flex flex-col gap-4">
             {experiences.map((exp, i) => {
@@ -384,7 +384,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* PROJECTS — Section 03                          */}
+      {/* PROJECTS - Section 03                          */}
       {/* ══════════════════════════════════════════════ */}
       <section id="projects" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--accent-cream)' }}>
         <div className="max-w-6xl mx-auto">
@@ -392,7 +392,7 @@ export default function Home() {
           {/* Section header */}
           <div className="flex items-center gap-3 mb-6 flex-wrap">
             <Sticker rotate={-3} bg="var(--accent-peach)">Section 03</Sticker>
-            <Sticker rotate={2} bg="var(--main)">— Featured Work</Sticker>
+            <Sticker rotate={2} bg="var(--main)">Featured Work</Sticker>
           </div>
           <motion.h2
             initial={{ opacity: 0, x: -16 }}
@@ -418,7 +418,7 @@ export default function Home() {
                 className="border-4 border-border shadow-shadow-lg p-6 md:p-8 mb-12"
               >
                 <div className="flex items-center gap-3 mb-4 flex-wrap">
-                  <span className="text-[10px] tracking-[0.3em] uppercase font-black opacity-70">— Featured · 01 —</span>
+                  <span className="text-[10px] tracking-[0.3em] uppercase font-black opacity-70">Featured · 01</span>
                   <Badge variant="neutral">{f.label}</Badge>
                   <span className="text-xs ml-auto opacity-70">{f.period}</span>
                 </div>
@@ -440,7 +440,7 @@ export default function Home() {
             )
           })()}
 
-          {/* Rest of projects — 2-col grid alternating tilt + accent */}
+          {/* Rest of projects - 2-col grid alternating tilt + accent */}
           <div className="grid md:grid-cols-2 gap-6">
             {projectsData.slice(1).map((p, idx) => {
               // 4-color rotation so no two adjacent cards share a color
@@ -511,7 +511,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* SKILLS — Section 04                            */}
+      {/* SKILLS - Section 04                            */}
       {/* ══════════════════════════════════════════════ */}
       <section id="skills" className="px-5 py-24 relative border-t-4 border-border">
         <div className="max-w-6xl mx-auto">
@@ -519,7 +519,7 @@ export default function Home() {
           {/* Section header */}
           <div className="flex items-center gap-3 mb-6 flex-wrap">
             <Sticker rotate={-3} bg="var(--accent-sky)">Section 04</Sticker>
-            <Sticker rotate={2} bg="var(--main)">— Stack</Sticker>
+            <Sticker rotate={2} bg="var(--main)">Stack</Sticker>
           </div>
           <motion.h2
             initial={{ opacity: 0, x: -16 }}
@@ -573,7 +573,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* CONTACT — Section 05                           */}
+      {/* CONTACT - Section 05                           */}
       {/* ══════════════════════════════════════════════ */}
       <section id="contact" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--accent-cream)' }}>
         <div className="max-w-6xl mx-auto">
