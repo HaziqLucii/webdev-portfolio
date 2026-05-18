@@ -25,3 +25,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.playwright-mcp/
+.screenshots/
+scripts/
+
+# Backups of in-place edited assets
+public/*.original.*

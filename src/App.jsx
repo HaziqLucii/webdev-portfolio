@@ -1,642 +1,500 @@
-import { FaGithub, FaLinkedin, FaEnvelope, FaSun, FaMoon } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import Counter from './Components/Counter/Counter';
-import { projectsData, personalProjectsData } from './data/projects';
-import { navItems } from './data/navigation';
-import { skills } from './data/skills';
-import { experiences } from './data/experiences';
-import Clock from './Components/Clock/Clock';
-import Weather from './Components/Weather/Weather';
+import { useState, useEffect } from 'react'
+import { motion } from 'motion/react'
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
+import { Sun, Moon, ArrowUpRight } from 'lucide-react'
+import { Button } from '@/Components/ui/button'
+import { Badge } from '@/Components/ui/badge'
+import { Card } from '@/Components/ui/card'
+import Marquee from '@/Components/ui/marquee'
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/Components/ui/accordion'
+import { navItems } from './data/navigation'
+import { experiences } from './data/experiences'
+import { projectsData, personalProjectsData } from './data/projects'
+import { skills } from './data/skills'
 
-/* ─── Newspaper ink-bleed link ─────────────────────── */
-/*
-  Background floods in from left (scaleX 0→1) on hover,
-  like ink soaking into newsprint. Text inverts to black
-  slightly after the fill starts — making the link feel
-  like a rubber stamp impression.
-*/
-function InkLink({ href, icon: Icon, children, target, rel }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <a
-      href={href}
-      target={target}
-      rel={rel}
-      className="relative inline-flex items-center gap-2.5 text-xs tracking-[0.2em] uppercase overflow-hidden px-2 py-1.5 -mx-2 cursor-pointer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {/* Ink fill — slides in from left */}
-      <motion.span
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'var(--fg)', transformOrigin: 'left', zIndex: 0 }}
-        initial={false}
-        animate={{ scaleX: hovered ? 1 : 0 }}
-        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-      />
-      {/* Icon */}
-      <motion.span
-        className="relative z-10 shrink-0"
-        animate={{ color: hovered ? 'var(--bg)' : 'var(--fg-3)' }}
-        transition={{ duration: 0.12, delay: hovered ? 0.08 : 0 }}
-      >
-        {Icon && <Icon size={11} />}
-      </motion.span>
-      {/* Label */}
-      <motion.span
-        className="relative z-10"
-        animate={{ color: hovered ? 'var(--bg)' : 'var(--fg)' }}
-        transition={{ duration: 0.12, delay: hovered ? 0.08 : 0 }}
-      >
-        {children}
-      </motion.span>
-    </a>
-  );
-}
-
-/* ─── Animated scaleX rule ─────────────────────────── */
-function Rule({ delay = 0, thick = false, color = 'var(--border)' }) {
-  return (
-    <div style={{ height: thick ? '3px' : '1px', background: color, overflow: 'hidden' }}>
-      <motion.div
-        style={{ height: '100%', background: thick ? 'var(--fg)' : 'var(--bdr-s)', transformOrigin: 'left' }}
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.0, delay, ease: [0.22, 1, 0.36, 1] }}
-      />
-    </div>
-  );
-}
-
-/* ─── Fade-up ───────────────────────────────────────── */
-function FadeUp({ children, delay = 0, className = '' }) {
+/* ─── Stat block — colored brutalist card ──────────── */
+function StatBlock({ value, suffix, label, bg, rotate = 0 }) {
   return (
     <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      style={{ background: bg, transform: `rotate(${rotate}deg)` }}
+      className="border-2 border-border shadow-shadow p-5 hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none transition-all"
     >
-      {children}
+      <p className="font-display text-5xl md:text-6xl leading-none">
+        {value}
+        <span className="text-3xl align-top">{suffix}</span>
+      </p>
+      <p className="mt-3 text-[10px] tracking-[0.25em] uppercase font-bold">{label}</p>
     </motion.div>
-  );
+  )
 }
 
-/* ─── Scroll dots ───────────────────────────────────── */
-const SECTIONS = [
-  { id: 'home',     label: '01' },
-  { id: 'about',    label: '02' },
-  { id: 'projects', label: '03' },
-  { id: 'skills',   label: '04' },
-  { id: 'contact',  label: '05' },
-];
-
-function ScrollDots({ activeSection, theme }) {
-  const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
-  // In light mode on the dark contact section, flip to contact-fg colors
-  const onDarkBg = theme === 'light' && activeSection === 'contact';
-  const colorActive  = onDarkBg ? 'var(--contact-fg)'       : 'var(--fg)';
-  const colorInactive = onDarkBg ? 'var(--contact-fg-muted)' : 'var(--fg-3)';
-  const colorLine    = onDarkBg ? 'var(--contact-fg-muted)' : 'var(--border)';
-  const colorFill    = onDarkBg ? 'var(--contact-fg)'       : 'var(--fg)';
+/* ─── Sticker — rotated label tag ──────────────────── */
+function Sticker({ children, rotate = -3, bg = 'var(--main)', className = '' }) {
   return (
-    <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center">
-      {SECTIONS.map((section, i) => (
-        <div key={section.id} className="flex flex-col items-center">
-          {i > 0 && (
-            <div className="w-px h-12 relative" style={{ background: colorLine }}>
-              <motion.div
-                className="absolute top-0 left-0 w-full"
-                style={{ background: colorFill }}
-                initial={{ height: '0%' }}
-                animate={{ height: i <= activeIndex ? '100%' : '0%' }}
-                transition={{ duration: 0.4 }}
-              />
-            </div>
-          )}
-          <button
-            onClick={() => document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex flex-col items-center gap-1 cursor-pointer"
-            aria-label={section.label}
-          >
-            <motion.div
-              style={{ borderRadius: 0 }}
-              animate={{
-                width: i === activeIndex ? '8px' : '4px',
-                height: i === activeIndex ? '8px' : '4px',
-                backgroundColor: i === activeIndex ? colorActive : colorInactive,
-              }}
-              whileHover={{
-                scale: 1.8,
-                backgroundColor: colorActive,
-              }}
-              transition={{ duration: 0.2 }}
-            />
-          </button>
-        </div>
-      ))}
-    </div>
-  );
+    <span
+      style={{ background: bg, transform: `rotate(${rotate}deg)` }}
+      className={`inline-block border-2 border-border shadow-shadow-sm px-3 py-1 text-xs tracking-[0.2em] uppercase font-black ${className}`}
+    >
+      {children}
+    </span>
+  )
 }
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState('home');
-  const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [activeSection, setActiveSection] = useState('home')
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    localStorage.setItem('theme', theme)
+  }, [theme])
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-      // Near bottom — last section (contact) is always active
-      if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 60) {
-        setActiveSection('contact');
-        return;
-      }
-      const ids = ['home', 'about', 'projects', 'skills', 'contact'];
-      const scrollY = window.scrollY + 60;
+    const onScroll = () => {
+      const ids = ['home', 'about', 'projects', 'skills', 'contact']
+      const y = window.scrollY + 100
       for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el) {
-          const { offsetTop, offsetHeight } = el;
-          if (scrollY >= offsetTop && scrollY < offsetTop + offsetHeight) {
-            setActiveSection(id);
-            break;
-          }
+        const el = document.getElementById(id)
+        if (el && y >= el.offsetTop && y < el.offsetTop + el.offsetHeight) {
+          setActiveSection(id)
+          break
         }
       }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const [featured, ...restProjects] = projectsData;
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <div className="min-h-screen" style={{ color: 'var(--fg)' }}>
+    <div className="min-h-screen bg-background text-foreground">
 
-      {/* ── Scroll dots ──────────────────────────────── */}
-      <ScrollDots activeSection={activeSection} theme={theme} />
-
-      {/* ── Widgets ──────────────────────────────────── */}
-      <div className="fixed top-[72px] left-4 z-40 hidden 2xl:block">
-        <div className="px-4 py-3 w-[148px]" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-          <div className="text-xs mb-1.5 tracking-[0.3em] uppercase" style={{ color: 'var(--fg-3)' }}>Time</div>
-          <Clock />
-        </div>
-      </div>
-      <div className="fixed top-[168px] left-4 z-40 hidden 2xl:block group">
-        <div className="px-4 py-3 w-[148px] relative" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-          <div className="text-xs mb-1.5 tracking-[0.3em] uppercase" style={{ color: 'var(--fg-3)' }}>Weather</div>
-          <Weather />
-          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-            <div className="text-xs px-3 py-1.5 whitespace-nowrap" style={{ background: 'var(--bg-3)', color: 'var(--fg-3)', border: '1px solid var(--border)' }}>
-              Source: data.gov.my
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Navigation ───────────────────────────────── */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style={{
-          background: scrolled ? 'var(--nav-bg)' : 'transparent',
-          borderBottom: `1px solid ${scrolled ? 'var(--border)' : 'transparent'}`,
-          backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-12">
+      {/* ══════════════════════════════════════════════ */}
+      {/* NAV — thick-border sticky bar                 */}
+      {/* ══════════════════════════════════════════════ */}
+      <header className="sticky top-0 z-50 bg-background border-b-4 border-border">
+        <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+          {/* Monogram chip */}
           <button
             onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
-            className="font-display text-sm font-black italic tracking-tight transition-opacity hover:opacity-55 cursor-pointer"
+            style={{ background: 'var(--main)' }}
+            className="border-2 border-border shadow-shadow-sm px-3 py-1.5 font-display text-lg leading-none hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer"
           >
-            IH
+            IH.
           </button>
-          <nav className="hidden sm:flex items-center">
+
+          {/* Desktop nav */}
+          <nav className="hidden sm:flex items-center gap-2">
             {navItems.map((item, i) => {
-              const isActive = item.sectionId === activeSection;
+              const isActive = item.sectionId === activeSection
               return (
-                <motion.button
+                <button
                   key={i}
                   onClick={item.onClick}
-                  initial="rest"
-                  whileHover="hover"
-                  animate="rest"
-                  className="relative px-4 py-3.5 text-xs tracking-[0.28em] uppercase transition-colors duration-200 cursor-pointer"
-                  style={{ color: isActive ? 'var(--fg)' : 'var(--fg-3)' }}
+                  style={isActive ? { background: 'var(--accent-lavender)' } : {}}
+                  className={`px-3 py-1.5 text-xs tracking-[0.2em] uppercase font-black border-2 transition-all cursor-pointer ${
+                    isActive
+                      ? 'border-border shadow-shadow-sm'
+                      : 'border-transparent hover:border-border hover:shadow-shadow-sm hover:bg-secondary-background'
+                  }`}
                 >
                   {item.label}
-                  {/* Active underline — shared layout animation */}
-                  {isActive && (
-                    <motion.div layoutId="nav-line"
-                      className="absolute bottom-2.5 left-4 right-4 h-px"
-                      style={{ background: 'var(--fg)' }}
-                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                    />
-                  )}
-                  {/* Hover underline — slides in from left, hidden when active */}
-                  {!isActive && (
-                    <motion.div
-                      className="absolute bottom-2.5 left-4 right-4 h-px"
-                      style={{ background: 'var(--fg-3)', transformOrigin: 'left' }}
-                      variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
-                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                  )}
-                </motion.button>
-              );
+                </button>
+              )
             })}
           </nav>
-          <nav className="flex sm:hidden items-center gap-1">
+
+          {/* Mobile nav — icon-only */}
+          <nav className="flex sm:hidden items-center gap-1.5">
             {navItems.map((item, i) => {
-              const Icon = item.iconComponent;
-              const isActive = item.sectionId === activeSection;
+              const Icon = item.iconComponent
+              const isActive = item.sectionId === activeSection
               return (
-                <button key={i} onClick={item.onClick} className="p-2.5 cursor-pointer"
-                  style={{ color: isActive ? 'var(--fg)' : 'var(--fg-3)' }}>
+                <button
+                  key={i}
+                  onClick={item.onClick}
+                  style={isActive ? { background: 'var(--accent-lavender)' } : {}}
+                  className={`p-2 border-2 ${isActive ? 'border-border shadow-shadow-sm' : 'border-transparent'}`}
+                >
                   <Icon size={14} />
                 </button>
-              );
+              )
             })}
           </nav>
+
           {/* Theme toggle */}
           <button
-            onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-            className="p-2.5 transition-opacity hover:opacity-55 cursor-pointer"
-            style={{ color: 'var(--fg-3)' }}
+            onClick={() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))}
+            style={{ background: 'var(--accent-peach)' }}
+            className="border-2 border-border shadow-shadow-sm p-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer"
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? <FaSun size={13} /> : <FaMoon size={13} />}
+            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
           </button>
         </div>
       </header>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* HERO — newspaper masthead layout              */}
+      {/* HERO — asymmetric brutalist grid              */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="home" className="pt-12 px-6 relative">
+      <section id="home" className="px-5 py-12 md:py-20 relative overflow-hidden">
         <div className="max-w-6xl mx-auto">
 
-          {/* Masthead metadata strip */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="flex items-center justify-between py-3"
-            style={{ borderBottom: '1px solid var(--border)' }}
-          >
-            <span className="text-xs tracking-[0.45em] uppercase" style={{ color: 'var(--fg-3)' }}>
-              Vol. I · Est. 2023
-            </span>
-            <span className="text-xs tracking-[0.45em] uppercase" style={{ color: 'var(--fg-3)' }}>
-              Kuala Lumpur, Malaysia
-            </span>
-          </motion.div>
-
-          {/* Giant masthead name */}
-          <div className="py-4 overflow-hidden" style={{ borderBottom: '3px solid var(--fg)' }}>
-            <motion.h1
-              className="font-display font-black uppercase leading-none text-center"
-              style={{
-                fontSize: 'clamp(48px, 13vw, 180px)',
-                letterSpacing: '-0.02em',
-                lineHeight: 0.88,
-              }}
-              initial={{ y: '105%' }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.25, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Ikhmal Haziq
-            </motion.h1>
+          {/* Top row: dateline sticker + availability */}
+          <div className="flex items-center justify-between mb-8 md:mb-12">
+            <Sticker rotate={-3}>Kuala Lumpur · Est. 2023</Sticker>
+            <Sticker rotate={2} bg="var(--accent-lavender)">
+              <span className="inline-block w-2 h-2 bg-green-600 border border-border mr-2 align-middle" />
+              Available For Hire
+            </Sticker>
           </div>
 
-          {/* 3-column newspaper below masthead */}
+          {/* Name block — oversized, tilted, with offset shadow */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="grid grid-cols-1 sm:grid-cols-3 py-6 gap-6"
-            style={{ borderBottom: '1px solid var(--border)' }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{ background: 'var(--main)', transform: 'rotate(-1deg)' }}
+            className="border-4 border-border shadow-shadow-lg px-6 md:px-10 py-6 md:py-10 mb-10 md:mb-14"
           >
-            {/* Col 1: role */}
-            <div style={{ borderRight: '1px solid var(--border)' }} className="pr-6">
-              <p className="text-xs tracking-[0.4em] uppercase mb-3" style={{ color: 'var(--fg-3)' }}>
-                Role
-              </p>
-              <p className="font-display text-lg font-bold italic leading-snug">
-                Fullstack Web Developer
-              </p>
-              <p className="text-xs mt-3 leading-relaxed" style={{ color: 'var(--fg-2)' }}>
-                Remote · Available
-              </p>
-            </div>
-
-            {/* Col 2: bio excerpt */}
-            <div className="sm:col-span-1" style={{ borderRight: '1px solid var(--border)' }}>
-              <p className="text-xs tracking-[0.4em] uppercase mb-3" style={{ color: 'var(--fg-3)' }}>
-                Profile
-              </p>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--fg-2)' }}>
-                Experienced developer with 2+ years building web apps,
-                DevOps pipelines and geospatial systems. CKA certified.
-              </p>
-            </div>
-
-            {/* Col 3: CTAs */}
-            <div className="pl-0 sm:pl-6">
-              <p className="text-xs tracking-[0.4em] uppercase mb-3" style={{ color: 'var(--fg-3)' }}>
-                Contact
-              </p>
-              <div className="flex flex-col items-start gap-1">
-                <InkLink href="mailto:ikhmalhaziq2907@gmail.com" icon={FaEnvelope}>
-                  <span className="hidden sm:inline">ikhmalhaziq2907@gmail.com</span>
-                  <span className="sm:hidden">Email</span>
-                </InkLink>
-                <InkLink href="https://github.com/HaziqLucii" icon={FaGithub} target="_blank" rel="noopener noreferrer">
-                  GitHub / HaziqLucii
-                </InkLink>
-                <InkLink href="https://linkedin.com/in/haziq-luffy" icon={FaLinkedin} target="_blank" rel="noopener noreferrer">
-                  LinkedIn
-                </InkLink>
-              </div>
-            </div>
+            <p className="text-xs tracking-[0.3em] uppercase font-black mb-2 opacity-70">— Portfolio of —</p>
+            <h1 className="font-display uppercase leading-[0.85]" style={{ fontSize: 'clamp(54px, 13vw, 180px)', letterSpacing: '-0.02em' }}>
+              Ikhmal<br />Haziq
+            </h1>
           </motion.div>
-        </div>
-      </section>
 
-      {/* ══════════════════════════════════════════════ */}
-      {/* STATS — horizontal ticker strip               */}
-      {/* ══════════════════════════════════════════════ */}
-      <section className="relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex divide-x" style={{ borderBottom: '1px solid var(--border)', borderColor: 'var(--border)' }}>
-            {[
-              { end: 2,  suffix: '+', label: 'Yrs Experience' },
-              { end: 5,  suffix: '+', label: 'Projects' },
-              { end: 1,  suffix: '',  label: 'Team Led' },
-              { end: 2,  suffix: '',  label: 'Certifications' },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07, duration: 0.5 }}
-                className="flex-1 py-7 px-6 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4"
-                style={{ borderColor: 'var(--border)' }}
-              >
-                <Counter
-                  endValue={stat.end}
-                  suffix={stat.suffix}
-                  className="font-display text-4xl sm:text-5xl font-black"
-                  duration={1.8}
-                />
-                <span className="text-xs tracking-[0.2em] uppercase" style={{ color: 'var(--fg-3)' }}>
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
+          {/* Role + bio + CTAs row */}
+          <div className="grid md:grid-cols-12 gap-5 mb-12 md:mb-16">
+
+            {/* Role card */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              style={{ background: 'var(--accent-lavender)', transform: 'rotate(-1.5deg)' }}
+              className="md:col-span-4 border-2 border-border shadow-shadow p-5"
+            >
+              <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Role</p>
+              <p className="font-display text-2xl leading-tight uppercase">Fullstack Web Developer</p>
+              <p className="mt-3 text-xs">Remote · Worldwide</p>
+            </motion.div>
+
+            {/* Bio */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.5 }}
+              style={{ background: 'var(--secondary-background)' }}
+              className="md:col-span-5 border-2 border-border shadow-shadow p-5"
+            >
+              <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Profile</p>
+              <p className="text-sm leading-relaxed">
+                Experienced fullstack developer with <b>2+ years</b> shipping web apps,
+                DevOps pipelines and geospatial systems. <b>CKA certified.</b>
+              </p>
+            </motion.div>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.5 }}
+              className="md:col-span-3 flex flex-col gap-3"
+            >
+              <Button asChild className="w-full justify-between">
+                <a href="mailto:ikhmalhaziq2907@gmail.com">
+                  <span className="flex items-center gap-2"><FaEnvelope size={11} /> Email</span>
+                  <ArrowUpRight size={14} />
+                </a>
+              </Button>
+              <Button asChild variant="neutral" className="w-full justify-between">
+                <a href="https://github.com/HaziqLucii" target="_blank" rel="noopener noreferrer">
+                  <span className="flex items-center gap-2"><FaGithub size={11} /> GitHub</span>
+                  <ArrowUpRight size={14} />
+                </a>
+              </Button>
+              <Button asChild variant="neutral" className="w-full justify-between">
+                <a href="https://linkedin.com/in/haziq-luffy" target="_blank" rel="noopener noreferrer">
+                  <span className="flex items-center gap-2"><FaLinkedin size={11} /> LinkedIn</span>
+                  <ArrowUpRight size={14} />
+                </a>
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Stats row — colored cards, alternating tilt */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+            <StatBlock value="2" suffix="+"  label="Yrs Experience"  bg="var(--main)"            rotate={-1.5} />
+            <StatBlock value="5" suffix="+"  label="Projects Shipped" bg="var(--accent-peach)"   rotate={1.5}  />
+            <StatBlock value="1"  suffix=""  label="Team Led"          bg="var(--accent-sky)"     rotate={-1}   />
+            <StatBlock value="2"  suffix=""  label="Certifications"    bg="var(--accent-lavender)" rotate={2}   />
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* ABOUT — newspaper feature article             */}
+      {/* MARQUEE — keyword ticker                       */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="about" className="py-24 relative">
-        <div className="max-w-6xl mx-auto px-6">
+      <Marquee items={[
+        '◆ FULLSTACK',
+        '◆ DEVOPS',
+        '◆ CKA CERTIFIED',
+        '◆ KUBERNETES',
+        '◆ REACT',
+        '◆ NODE.JS',
+        '◆ SHOPIFY',
+        '◆ KUALA LUMPUR',
+      ]} />
 
-          {/* Section header — newspaper style */}
-          <div className="mb-10">
-            <Rule thick delay={0} />
-            <div className="flex items-center justify-between py-2">
-              <h2 className="font-display text-xs font-black uppercase tracking-[0.5em]" style={{ color: 'var(--fg-3)' }}>
-                Section 01 — About
-              </h2>
-              <span className="text-xs tracking-[0.3em]" style={{ color: 'var(--fg-3)' }}>2023 — Present</span>
-            </div>
-            <Rule delay={0.1} />
+      {/* ══════════════════════════════════════════════ */}
+      {/* ABOUT — Section 02                              */}
+      {/* ══════════════════════════════════════════════ */}
+      <section id="about" className="px-5 py-24 relative">
+        <div className="max-w-6xl mx-auto">
+
+          {/* Section header */}
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={-3} bg="var(--main)">Section 02</Sticker>
+            <Sticker rotate={2} bg="var(--accent-lavender)">— Background</Sticker>
           </div>
+          <motion.h2
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-display uppercase leading-[0.85] mb-12"
+            style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.02em' }}
+          >
+            About
+          </motion.h2>
 
-          {/* Pull quote */}
-          <FadeUp className="mb-12">
-            <p
-              className="font-display text-2xl md:text-3xl font-bold italic leading-snug border-l-4 pl-6"
-              style={{ borderColor: 'var(--fg)', color: 'var(--fg-2)' }}
+          {/* Portrait + bio + meta grid */}
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 mb-14 items-start">
+
+            {/* Portrait — already brutalist-framed, displayed bare with a sticker caption */}
+            <motion.div
+              initial={{ opacity: 0, y: 12, rotate: 0 }}
+              whileInView={{ opacity: 1, y: 0, rotate: -2 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="md:col-span-5 lg:col-span-4 flex flex-col items-start"
             >
-              "Experienced developer building scalable systems — web, mobile, DevOps, and beyond."
-            </p>
-          </FadeUp>
-
-          {/* 2-column newspaper body + meta */}
-          <FadeUp delay={0.1}>
-            <div className="grid md:grid-cols-3 gap-10 mb-16">
-              <div className="md:col-span-2 space-y-4">
-                <p className="text-sm leading-[2]" style={{ color: 'var(--fg-2)' }}>
-                  Experienced Fullstack Developer & Technical Lead with a strong background
-                  in web and mobile development, DevOps, and geospatial systems. Passionate
-                  about delivering scalable and efficient solutions that make a lasting impact.
-                </p>
-                <p className="text-sm leading-[2]" style={{ color: 'var(--fg-2)' }}>
-                  Holds a Certified Kubernetes Administrator (CKA) certification, showcasing
-                  expertise in containerization and cloud orchestration. Adept at mentoring
-                  developers, leading teams, and optimizing system performance at scale.
-                </p>
+              <img
+                src="/me-in-neo-brutalism-frame.png"
+                alt="Ikhmal Haziq"
+                className="w-full max-w-[360px] mx-auto block select-none pointer-events-none"
+                draggable={false}
+              />
+              <div className="self-center -mt-2 relative z-10">
+                <Sticker rotate={3} bg="var(--main)">Ikhmal · Est. 1996</Sticker>
               </div>
-              <div className="space-y-6 pt-1">
-                <div style={{ borderTop: '1px solid var(--border)' }} className="pt-5">
-                  <p className="text-xs tracking-[0.35em] uppercase mb-2" style={{ color: 'var(--fg-3)' }}>Education</p>
-                  <p className="text-sm font-bold mb-1">Diploma in Cyber Forensics</p>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--fg-2)' }}>Cybernetics International College</p>
-                </div>
-                <div style={{ borderTop: '1px solid var(--border)' }} className="pt-5">
-                  <p className="text-xs tracking-[0.35em] uppercase mb-2" style={{ color: 'var(--fg-3)' }}>Based In</p>
-                  <p className="text-sm font-bold">Ampang, Kuala Lumpur</p>
-                  <p className="text-xs mt-1" style={{ color: 'var(--fg-2)' }}>Malaysia</p>
-                </div>
-              </div>
-            </div>
-          </FadeUp>
+            </motion.div>
 
-          {/* Experience — date table layout */}
-          <div>
-            <div className="mb-4" style={{ borderTop: '3px solid var(--fg)', paddingTop: '8px' }}>
-              <p className="text-xs tracking-[0.45em] uppercase" style={{ color: 'var(--fg-3)' }}>
-                Employment History
-              </p>
-            </div>
-            {experiences.map((exp, i) => (
+            {/* Right column — bio + meta */}
+            <div className="md:col-span-7 lg:col-span-8 flex flex-col gap-5">
               <motion.div
-                key={exp.id}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 md:gap-10 py-7"
-                style={{ borderBottom: '1px solid var(--border)' }}
+                transition={{ duration: 0.5 }}
+                style={{ background: 'var(--secondary-background)' }}
+                className="border-2 border-border shadow-shadow p-6 md:p-8"
               >
-                {/* Date column */}
-                <div>
-                  <p className="font-display text-sm font-bold">{exp.period}</p>
-                  <p className="text-xs mt-1" style={{ color: 'var(--fg-3)' }}>{exp.location}</p>
-                </div>
-                {/* Content column */}
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <h3 className="font-display text-xl font-bold">{exp.title}</h3>
-                    <span className="text-xs tracking-[0.25em] uppercase" style={{ color: 'var(--fg-2)' }}>
-                      @ {exp.company}
-                    </span>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--fg-2)' }}>
-                    {exp.description}
-                  </p>
-                </div>
+                <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-3 opacity-60">— Bio</p>
+                <p className="font-display text-2xl md:text-3xl leading-tight mb-4 uppercase">
+                  "Experienced developer building scalable systems — web, mobile, DevOps, and beyond."
+                </p>
+                <p className="text-sm leading-relaxed mb-3">
+                  Fullstack Developer & Technical Lead with strong background in web/mobile development,
+                  DevOps, and geospatial systems. Passionate about delivering scalable and efficient solutions.
+                </p>
+                <p className="text-sm leading-relaxed">
+                  <b>CKA-certified</b>, with proven expertise in containerization and cloud orchestration.
+                  Adept at mentoring developers, leading teams, and optimizing system performance.
+                </p>
               </motion.div>
-            ))}
+
+              <div className="grid sm:grid-cols-2 gap-5">
+                <motion.div
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  style={{ background: 'var(--accent-peach)', transform: 'rotate(-1deg)' }}
+                  className="border-2 border-border shadow-shadow p-5"
+                >
+                  <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Education</p>
+                  <p className="font-display text-lg uppercase leading-tight">Diploma · Cyber Forensics</p>
+                  <p className="text-xs mt-2">Cybernetics International College</p>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  style={{ background: 'var(--accent-sky)', transform: 'rotate(1.5deg)' }}
+                  className="border-2 border-border shadow-shadow p-5"
+                >
+                  <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Based In</p>
+                  <p className="font-display text-lg uppercase leading-tight">Ampang, KL</p>
+                  <p className="text-xs mt-2">Malaysia · GMT+8</p>
+                </motion.div>
+              </div>
+            </div>
           </div>
+
+          {/* Employment history accordion */}
+          <div className="flex items-center gap-3 mb-5 flex-wrap">
+            <Sticker rotate={-2} bg="var(--main)">Employment History</Sticker>
+            <span className="text-xs tracking-[0.25em] uppercase opacity-50">2023 — Present</span>
+          </div>
+          <Accordion type="single" collapsible defaultValue={experiences[0].id} className="flex flex-col gap-4">
+            {experiences.map((exp, i) => {
+              const triggerBgs = ['var(--main)', 'var(--accent-lavender)', 'var(--accent-peach)']
+              return (
+                <AccordionItem key={exp.id} value={exp.id} style={{ background: 'var(--secondary-background)' }}>
+                  <AccordionTrigger
+                    style={{ background: triggerBgs[i % triggerBgs.length] }}
+                    className="px-5"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 text-left">
+                      <span className="font-display text-base uppercase">{exp.title}</span>
+                      <span className="text-xs tracking-[0.2em] uppercase opacity-70">@ {exp.company} · {exp.period}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 py-4">
+                    <p className="text-xs tracking-[0.2em] uppercase mb-3 opacity-60">{exp.location}</p>
+                    <p className="text-sm leading-relaxed">{exp.description}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              )
+            })}
+          </Accordion>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* PROJECTS — editorial featured + index list    */}
+      {/* PROJECTS — Section 03                          */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="projects" className="py-24 relative">
-        <div className="max-w-6xl mx-auto px-6">
+      <section id="projects" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--accent-cream)' }}>
+        <div className="max-w-6xl mx-auto">
 
-          <div className="mb-10">
-            <Rule thick delay={0} />
-            <div className="flex items-center justify-between py-2">
-              <h2 className="font-display text-xs font-black uppercase tracking-[0.5em]" style={{ color: 'var(--fg-3)' }}>
-                Section 02 — Projects
-              </h2>
-              <span className="text-xs tracking-[0.3em]" style={{ color: 'var(--fg-3)' }}>Featured Work</span>
-            </div>
-            <Rule delay={0.1} />
+          {/* Section header */}
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={-3} bg="var(--accent-peach)">Section 03</Sticker>
+            <Sticker rotate={2} bg="var(--main)">— Featured Work</Sticker>
           </div>
+          <motion.h2
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-display uppercase leading-[0.85] mb-12"
+            style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.02em' }}
+          >
+            Projects
+          </motion.h2>
 
-          {/* FEATURED project — full-width editorial card */}
-          {featured && (
-            <FadeUp className="mb-12">
-              <div className="grid md:grid-cols-3 gap-8 py-8" style={{ borderBottom: '3px solid var(--fg)' }}>
-                <div className="md:col-span-2">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="font-display text-6xl font-black" style={{ color: 'var(--bg-3)', WebkitTextStroke: '1.5px var(--border)' }}>
-                      01
-                    </span>
-                    <div>
-                      <span className="text-xs tracking-[0.3em] uppercase block mb-1" style={{ color: 'var(--fg-3)' }}>
-                        — Featured
-                      </span>
-                      <span className="text-xs tracking-[0.2em] uppercase px-2 py-0.5" style={{ border: '1px solid var(--border)', color: 'var(--fg-2)' }}>
-                        {featured.label}
-                      </span>
-                    </div>
-                  </div>
-                  <h3 className="font-display text-3xl md:text-4xl font-black mb-4 leading-tight">
-                    {featured.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--fg-2)' }}>
-                    {featured.description}
-                  </p>
-                  <div className="space-y-1.5">
-                    {featured.highlights.map((h, hi) => (
-                      <div key={hi} className="flex items-center gap-2 text-xs" style={{ color: 'var(--fg-3)' }}>
-                        <span>—</span> {h}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <p className="text-xs tracking-[0.35em] uppercase mb-3" style={{ color: 'var(--fg-3)' }}>Tech Stack</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {featured.tech.map((tech, ti) => (
-                        <span key={ti} className="text-xs px-2 py-0.5" style={{ border: '1px solid var(--border)', color: 'var(--fg-3)' }}>
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-xs mt-4" style={{ color: 'var(--fg-3)' }}>{featured.period}</p>
-                </div>
-              </div>
-            </FadeUp>
-          )}
-
-          {/* Rest of projects — 2-column index */}
-          <div className="grid md:grid-cols-2 gap-x-12">
-            {restProjects.map((project, index) => (
+          {/* Featured project */}
+          {(() => {
+            const f = projectsData[0]
+            return (
               <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.08, duration: 0.45 }}
-                className="py-6"
-                style={{ borderBottom: '1px solid var(--border)' }}
+                transition={{ duration: 0.5 }}
+                style={{ background: 'var(--main)' }}
+                className="border-4 border-border shadow-shadow-lg p-6 md:p-8 mb-12"
               >
-                <div className="flex items-start gap-4">
-                  <span className="font-display text-2xl font-black shrink-0"
-                    style={{ color: 'var(--bg-3)', WebkitTextStroke: '1px var(--border)' }}>
-                    {String(index + 2).padStart(2, '0')}
-                  </span>
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <h3 className="font-display text-lg font-bold">{project.title}</h3>
-                      <span className="text-xs px-2 py-0.5" style={{ border: '1px solid var(--border)', color: 'var(--fg-3)' }}>
-                        {project.label}
-                      </span>
-                    </div>
-                    <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--fg-2)' }}>{project.description}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tech.map((tech, ti) => (
-                        <span key={ti} className="text-xs px-1.5 py-0.5" style={{ color: 'var(--fg-3)', border: '1px solid var(--border)' }}>
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                <div className="flex items-center gap-3 mb-4 flex-wrap">
+                  <span className="text-[10px] tracking-[0.3em] uppercase font-black opacity-70">— Featured · 01 —</span>
+                  <Badge variant="neutral">{f.label}</Badge>
+                  <span className="text-xs ml-auto opacity-70">{f.period}</span>
+                </div>
+                <h3 className="font-display text-3xl md:text-5xl uppercase leading-[0.9] mb-4">{f.title}</h3>
+                <p className="text-sm md:text-base leading-relaxed mb-5 max-w-3xl">{f.description}</p>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {f.highlights.map((h, hi) => (
+                    <span key={hi} className="bg-secondary-background text-foreground border-2 border-border text-xs px-2 py-1 font-bold">
+                      ★ {h}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {f.tech.map((t, ti) => (
+                    <Badge key={ti} variant="neutral" className="text-[10px]">{t}</Badge>
+                  ))}
                 </div>
               </motion.div>
-            ))}
+            )
+          })()}
+
+          {/* Rest of projects — 2-col grid alternating tilt + accent */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {projectsData.slice(1).map((p, idx) => {
+              // 4-color rotation so no two adjacent cards share a color
+              const palette = ['var(--accent-lavender)', 'var(--accent-peach)', 'var(--accent-sky)', 'var(--secondary-background)']
+              const rotate = idx % 2 === 0 ? -0.7 : 0.7
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: (idx % 2) * 0.08 }}
+                  style={{ background: palette[idx % palette.length], transform: `rotate(${rotate}deg)` }}
+                  className="border-2 border-border shadow-shadow p-5 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                >
+                  <div className="flex items-baseline justify-between gap-3 mb-3">
+                    <span className="font-display text-2xl opacity-30">{String(idx + 2).padStart(2, '0')}</span>
+                    <Badge variant="neutral" className="text-[10px]">{p.label}</Badge>
+                  </div>
+                  <h3 className="font-display text-xl md:text-2xl uppercase leading-tight mb-3">{p.title}</h3>
+                  <p className="text-xs leading-relaxed mb-4">{p.description}</p>
+                  <div className="flex flex-wrap gap-1">
+                    {p.tech.slice(0, 6).map((t, ti) => (
+                      <span key={ti} className="text-[10px] border-2 border-border bg-secondary-background text-foreground px-1.5 py-0.5 font-bold">
+                        {t}
+                      </span>
+                    ))}
+                    {p.tech.length > 6 && (
+                      <span className="text-[10px] px-1.5 py-0.5 font-bold opacity-50">+{p.tech.length - 6}</span>
+                    )}
+                  </div>
+                </motion.div>
+              )
+            })}
           </div>
 
-          {/* Personal projects — compact list */}
+          {/* Personal projects */}
           <div className="mt-16">
-            <div className="mb-6" style={{ borderTop: '1px solid var(--border)', paddingTop: '8px' }}>
-              <p className="text-xs tracking-[0.45em] uppercase" style={{ color: 'var(--fg-3)' }}>Personal Projects</p>
+            <div className="flex items-center gap-3 mb-6">
+              <Sticker rotate={-1} bg="var(--accent-lavender)">Personal Projects</Sticker>
             </div>
-            <div className="grid md:grid-cols-2 gap-x-12">
-              {personalProjectsData.map((project, index) => (
+            <div className="grid md:grid-cols-2 gap-5">
+              {personalProjectsData.map((p, idx) => (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  key={idx}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.08, duration: 0.4 }}
-                  className="py-5"
-                  style={{ borderBottom: '1px solid var(--border)' }}
+                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  style={{ background: 'var(--secondary-background)', transform: `rotate(${idx % 2 === 0 ? -0.5 : 0.5}deg)` }}
+                  className="border-2 border-border shadow-shadow p-5"
                 >
-                  <div className="flex items-start justify-between gap-4 mb-1.5">
-                    <h3 className="font-display text-base font-bold">{project.title}</h3>
-                    <span className="text-xs shrink-0 mt-0.5" style={{ color: 'var(--fg-3)' }}>{project.period}</span>
+                  <div className="flex items-baseline justify-between gap-3 mb-2">
+                    <h3 className="font-display text-lg uppercase leading-tight">{p.title}</h3>
+                    <span className="text-[10px] opacity-60 shrink-0">{p.period}</span>
                   </div>
-                  <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--fg-2)' }}>{project.description}</p>
+                  <p className="text-xs leading-relaxed mb-3">{p.description}</p>
                   <div className="flex flex-wrap gap-1">
-                    {project.tech.map((tech, ti) => (
-                      <span key={ti} className="text-xs px-1.5 py-0.5" style={{ color: 'var(--fg-3)', border: '1px solid var(--border)' }}>
-                        {tech}
-                      </span>
+                    {p.tech.map((t, ti) => (
+                      <span key={ti} className="text-[10px] border-2 border-border bg-secondary-background text-foreground px-1.5 py-0.5 font-bold">{t}</span>
                     ))}
                   </div>
                 </motion.div>
@@ -647,130 +505,132 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* SKILLS — horizontal reference table rows      */}
+      {/* SKILLS — Section 04                            */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="skills" className="py-24 relative min-h-screen">
-        <div className="max-w-6xl mx-auto px-6">
+      <section id="skills" className="px-5 py-24 relative border-t-4 border-border">
+        <div className="max-w-6xl mx-auto">
 
-          <div className="mb-10">
-            <Rule thick delay={0} />
-            <div className="flex items-center justify-between py-2">
-              <h2 className="font-display text-xs font-black uppercase tracking-[0.5em]" style={{ color: 'var(--fg-3)' }}>
-                Section 03 — Technical Skills
-              </h2>
-            </div>
-            <Rule delay={0.1} />
+          {/* Section header */}
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={-3} bg="var(--accent-sky)">Section 04</Sticker>
+            <Sticker rotate={2} bg="var(--main)">— Stack</Sticker>
           </div>
+          <motion.h2
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-display uppercase leading-[0.85] mb-12"
+            style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.02em' }}
+          >
+            Skills
+          </motion.h2>
 
-          <div>
-            {skills.map((skill, si) => (
-              <motion.div
-                key={skill.id}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: si * 0.05, duration: 0.45 }}
-                className="skill-row flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8 py-4 px-3 -mx-3"
-                style={{ borderBottom: '1px solid var(--border)' }}
-              >
-                {/* Category label */}
-                <span className="skill-row-label text-xs tracking-[0.35em] uppercase shrink-0 w-28">
-                  {skill.name}
-                </span>
-                {/* Skill pills — horizontal */}
-                <div className="flex flex-wrap gap-2">
-                  {skill.items.map((item, idx) => (
-                    <div key={idx} className="skill-pill inline-flex items-center gap-2 px-3 py-1.5">
-                      {item.icon && (
-                        <img
-                          src={item.icon}
-                          alt={item.name}
-                          className={`skill-pill-icon${item.invert ? ' skill-pill-icon--invert' : ''} h-4 w-auto max-w-[36px] object-contain`}
-                        />
-                      )}
-                      <span className="text-xs">{item.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+          {/* Category cards grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {skills.map((category, ci) => {
+              const palette = ['var(--main)', 'var(--accent-lavender)', 'var(--accent-peach)', 'var(--accent-sky)', 'var(--main)', 'var(--accent-lavender)', 'var(--accent-peach)']
+              const rotate = ci % 2 === 0 ? -0.5 : 0.5
+              return (
+                <motion.div
+                  key={category.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: ci * 0.05 }}
+                  style={{ background: palette[ci % palette.length], transform: `rotate(${rotate}deg)` }}
+                  className="border-2 border-border shadow-shadow p-5 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                >
+                  <p className="font-display text-2xl uppercase mb-4 leading-none">{category.name}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {category.items.map((item, ii) => (
+                      <span
+                        key={ii}
+                        className="inline-flex items-center gap-1.5 bg-secondary-background text-foreground border-2 border-border px-2 py-1 text-xs font-bold"
+                      >
+                        {item.icon && (
+                          <img
+                            src={item.icon}
+                            alt={item.name}
+                            className="h-3.5 w-auto"
+                          />
+                        )}
+                        {item.name}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* CONTACT — INVERTED white section              */}
+      {/* CONTACT — Section 05                           */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="contact" style={{ background: 'var(--contact-bg)', color: 'var(--contact-fg)' }} className="py-24 relative">
-        {/* Gradient bleed — fades from page bg into contact section */}
-        <div className="absolute top-0 left-0 right-0 h-16 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, var(--contact-bg), transparent)' }} />
-        <div className="max-w-6xl mx-auto px-6">
-
-          {/* Section header — inverted */}
-          <div className="mb-14">
-            <div className="h-[3px]" style={{ background: 'var(--contact-fg)' }} />
-            <div className="flex items-center justify-between py-2">
-              <h2 className="font-display text-xs font-black uppercase tracking-[0.5em]" style={{ color: 'var(--contact-fg-muted)' }}>
-                Section 04 — Contact
-              </h2>
+      <section id="contact" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--accent-cream)' }}>
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ background: 'var(--main)' }}
+            className="border-4 border-border shadow-shadow-lg p-5 sm:p-8 md:p-14 relative"
+          >
+            {/* Sticker top-left */}
+            <div className="absolute -top-4 -left-2 md:-top-5 md:-left-4">
+              <Sticker rotate={-5} bg="var(--accent-lavender)">Section 05 · Contact</Sticker>
             </div>
-            <div className="h-px" style={{ background: 'var(--contact-fg-muted)' }} />
-          </div>
 
-          <FadeUp>
-            <div className="grid md:grid-cols-2 gap-16 items-end">
-              <div>
-                <p className="text-xs tracking-[0.45em] uppercase mb-6" style={{ color: 'var(--contact-fg-muted)' }}>
-                  — Open to opportunities
-                </p>
-                <h2
-                  className="font-display font-black leading-none"
-                  style={{ fontSize: 'clamp(48px, 8vw, 110px)', letterSpacing: '-0.03em', color: 'var(--contact-fg)' }}
-                >
-                  Let's<br />
-                  <span className="italic" style={{ color: 'var(--contact-fg-muted)' }}>Work</span><br />
-                  Together
-                </h2>
-              </div>
-              <div>
-                <p className="text-sm leading-[1.9] mb-8" style={{ color: 'var(--contact-fg-muted)' }}>
-                  Ready to bring your ideas to life with cutting-edge technology
-                  and proven expertise in fullstack development and cloud systems.
-                </p>
-                <a
-                  href="mailto:ikhmalhaziq2907@gmail.com"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs tracking-[0.25em] uppercase transition-opacity hover:opacity-75 w-full sm:w-auto"
-                  style={{ background: 'var(--contact-fg)', color: 'var(--contact-bg)' }}
-                >
-                  <FaEnvelope size={12} />
-                  <span className="hidden sm:inline">ikhmalhaziq2907@gmail.com</span>
-                  <span className="sm:hidden">Get In Touch</span>
+            <h2
+              className="font-display uppercase leading-[0.85] mb-6"
+              style={{ fontSize: 'clamp(38px, 11vw, 140px)', letterSpacing: '-0.02em' }}
+            >
+              Let's<br />Work Together
+            </h2>
+            <p className="text-base md:text-lg max-w-xl mb-8 leading-relaxed">
+              Ready to bring your ideas to life with cutting-edge tech and proven expertise
+              in fullstack development, DevOps, and cloud systems.
+            </p>
+
+            {/* Primary CTA */}
+            <div className="mb-8">
+              <Button asChild size="lg" variant="neutral" className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-8">
+                <a href="mailto:ikhmalhaziq2907@gmail.com" className="min-w-0">
+                  <FaEnvelope size={14} className="mr-2 shrink-0" />
+                  <span className="hidden sm:inline truncate">ikhmalhaziq2907@gmail.com</span>
+                  <span className="sm:hidden">Email Me</span>
+                  <ArrowUpRight size={16} className="ml-2 shrink-0" />
                 </a>
-                <div className="flex items-center gap-6 mt-6">
-                  <a href="https://github.com/HaziqLucii" target="_blank" rel="noopener noreferrer"
-                    className="contact-link flex items-center gap-2 text-xs tracking-[0.2em] uppercase">
-                    <FaGithub size={15} /> GitHub
-                  </a>
-                  <a href="https://linkedin.com/in/haziq-luffy" target="_blank" rel="noopener noreferrer"
-                    className="contact-link flex items-center gap-2 text-xs tracking-[0.2em] uppercase">
-                    <FaLinkedin size={15} /> LinkedIn
-                  </a>
-                </div>
-              </div>
+              </Button>
             </div>
-          </FadeUp>
+
+            {/* Socials */}
+            <div className="flex gap-3 flex-wrap">
+              <Button asChild variant="neutral" size="sm">
+                <a href="https://github.com/HaziqLucii" target="_blank" rel="noopener noreferrer">
+                  <FaGithub size={12} className="mr-1.5" /> GitHub
+                </a>
+              </Button>
+              <Button asChild variant="neutral" size="sm">
+                <a href="https://linkedin.com/in/haziq-luffy" target="_blank" rel="noopener noreferrer">
+                  <FaLinkedin size={12} className="mr-1.5" /> LinkedIn
+                </a>
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── Footer ──────────────────────────────────── */}
-      <footer className="py-6" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs" style={{ color: 'var(--fg-3)' }}>© 2025 Ikhmal Haziq</p>
-          <p className="text-xs" style={{ color: 'var(--fg-3)' }}>Built with React + Motion</p>
+      {/* Footer */}
+      <footer className="border-t-4 border-border py-6 mt-12">
+        <div className="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <p>© 2026 Ikhmal Haziq</p>
+          <p>Built with React + Neobrutalism.dev</p>
         </div>
       </footer>
-
     </div>
-  );
+  )
 }

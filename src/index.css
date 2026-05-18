@@ -1,147 +1,179 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Public+Sans:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-/* ── Design Tokens ────────────────────────────────── */
+@custom-variant dark (&:is(.dark *));
+
+/* ══════════════════════════════════════════════════════
+   Neobrutalism tokens — Lime + Lavender + Cream
+   ══════════════════════════════════════════════════════ */
 :root {
-  --bg:          #000000;
-  --bg-2:        #0d0d0d;
-  --bg-3:        #161616;
-  --fg:          #EDE8D9;
-  --fg-2:        #9A9488;
-  --fg-3:        #4A4640;
-  --border:      rgba(237, 232, 217, 0.12);
-  --bdr-m:       rgba(237, 232, 217, 0.22);
-  --bdr-s:       rgba(237, 232, 217, 0.45);
-  --nav-bg:      rgba(0, 0, 0, 0.94);
-  --contact-bg:  #F0EEE9;
-  --contact-fg:  #0D0B09;
-  --contact-fg-muted: rgba(13, 11, 9, 0.55);
+  /* Surfaces */
+  --background:            #FAF6E9;   /* warm cream */
+  --secondary-background:  #FFFFFF;   /* pure white card surface */
+  --foreground:            #000000;
+  --main-foreground:        #000000;
+
+  /* Brutalist signature accent */
+  --main:                  #B8FF3D;   /* saturated lime */
+
+  /* Section/feature accent rotations */
+  --accent-lavender:       #C9B8FF;
+  --accent-peach:          #FFB8A4;
+  --accent-sky:            #A4DDFF;
+  --accent-cream:          #FAF6E9;
+
+  /* Structural ink */
+  --border:                #000000;
+  --ring:                  #000000;
+  --overlay:               rgba(0, 0, 0, 0.8);
+
+  /* Hard-offset shadow — the brutalist signature */
+  --shadow-x:              4px;
+  --shadow-y:              4px;
+  --shadow:                4px 4px 0px 0px var(--border);
+  --shadow-sm:             2px 2px 0px 0px var(--border);
+  --shadow-lg:             8px 8px 0px 0px var(--border);
+
+  /* Radii — brutalism prefers hard 0px, but allow a tiny 4-5px on soft variants */
+  --radius-base:           5px;
+
+  /* Fonts */
+  --font-weight-base:      500;
+  --font-weight-heading:   900;
 }
 
-/* ── Light mode overrides ─────────────────────────── */
-[data-theme="light"] {
-  --bg:          #EDE8D9;
-  --bg-2:        #E3DDD0;
-  --bg-3:        #D8D2C4;
-  --fg:          #0D0B09;
-  --fg-2:        #5C5650;
-  --fg-3:        #A09890;
-  --border:      rgba(0, 0, 0, 0.10);
-  --bdr-m:       rgba(0, 0, 0, 0.18);
-  --bdr-s:       rgba(0, 0, 0, 0.38);
-  --nav-bg:      rgba(237, 232, 217, 0.96);
-  --contact-bg:  #0D0B09;
-  --contact-fg:  #EDE8D9;
-  --contact-fg-muted: rgba(237, 232, 217, 0.55);
+.dark {
+  /* Warm near-black instead of cold grey-black — subtle brown undertone */
+  --background:            #1B1815;
+  --secondary-background:  #28231F;
+  --foreground:            #EFE6D2;   /* softened warm cream (not pure white) */
+  --main-foreground:       #0F0E0C;
+
+  /* Lime — slightly toned from pure electric to "still loud, less screaming" */
+  --main:                  #A5DE3F;
+
+  /* Accents — deepened to jewel-tones so cream text reads cleanly on them */
+  --accent-lavender:       #6856B8;   /* deep violet */
+  --accent-peach:          #B36959;   /* terracotta */
+  --accent-sky:            #527FA0;   /* slate blue */
+  --accent-cream:          #2E2823;   /* warm dark section bg */
+
+  --border:                #EFE6D2;   /* warm cream — softer than pure white */
+  --ring:                  #EFE6D2;
+  --overlay:               rgba(0, 0, 0, 0.8);
+
+  --shadow:                4px 4px 0px 0px var(--border);
+  --shadow-sm:             2px 2px 0px 0px var(--border);
+  --shadow-lg:             8px 8px 0px 0px var(--border);
 }
 
-/* skill-row hover flips in light mode (dark row on light page) */
-[data-theme="light"] .skill-row:hover {
-  background: #0D0B09;
-}
-[data-theme="light"] .skill-row:hover .skill-row-label { color: #888888; }
-[data-theme="light"] .skill-row:hover .skill-pill {
-  border-color: rgba(237, 232, 217, 0.22);
-  color: #CCC;
-  background: rgba(237, 232, 217, 0.06);
-}
-[data-theme="light"] .skill-row:hover .skill-pill-icon {
-  filter: brightness(0) invert(1);
+/* ══════════════════════════════════════════════════════
+   Tailwind theme bridge — exposes tokens as utilities
+   ══════════════════════════════════════════════════════ */
+@theme inline {
+  --color-background:           var(--background);
+  --color-secondary-background: var(--secondary-background);
+  --color-foreground:           var(--foreground);
+  --color-main:                 var(--main);
+  --color-main-foreground:      var(--main-foreground);
+  --color-border:               var(--border);
+  --color-ring:                 var(--ring);
+  --color-overlay:              var(--overlay);
+  --color-accent-lavender:      var(--accent-lavender);
+  --color-accent-peach:         var(--accent-peach);
+  --color-accent-sky:           var(--accent-sky);
+  --color-accent-cream:         var(--accent-cream);
+
+  --spacing-boxShadowX:        var(--shadow-x);
+  --spacing-boxShadowY:        var(--shadow-y);
+  --spacing-reverseBoxShadowX: calc(var(--shadow-x) * -1);
+  --spacing-reverseBoxShadowY: calc(var(--shadow-y) * -1);
+  --shadow-shadow:      var(--shadow);
+  --shadow-shadow-sm:   var(--shadow-sm);
+  --shadow-shadow-lg:   var(--shadow-lg);
+  --radius-base:        var(--radius-base);
+
+  --font-weight-base:    var(--font-weight-base);
+  --font-weight-heading: var(--font-weight-heading);
+
+  --font-display: 'Archivo Black', 'Archivo', sans-serif;
+  --font-sans:    'Public Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Space Mono', monospace;
+
+  /* Marquee animations (used by lib's Marquee component) */
+  --animate-marquee:  marquee  18s linear infinite;
+  --animate-marquee2: marquee2 18s linear infinite;
+  @keyframes marquee {
+    0%   { transform: translateX(0%);    }
+    100% { transform: translateX(-100%); }
+  }
+  @keyframes marquee2 {
+    0%   { transform: translateX(100%);  }
+    100% { transform: translateX(0%);    }
+  }
 }
 
-/* ── Base ─────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   Base
+   ══════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 56px; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; overflow-x: hidden; }
 
 body {
-  font-family: 'Space Mono', 'Courier New', monospace;
-  background: var(--bg);
-  color: var(--fg);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-base);
+  background: var(--background);
+  color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* ── Grain overlay ────────────────────────────────── */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 900; }
+
+::selection { background: var(--main); color: var(--main-foreground); }
+
+/* Scrollbar — brutalist chunky */
+::-webkit-scrollbar       { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--background); border-left: 2px solid var(--border); }
+::-webkit-scrollbar-thumb { background: var(--main); border: 2px solid var(--border); }
+::-webkit-scrollbar-thumb:hover { background: var(--foreground); }
+
+/* ══════════════════════════════════════════════════════
+   Text-on-lime contract — lime is a fixed-personality color
+   that always wants near-black text, regardless of theme.
+   Cream-on-lime contrast is ~1.2:1 (fails AA); black-on-lime
+   is ~13:1 (passes AAA). This rule auto-applies to any element
+   with `background: var(--main)` in its inline style, so we
+   don't have to remember to add `text-main-foreground` to each.
+   ══════════════════════════════════════════════════════ */
+/* :where() wraps the selector so it has zero specificity — descendants
+   that declare their own text color (e.g. .text-foreground on neutral
+   Badges) win, while text with no color class still inherits near-black. */
+:where([style*="background: var(--main)"]),
+:where([style*="background:var(--main)"]) {
+  color: var(--main-foreground);
 }
 
-/* ── Font utilities ───────────────────────────────── */
-@layer utilities {
-  .font-display { font-family: 'Playfair Display', Georgia, serif; }
+/* ══════════════════════════════════════════════════════
+   Brutalist utility helpers
+   ══════════════════════════════════════════════════════ */
+.brutal-card {
+  background: var(--secondary-background);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 120ms ease, box-shadow 120ms ease;
 }
-
-/* ── Scrollbar ────────────────────────────────────── */
-::-webkit-scrollbar       { width: 2px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--fg-3); }
-::-webkit-scrollbar-thumb:hover { background: var(--fg-2); }
-
-/* ── Selection ────────────────────────────────────── */
-::selection { background: var(--fg); color: var(--bg); }
-
-/* ══════════════════════════════════════════════════ */
-/* SKILL ROW HOVER — inverts entire row on hover      */
-/* ══════════════════════════════════════════════════ */
-.skill-row {
-  transition: background 0.2s ease, border-color 0.2s ease;
+.brutal-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px var(--border);
 }
-.skill-row:hover {
-  background: #EDE8D9;
+.brutal-press {
+  transition: transform 120ms ease, box-shadow 120ms ease;
 }
-.skill-row-label {
-  color: var(--fg-3);
-  transition: color 0.2s ease;
-}
-.skill-row:hover .skill-row-label {
-  color: #777777;
-}
-.skill-pill {
-  border: 1px solid var(--border);
-  color: var(--fg-2);
-  background: transparent;
-  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
-}
-.skill-row:hover .skill-pill {
-  border-color: rgba(0,0,0,0.18);
-  color: #333333;
-  background: rgba(0,0,0,0.06);
-}
-.skill-pill-icon {
-  transition: filter 0.2s ease;
-}
-.skill-row:hover .skill-pill-icon {
-  filter: brightness(0);
-}
-
-/* Contact section links — theme-aware hover */
-.contact-link {
-  color: var(--contact-fg-muted);
-  transition: color 0.2s ease;
-}
-.contact-link:hover {
-  color: var(--contact-fg);
-}
-
-/* Dark icons (Next.js, FastAPI, Django): invert in dark mode so they're visible */
-.skill-pill-icon--invert {
-  filter: invert(1);
-}
-[data-theme="light"] .skill-pill-icon--invert {
-  filter: none;
-}
-.skill-row:hover .skill-pill-icon--invert {
-  filter: brightness(0);
-}
-[data-theme="light"] .skill-row:hover .skill-pill-icon--invert {
-  filter: brightness(0) invert(1);
+.brutal-press:hover {
+  transform: translate(2px, 2px);
+  box-shadow: none !important;
 }
