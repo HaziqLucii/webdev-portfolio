@@ -119,7 +119,9 @@
    ══════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 72px; overflow-x: hidden; }
+/* NB: do NOT add overflow-x:hidden here — it breaks position:sticky on the nav.
+   Mobile horizontal overflow is clipped on body below. */
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
 body {
   font-family: var(--font-sans);
