@@ -290,7 +290,7 @@ export default function Home() {
                 draggable={false}
               />
               <div className="self-center -mt-2 relative z-10">
-                <Sticker rotate={3} bg="var(--main)">Ikhmal · Est. 1996</Sticker>
+                <Sticker rotate={3} bg="var(--main)">Ikhmal · Est. 1999</Sticker>
               </div>
             </motion.div>
 
