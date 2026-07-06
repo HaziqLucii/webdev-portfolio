@@ -5,7 +5,7 @@ export const experiences = [
     company: 'Meekco.Asia',
     period: '2025 - Present',
     location: 'TTDI, Kuala Lumpur',
-    description: 'Appointed by the CTO as Person-In-Charge (PIC) of a bidirectional SAP Business One to Shopify integration across 12 data domains (items, inventory, pricing, customers, orders, invoices, payments, deliveries, returns, and B2B discounts), leading a lean 2-developer build. Built the orchestration layer on a customized ActivePieces fork with custom Pieces, Actions, and Triggers against the SAP B1 Service Layer and Shopify Admin GraphQL API, and designed a delta-sync architecture using high-water-mark polling and reconciliation. Delivered ~70 theme and storefront customizations across 13 client Shopify stores, self-hosted and operated production infrastructure on the company Webdock VPS, and mentored a second developer.'
+    description: 'Appointed by the CTO as Person-In-Charge (PIC) of a bidirectional SAP Business One to Shopify integration across 12 data domains (items, inventory, pricing, customers, orders, invoices, payments, deliveries, returns, and B2B discounts), leading a lean 2-developer build. Built the orchestration layer on a customized ActivePieces fork with custom Pieces, Actions, and Triggers against the SAP B1 Service Layer and Shopify Admin GraphQL API, and designed a delta-sync architecture using high-water-mark polling and reconciliation. Delivered ~70 theme and storefront customizations across 13 client Shopify stores, and self-hosted and operated production infrastructure on the company Webdock VPS.'
   },
   {
     id: 'plisca-lead',
