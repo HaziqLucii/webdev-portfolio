@@ -185,8 +185,8 @@ export default function Home() {
               className="md:col-span-4 border-2 border-border shadow-shadow p-5"
             >
               <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Role</p>
-              <p className="font-display text-2xl leading-tight uppercase">Fullstack Web Developer</p>
-              <p className="mt-3 text-xs">Remote · Worldwide</p>
+              <p className="font-display text-2xl leading-tight uppercase">Fullstack Developer, Shopify & DevOps</p>
+              <p className="mt-3 text-xs">Meekco.Asia · Kuala Lumpur</p>
             </motion.div>
 
             {/* Bio */}
@@ -199,8 +199,9 @@ export default function Home() {
             >
               <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Profile</p>
               <p className="text-sm leading-relaxed">
-                Experienced fullstack developer with <b>2+ years</b> shipping web apps,
-                DevOps pipelines and geospatial systems. <b>CKA certified.</b>
+                Fullstack developer specializing in <b>Shopify commerce</b>, <b>enterprise
+                system integration</b> and <b>DevOps</b>. Ship most projects end-to-end.
+                <b> CKA certified.</b>
               </p>
             </motion.div>
 
@@ -234,10 +235,10 @@ export default function Home() {
 
           {/* Stats row - colored cards, alternating tilt */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-            <StatBlock value="2" suffix="+"  label="Yrs Experience"  bg="var(--main)"            rotate={-1.5} />
-            <StatBlock value="5" suffix="+"  label="Projects Shipped" bg="var(--accent-peach)"   rotate={1.5}  />
-            <StatBlock value="1"  suffix=""  label="Team Led"          bg="var(--accent-sky)"     rotate={-1}   />
-            <StatBlock value="2"  suffix=""  label="Certifications"    bg="var(--accent-lavender)" rotate={2}   />
+            <StatBlock value="3"   suffix="+" label="Years as Developer" bg="var(--main)"            rotate={-1.5} />
+            <StatBlock value="13"  suffix=""  label="Client Stores"     bg="var(--accent-peach)"   rotate={1.5}  />
+            <StatBlock value="70"  suffix="+" label="Store Customizations" bg="var(--accent-sky)"  rotate={-1}   />
+            <StatBlock value="CKA" suffix=""  label="Certified"         bg="var(--accent-lavender)" rotate={2}   />
           </div>
         </div>
       </section>
@@ -246,13 +247,14 @@ export default function Home() {
       {/* MARQUEE - keyword ticker                       */}
       {/* ══════════════════════════════════════════════ */}
       <Marquee items={[
-        '◆ FULLSTACK',
+        '◆ SHOPIFY',
+        '◆ SAP INTEGRATION',
+        '◆ ACTIVEPIECES',
         '◆ DEVOPS',
         '◆ CKA CERTIFIED',
         '◆ KUBERNETES',
+        '◆ GADGET',
         '◆ REACT',
-        '◆ NODE.JS',
-        '◆ SHOPIFY',
         '◆ KUALA LUMPUR',
       ]} />
 
@@ -312,15 +314,18 @@ export default function Home() {
               >
                 <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-3 opacity-60">Bio</p>
                 <p className="font-display text-2xl md:text-3xl leading-tight mb-4 uppercase">
-                  "Experienced developer building scalable systems across web, mobile, DevOps, and beyond."
+                  "Full-lifecycle Shopify & integration engineer, shipping most projects end-to-end."
                 </p>
                 <p className="text-sm leading-relaxed mb-3">
-                  Fullstack Developer & Technical Lead with strong background in web/mobile development,
-                  DevOps, and geospatial systems. Passionate about delivering scalable and efficient solutions.
+                  Fullstack developer specializing in <b>Shopify commerce</b>, <b>enterprise system
+                  integration</b>, and <b>DevOps</b>. Currently at Meekco.Asia, where I was appointed
+                  by the CTO as Person-In-Charge of a bidirectional <b>SAP Business One to Shopify</b>{' '}
+                  integration spanning 12 data domains, leading a lean development team.
                 </p>
                 <p className="text-sm leading-relaxed">
-                  <b>CKA-certified</b>, with proven expertise in containerization and cloud orchestration.
-                  Adept at mentoring developers, leading teams, and optimizing system performance.
+                  Experienced across web and mobile development, self-hosted infrastructure, and cloud
+                  orchestration. <b>Certified Kubernetes Administrator (CKA)</b> with a strong foundation
+                  in containerization, automation, and scalable system design.
                 </p>
               </motion.div>
 
@@ -335,7 +340,7 @@ export default function Home() {
                 >
                   <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Education</p>
                   <p className="font-display text-lg uppercase leading-tight">Diploma · Cyber Forensics</p>
-                  <p className="text-xs mt-2">Cybernetics International College</p>
+                  <p className="text-xs mt-2">Cybernetics International College of Technologies · 2018-2020</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, x: 12 }}
@@ -356,7 +361,7 @@ export default function Home() {
           {/* Employment history accordion */}
           <div className="flex items-center gap-3 mb-5 flex-wrap">
             <Sticker rotate={-2} bg="var(--main)">Employment History</Sticker>
-            <span className="text-xs tracking-[0.25em] uppercase opacity-50">2023 / Present</span>
+            <span className="text-xs tracking-[0.25em] uppercase opacity-50">2020 / Present</span>
           </div>
           <Accordion type="single" collapsible defaultValue={experiences[0].id} className="flex flex-col gap-4">
             {experiences.map((exp, i) => {
@@ -558,7 +563,7 @@ export default function Home() {
                           <img
                             src={item.icon}
                             alt={item.name}
-                            className="h-3.5 w-auto"
+                            className={`h-3.5 w-auto ${item.invert ? 'dark:invert ' : ''}${item.invertLight ? 'invert dark:invert-0' : ''}`}
                           />
                         )}
                         {item.name}
@@ -597,8 +602,8 @@ export default function Home() {
               Let's<br />Work Together
             </h2>
             <p className="text-base md:text-lg max-w-xl mb-8 leading-relaxed">
-              Ready to bring your ideas to life with cutting-edge tech and proven expertise
-              in fullstack development, DevOps, and cloud systems.
+              Building Shopify apps, ERP integrations, and self-hosted infrastructure end-to-end.
+              If you have a commerce, integration, or DevOps challenge, let's talk.
             </p>
 
             {/* Primary CTA */}
