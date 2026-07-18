@@ -102,8 +102,8 @@
   --font-mono:    'JetBrains Mono', 'Space Mono', monospace;
 
   /* Marquee animations (used by lib's Marquee component) */
-  --animate-marquee:  marquee  18s linear infinite;
-  --animate-marquee2: marquee2 18s linear infinite;
+  --animate-marquee:  marquee  32s linear infinite;
+  --animate-marquee2: marquee2 32s linear infinite;
   @keyframes marquee {
     0%   { transform: translateX(0%);    }
     100% { transform: translateX(-100%); }
@@ -178,4 +178,28 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 900; }
 .brutal-press:hover {
   transform: translate(2px, 2px);
   box-shadow: none !important;
+}
+
+/* Typing caret for the role cycler */
+.type-caret {
+  display: inline-block;
+  margin-left: 2px;
+  font-weight: 400;
+  animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Respect users who prefer reduced motion: kill transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

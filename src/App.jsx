@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'motion/react'
+import { useState, useEffect, useRef } from 'react'
+import { motion, MotionConfig, useInView, animate } from 'motion/react'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import { Sun, Moon, ArrowUpRight, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
 import { Button } from '@/Components/ui/button'
@@ -12,8 +12,51 @@ import { experiences } from './data/experiences'
 import { projectsData, personalProjectsData } from './data/projects'
 import { skills } from './data/skills'
 
+/* ─── Count-up number (animates when scrolled into view) ── */
+function CountUp({ to }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const [n, setN] = useState(0)
+  useEffect(() => {
+    if (!inView) return
+    const controls = animate(0, to, {
+      duration: 1.1,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (v) => setN(Math.round(v)),
+    })
+    return () => controls.stop()
+  }, [inView, to])
+  return <span ref={ref}>{n}</span>
+}
+
+/* ─── Typing role cycler ───────────────────────────── */
+function TypeCycle({ words }) {
+  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const [i, setI] = useState(0)
+  const [text, setText] = useState('')
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    if (reduce) return
+    const current = words[i % words.length]
+    let delay = deleting ? 40 : 85
+    if (!deleting && text === current) delay = 1600
+    else if (deleting && text === '') delay = 300
+    const t = setTimeout(() => {
+      if (!deleting && text === current) { setDeleting(true); return }
+      if (deleting && text === '') { setDeleting(false); setI((p) => (p + 1) % words.length); return }
+      setText(current.slice(0, deleting ? text.length - 1 : text.length + 1))
+    }, delay)
+    return () => clearTimeout(t)
+  }, [text, deleting, i, words, reduce])
+
+  if (reduce) return <span>{words[0]}</span>
+  return <span>{text}<span className="type-caret" aria-hidden="true">|</span></span>
+}
+
 /* ─── Stat block - colored brutalist card ──────────── */
 function StatBlock({ value, suffix, label, bg, rotate = 0 }) {
+  const numeric = /^\d+$/.test(String(value))
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -24,7 +67,7 @@ function StatBlock({ value, suffix, label, bg, rotate = 0 }) {
       className="border-2 border-border shadow-shadow p-5 hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none transition-all"
     >
       <p className="font-display text-5xl md:text-6xl leading-none">
-        {value}
+        {numeric ? <CountUp to={Number(value)} /> : value}
         <span className="text-3xl align-top">{suffix}</span>
       </p>
       <p className="mt-3 text-[10px] tracking-[0.25em] uppercase font-bold">{label}</p>
@@ -290,6 +333,7 @@ export default function Home() {
   }, [])
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-background text-foreground">
 
       {/* ══════════════════════════════════════════════ */}
@@ -404,7 +448,9 @@ export default function Home() {
               className="md:col-span-4 border-2 border-border shadow-shadow p-5"
             >
               <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Role</p>
-              <p className="font-display text-2xl leading-tight uppercase">Fullstack Developer, Shopify & DevOps</p>
+              <p className="font-display text-2xl leading-tight uppercase min-h-[2.4em]">
+                <TypeCycle words={['Fullstack Developer', 'Shopify Engineer', 'Integration Engineer', 'DevOps Engineer']} />
+              </p>
               <p className="mt-3 text-xs">Meekco.Asia · Kuala Lumpur</p>
             </motion.div>
 
@@ -1052,5 +1098,6 @@ export default function Home() {
       {/* Case-study deep-dive */}
       {caseProject && <CaseStudyModal project={caseProject} onClose={() => setCaseProject(null)} />}
     </div>
+    </MotionConfig>
   )
 }
