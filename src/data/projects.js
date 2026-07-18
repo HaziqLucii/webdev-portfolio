@@ -88,11 +88,11 @@ export const personalProjectsData = [
   {
     color: "#060010",
     title: "KDE Plasma Prayer-Times Widget",
-    description: "Built a KDE Plasma 6 prayer-times widget backed by the JAKIM e-solat API, with offline caching and azan playback, demonstrating cross-platform desktop breadth beyond web and mobile.",
+    description: "A KDE Plasma 6 desktop widget (plasmoid) showing daily prayer times from the JAKIM e-solat API, with offline caching and azan playback.",
     label: "Desktop Widget",
     tech: ['KDE Plasma 6', 'QML', 'JAKIM e-solat API'],
     period: '2025',
-    highlights: ['Offline Caching', 'Azan Playback', 'Cross-platform']
+    highlights: ['Offline Caching', 'Azan Playback']
   },
   {
     color: "#060010",
@@ -103,15 +103,6 @@ export const personalProjectsData = [
     period: '2025 - Present',
     highlights: ['Parallel Agents', 'Test Gate', 'One-Window Cockpit'],
     internal: 'haro'
-  },
-  {
-    color: "#060010",
-    title: "Supplement Tracker AI",
-    description: "Flutter Android app for supplement tracking with Claude Haiku 4.5-powered AI coaching via an Edge Function proxy. Built on Riverpod and a Drift local DB with Supabase Postgres/Edge Functions, RevenueCat subscriptions, and Sentry/PostHog observability.",
-    label: "Mobile App",
-    tech: ['Flutter', 'Riverpod', 'Drift', 'Supabase', 'RevenueCat', 'Claude API'],
-    period: '2025',
-    highlights: ['AI Coaching', 'Offline-first DB', 'Subscriptions', 'Observability']
   },
   {
     color: "#060010",
