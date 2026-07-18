@@ -565,7 +565,9 @@ export default function Home() {
                   <span className="text-xs ml-auto opacity-70">{f.period}</span>
                 </div>
                 <h3 className="font-display text-3xl md:text-5xl uppercase leading-[0.9] mb-4">{f.title}</h3>
-                <p className="text-sm md:text-base leading-relaxed mb-5 max-w-3xl">{f.description}</p>
+                <div className="text-sm md:text-base leading-relaxed mb-5 max-w-3xl space-y-3">
+                  {f.description.split('\n\n').map((para, pi) => <p key={pi}>{para}</p>)}
+                </div>
                 <div className="flex flex-wrap gap-2 mb-5">
                   {f.highlights.map((h, hi) => (
                     <span key={hi} className="bg-secondary-background text-foreground border-2 border-border text-xs px-2 py-1 font-bold">
@@ -603,7 +605,9 @@ export default function Home() {
                     <Badge variant="neutral" className="text-[10px]">{p.label}</Badge>
                   </div>
                   <h3 className="font-display text-xl md:text-2xl uppercase leading-tight mb-3">{p.title}</h3>
-                  <p className="text-xs leading-relaxed mb-4">{p.description}</p>
+                  <div className="text-xs leading-relaxed mb-4 space-y-2">
+                    {p.description.split('\n\n').map((para, pi) => <p key={pi}>{para}</p>)}
+                  </div>
                   <div className="flex flex-wrap gap-1">
                     {p.tech.slice(0, 6).map((t, ti) => (
                       <span key={ti} className="text-[10px] border-2 border-border bg-secondary-background text-foreground px-1.5 py-0.5 font-bold">
@@ -644,7 +648,9 @@ export default function Home() {
                       </h3>
                       <span className="text-[10px] opacity-60 shrink-0">{p.period}</span>
                     </div>
-                    <p className="text-xs leading-relaxed mb-3">{p.description}</p>
+                    <div className="text-xs leading-relaxed mb-3 space-y-2">
+                      {p.description.split('\n\n').map((para, pi) => <p key={pi}>{para}</p>)}
+                    </div>
                     <div className="flex flex-wrap gap-1">
                       {p.tech.map((t, ti) => (
                         <span key={ti} className="text-[10px] border-2 border-border bg-secondary-background text-foreground px-1.5 py-0.5 font-bold">{t}</span>

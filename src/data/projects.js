@@ -21,11 +21,11 @@ export const projectsData = [
   {
     color: "#060010",
     title: "JD Sports Self-Checkout Kiosk",
-    description: "Built a cashier-less self-checkout kiosk for JD Sports Malaysia: a Shopify Checkout UI Extension plus Remix/TypeScript backend rendering inline DuitNow QR via Fiuu, auto-detecting payment and marking orders paid with no cashier involvement. Ran a rigorous payment-gateway evaluation to select the only viable inline DuitNow QR provider.",
+    description: "Built a cashier-less self-checkout kiosk for JD Sports Malaysia end to end, from the device to the checkout. Engineered the hardware platform on a Raspberry Pi Compute Module 5: custom carrier PCB, 13.3\" DSI capacitive touchscreen, enclosure assembly, and Linux touchscreen calibration and provisioning.\n\nThe checkout is a Shopify Checkout UI Extension with a Remix/TypeScript backend that renders inline DuitNow QR via Fiuu, auto-detects payment, and marks orders paid with no cashier involvement. A rigorous payment-gateway evaluation selected the only viable inline DuitNow QR provider, and the storefront ships as a PWA, solving Shopify CDN service-worker scoping for reliable operation.",
     label: "Kiosk · Payments",
-    tech: ['Shopify Checkout UI Extension', 'Remix', 'TypeScript', 'Fiuu', 'DuitNow QR', 'PWA'],
+    tech: ['Shopify Checkout UI Extension', 'Remix', 'TypeScript', 'Fiuu', 'DuitNow QR', 'Raspberry Pi CM5', 'PWA', 'Linux'],
     period: '2025',
-    highlights: ['Cashier-less Checkout', 'Inline DuitNow QR', 'Auto Payment Detection', 'Gateway Evaluation']
+    highlights: ['Cashier-less Checkout', 'Inline DuitNow QR', 'Custom Carrier PCB', 'Hardware to Checkout']
   },
   {
     color: "#060010",
@@ -71,15 +71,6 @@ export const projectsData = [
     tech: ['Docker Compose', 'Traefik', 'OpenTofu', 'Ansible', 'Prometheus', 'Grafana'],
     period: '2025',
     highlights: ['Production VPS Ops', 'TLS Automation', 'IaC & Observability', 'CKA Certified']
-  },
-  {
-    color: "#060010",
-    title: "Raspberry Pi CM5 Kiosk Platform",
-    description: "Engineered a Raspberry Pi Compute Module 5 kiosk platform for Meekco.Asia: custom carrier PCB, 13.3\" DSI capacitive touchscreen, enclosure assembly, and Linux touchscreen calibration/provisioning. Packaged and deployed the kiosk as a PWA/APK on Honeywell retail tablets, solving Shopify CDN service-worker scoping for reliable operation.",
-    label: "Hardware / Kiosk",
-    tech: ['Raspberry Pi CM5', 'DSI/MIPI', 'libinput', 'PWA', 'Linux'],
-    period: '2025',
-    highlights: ['Custom Carrier PCB', 'Touchscreen Provisioning', 'PWA Deployment']
   }
 ];
 
