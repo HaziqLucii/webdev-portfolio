@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, MotionConfig, useInView, animate } from 'motion/react'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
-import { Sun, Moon, ArrowUpRight, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
+import { Sun, Moon, ArrowUpRight, ChevronLeft, ChevronRight, X, Maximize2, Download } from 'lucide-react'
 import { Button } from '@/Components/ui/button'
 import { Badge } from '@/Components/ui/badge'
 import { Card } from '@/Components/ui/card'
@@ -334,13 +334,13 @@ export default function Home() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
       {/* ══════════════════════════════════════════════ */}
       {/* NAV - thick-border sticky bar                 */}
       {/* ══════════════════════════════════════════════ */}
       <header className="sticky top-0 z-50 bg-background border-b-4 border-border">
-        <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-2 sm:gap-4">
           {/* Monogram chip */}
           <button
             onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
@@ -372,7 +372,7 @@ export default function Home() {
           </nav>
 
           {/* Mobile nav - icon-only */}
-          <nav className="flex sm:hidden items-center gap-1.5">
+          <nav className="flex sm:hidden items-center gap-0.5">
             {navItems.map((item, i) => {
               const Icon = item.iconComponent
               const isActive = item.sectionId === activeSection
@@ -380,10 +380,11 @@ export default function Home() {
                 <button
                   key={i}
                   onClick={item.onClick}
+                  aria-label={item.label}
                   style={isActive ? { background: 'var(--accent-lavender)' } : {}}
-                  className={`p-2 border-2 ${isActive ? 'border-border shadow-shadow-sm' : 'border-transparent'}`}
+                  className={`p-1.5 border-2 ${isActive ? 'border-border shadow-shadow-sm' : 'border-transparent'}`}
                 >
-                  <Icon size={14} />
+                  <Icon size={13} />
                 </button>
               )
             })}
@@ -449,7 +450,7 @@ export default function Home() {
             >
               <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-70">Role</p>
               <p className="font-display text-2xl leading-tight uppercase min-h-[2.4em]">
-                <TypeCycle words={['Fullstack Developer', 'Shopify Engineer', 'Integration Engineer', 'DevOps Engineer']} />
+                <TypeCycle words={['Fullstack Developer', 'Shopify Developer', 'Integration Engineer', 'DevOps Engineer']} />
               </p>
               <p className="mt-3 text-xs">Meekco.Asia · Kuala Lumpur</p>
             </motion.div>
@@ -492,6 +493,12 @@ export default function Home() {
               <Button asChild variant="neutral" className="w-full justify-between">
                 <a href="https://linkedin.com/in/haziq-luffy" target="_blank" rel="noopener noreferrer">
                   <span className="flex items-center gap-2"><FaLinkedin size={11} /> LinkedIn</span>
+                  <ArrowUpRight size={14} />
+                </a>
+              </Button>
+              <Button asChild className="w-full justify-between" style={{ background: 'var(--accent-lavender)' }}>
+                <a href="/cv.pdf" download="Ikhmal-Haziq-CV.pdf" target="_blank" rel="noopener noreferrer">
+                  <span className="flex items-center gap-2"><Download size={12} /> Download CV</span>
                   <ArrowUpRight size={14} />
                 </a>
               </Button>
@@ -1080,6 +1087,11 @@ export default function Home() {
               <Button asChild variant="neutral" size="sm">
                 <a href="https://linkedin.com/in/haziq-luffy" target="_blank" rel="noopener noreferrer">
                   <FaLinkedin size={12} className="mr-1.5" /> LinkedIn
+                </a>
+              </Button>
+              <Button asChild variant="neutral" size="sm">
+                <a href="/cv.pdf" download="Ikhmal-Haziq-CV.pdf" target="_blank" rel="noopener noreferrer">
+                  <Download size={12} className="mr-1.5" /> Download CV
                 </a>
               </Button>
             </div>
