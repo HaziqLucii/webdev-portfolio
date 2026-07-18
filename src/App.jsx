@@ -334,7 +334,7 @@ export default function Home() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden pb-[68px] sm:pb-0">
 
       {/* ══════════════════════════════════════════════ */}
       {/* NAV - thick-border sticky bar                 */}
@@ -366,25 +366,6 @@ export default function Home() {
                   }`}
                 >
                   {item.label}
-                </button>
-              )
-            })}
-          </nav>
-
-          {/* Mobile nav - icon-only */}
-          <nav className="flex sm:hidden items-center gap-0.5">
-            {navItems.map((item, i) => {
-              const Icon = item.iconComponent
-              const isActive = item.sectionId === activeSection
-              return (
-                <button
-                  key={i}
-                  onClick={item.onClick}
-                  aria-label={item.label}
-                  style={isActive ? { background: 'var(--accent-lavender)' } : {}}
-                  className={`p-1.5 border-2 ${isActive ? 'border-border shadow-shadow-sm' : 'border-transparent'}`}
-                >
-                  <Icon size={13} />
                 </button>
               )
             })}
@@ -1106,6 +1087,26 @@ export default function Home() {
           <p>Built with React + Neobrutalism.dev</p>
         </div>
       </footer>
+
+      {/* Mobile bottom tab bar */}
+      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-50 bg-background border-t-4 border-border flex">
+        {navItems.map((item, i) => {
+          const Icon = item.iconComponent
+          const isActive = item.sectionId === activeSection
+          return (
+            <button
+              key={i}
+              onClick={item.onClick}
+              aria-label={item.label}
+              style={isActive ? { background: 'var(--accent-lavender)' } : {}}
+              className="flex-1 flex flex-col items-center justify-center gap-1 py-2.5 border-r-2 border-border last:border-r-0 cursor-pointer transition-colors"
+            >
+              <Icon size={16} />
+              <span className="text-[8px] tracking-[0.08em] uppercase font-black leading-none">{item.label}</span>
+            </button>
+          )
+        })}
+      </nav>
 
       {/* Case-study deep-dive */}
       {caseProject && <CaseStudyModal project={caseProject} onClose={() => setCaseProject(null)} />}
