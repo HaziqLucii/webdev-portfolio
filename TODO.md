@@ -11,8 +11,6 @@ interviews.
 ## Already installed but not yet on the page (quick wins)
 These components ship in `src/` but are not rendered anywhere yet.
 
-- [ ] 3D Lanyard badge (`Components/Lanyard`, uses rapier + `card.glb`): a draggable
-      physical ID card in the hero or About.
 - [ ] Count-up stat tiles (`Components/Counter`): animate the "3+ / 13 / 70+ / CKA"
       numbers on scroll.
 - [ ] Cursor spotlight on project + haro cards (`Components/SpotlightCard`).
@@ -41,7 +39,6 @@ These components ship in `src/` but are not rendered anywhere yet.
 - [ ] OG social-share card + favicon.
 - [ ] View Transitions API for smoother section changes.
 
-## Top 3 to build first
-1. 3D Lanyard badge (memorable, low effort, parts already exist).
-2. Case-study deep-dives (converts visitors to interviews).
-3. "Ask my portfolio" AI bot (unforgettable and perfectly on-brand).
+## Top picks to build first
+1. Case-study deep-dives (converts visitors to interviews).
+2. "Ask my portfolio" AI bot (unforgettable and perfectly on-brand).
