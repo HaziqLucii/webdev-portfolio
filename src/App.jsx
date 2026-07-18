@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'motion/react'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
-import { Sun, Moon, ArrowUpRight } from 'lucide-react'
+import { Sun, Moon, ArrowUpRight, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
 import { Button } from '@/Components/ui/button'
 import { Badge } from '@/Components/ui/badge'
 import { Card } from '@/Components/ui/card'
@@ -44,6 +44,141 @@ function Sticker({ children, rotate = -3, bg = 'var(--main)', className = '' }) 
   )
 }
 
+/* ─── haro screenshot carousel + click-to-zoom lightbox ─ */
+const HARO_SLIDES = [
+  { src: '/haro/cockpit.png', tag: 'Cockpit', caption: 'Agent stream, gate & live preview in one window' },
+  { src: '/haro/dashboard.png', tag: 'Parallel', caption: 'Multiple agents running concurrently + the backlog' },
+  { src: '/haro/gate.png', tag: 'The Gate', caption: 'Live test grid, green before anything can merge' },
+  { src: '/haro/impact.png', tag: 'Impact Map', caption: 'Changed files → the exact tests they affect' },
+  { src: '/haro/code-editor.png', tag: 'Diff Review', caption: 'Full-screen Monaco diff, split view and per-commit' },
+  { src: '/haro/preview.png', tag: 'Live Preview', caption: 'The running app, previewed inside haro' },
+]
+
+function ScreenshotShowcase({ slides }) {
+  const [i, setI] = useState(0)
+  const [zoom, setZoom] = useState(false)
+  const n = slides.length
+  const go = (d) => setI((p) => (p + d + n) % n)
+  const active = slides[i]
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'ArrowRight') setI((p) => (p + 1) % n)
+      else if (e.key === 'ArrowLeft') setI((p) => (p - 1 + n) % n)
+      else if (e.key === 'Escape') setZoom(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [n])
+
+  useEffect(() => {
+    document.body.style.overflow = zoom ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [zoom])
+
+  // Centering lives on the wrapper (translateY -50%); the press effect lives on the
+  // button, keeping them on separate elements so the hover translate doesn't clobber
+  // the vertical-centering transform.
+  const arrowBtn =
+    'border-2 border-border shadow-shadow-sm p-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer'
+  const arrowWrap = 'absolute top-1/2 -translate-y-1/2 z-10'
+
+  return (
+    <div>
+      {/* Main viewport */}
+      <div className="relative border-4 border-border shadow-shadow-lg bg-secondary-background overflow-hidden">
+        <motion.img
+          key={active.src}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35 }}
+          src={active.src}
+          alt={active.caption}
+          onClick={() => setZoom(true)}
+          className="w-full block cursor-zoom-in select-none"
+          draggable={false}
+        />
+
+        {/* Prev / next */}
+        <span className={`${arrowWrap} left-3`}>
+          <button onClick={() => go(-1)} aria-label="Previous screenshot" style={{ background: 'var(--main)' }} className={arrowBtn}>
+            <ChevronLeft size={18} />
+          </button>
+        </span>
+        <span className={`${arrowWrap} right-3`}>
+          <button onClick={() => go(1)} aria-label="Next screenshot" style={{ background: 'var(--main)' }} className={arrowBtn}>
+            <ChevronRight size={18} />
+          </button>
+        </span>
+
+        {/* Counter */}
+        <div style={{ background: 'var(--background)' }} className="absolute top-3 left-3 border-2 border-border shadow-shadow-sm px-2 py-1 text-[10px] font-black tracking-[0.15em]">
+          {i + 1} / {n}
+        </div>
+
+        {/* Caption bar */}
+        <div className="absolute bottom-0 inset-x-0 bg-background/92 border-t-2 border-border px-4 py-3 flex items-center gap-3">
+          <span style={{ background: 'var(--main)' }} className="shrink-0 text-[9px] tracking-[0.18em] uppercase font-black border-2 border-border px-1.5 py-0.5">
+            {active.tag}
+          </span>
+          <span className="text-[11px] sm:text-xs font-bold leading-tight truncate">{active.caption}</span>
+          <span className="ml-auto shrink-0 hidden sm:flex items-center gap-1 text-[10px] tracking-[0.15em] uppercase opacity-50">
+            <Maximize2 size={11} /> click to zoom
+          </span>
+        </div>
+      </div>
+
+      {/* Thumbnail strip */}
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3">
+        {slides.map((s, idx) => (
+          <button
+            key={s.src}
+            onClick={() => setI(idx)}
+            aria-label={`Show ${s.tag}`}
+            style={idx === i ? { outline: '2px solid var(--main)', outlineOffset: '1px' } : {}}
+            className={`overflow-hidden border-2 border-border aspect-[16/10] transition-all cursor-pointer ${idx === i ? 'shadow-shadow-sm' : 'opacity-55 hover:opacity-100'}`}
+          >
+            <img src={s.src} alt="" loading="lazy" draggable={false} className="w-full h-full object-cover object-top" />
+          </button>
+        ))}
+      </div>
+
+      {/* Lightbox */}
+      {zoom && (
+        <div
+          onClick={() => setZoom(false)}
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-3 sm:p-8 cursor-zoom-out"
+        >
+          <button
+            onClick={(e) => { e.stopPropagation(); setZoom(false) }}
+            aria-label="Close"
+            style={{ background: 'var(--main)' }}
+            className="absolute top-4 right-4 border-2 border-border shadow-shadow-sm p-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer"
+          >
+            <X size={18} />
+          </button>
+          <span className={`${arrowWrap} left-3 sm:left-6`}>
+            <button onClick={(e) => { e.stopPropagation(); go(-1) }} aria-label="Previous" style={{ background: 'var(--main)' }} className={arrowBtn}>
+              <ChevronLeft size={20} />
+            </button>
+          </span>
+          <span className={`${arrowWrap} right-3 sm:right-6`}>
+            <button onClick={(e) => { e.stopPropagation(); go(1) }} aria-label="Next" style={{ background: 'var(--main)' }} className={arrowBtn}>
+              <ChevronRight size={20} />
+            </button>
+          </span>
+          <figure onClick={(e) => e.stopPropagation()} className="max-w-[92vw] max-h-[88vh] cursor-default">
+            <img src={active.src} alt={active.caption} draggable={false} className="max-w-full max-h-[82vh] border-2 border-border object-contain" />
+            <figcaption className="mt-3 text-center text-white/80 text-xs sm:text-sm font-bold">
+              {active.tag}: {active.caption}
+            </figcaption>
+          </figure>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home')
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
@@ -55,7 +190,7 @@ export default function Home() {
 
   useEffect(() => {
     const onScroll = () => {
-      const ids = ['home', 'about', 'projects', 'skills', 'contact']
+      const ids = ['home', 'about', 'projects', 'haro', 'skills', 'contact']
       const y = window.scrollY + 100
       for (const id of ids) {
         const el = document.getElementById(id)
@@ -255,6 +390,8 @@ export default function Home() {
         '◆ KUBERNETES',
         '◆ GADGET',
         '◆ REACT',
+        '◆ HARO',
+        '◆ AI ORCHESTRATION',
         '◆ KUALA LUMPUR',
       ]} />
 
@@ -512,6 +649,124 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════ */}
+      {/* HARO - Spotlight (own product)                 */}
+      {/* ══════════════════════════════════════════════ */}
+      <section id="haro" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--secondary-background)' }}>
+        <div className="max-w-6xl mx-auto">
+
+          {/* Section header */}
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={-3} bg="var(--main)">★ Spotlight</Sticker>
+            <Sticker rotate={2} bg="var(--accent-lavender)">Own Product</Sticker>
+            <Sticker rotate={-2} bg="var(--accent-sky)">Linux-First</Sticker>
+          </div>
+          <motion.h2
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-display lowercase leading-[0.85] mb-3"
+            style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.03em' }}
+          >
+            haro<span style={{ color: 'var(--main)', WebkitTextStroke: '2px var(--border)' }}>.</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-sm md:text-lg max-w-2xl mb-10 leading-relaxed font-bold"
+          >
+            A local-first, Linux-first orchestrator for AI coding agents. Designed and
+            engineered end-to-end, from zero.
+          </motion.p>
+
+          {/* Intro: green feature card + highlights */}
+          <div className="grid md:grid-cols-12 gap-6 mb-10 items-stretch">
+
+            {/* Green feature card */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              style={{ background: 'var(--main)', color: 'var(--main-foreground)' }}
+              className="md:col-span-7 border-4 border-border shadow-shadow-lg p-6 md:p-8 flex flex-col"
+            >
+              <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-3 opacity-70">What it is</p>
+              <p className="text-sm md:text-base leading-relaxed mb-5">
+                Runs multiple AI coding agents <b>in parallel</b>, each isolated in its own{' '}
+                <b>git worktree</b>, behind an <b>automatic test gate</b>: no agent's work is
+                mergeable until its tests pass. You watch it happen live in <b>one window</b>:
+                agent stream, Monaco editor, terminal, live preview, and the gate. Then commit,
+                merge, and ship.
+              </p>
+
+              {/* North star callout */}
+              <div
+                style={{ background: 'var(--secondary-background)', color: 'var(--foreground)' }}
+                className="border-2 border-border shadow-shadow-sm p-4 mt-auto"
+              >
+                <p className="text-[10px] tracking-[0.3em] uppercase font-black mb-2 opacity-60">★ North Star</p>
+                <p className="font-display text-base md:text-lg leading-tight uppercase">
+                  "No work is mergeable until the gate is green, and you can watch it happen."
+                </p>
+              </div>
+
+              <div className="mt-5">
+                <Button asChild variant="neutral" className="w-full sm:w-auto justify-between">
+                  <a href="mailto:ikhmalhaziq2907@gmail.com?subject=haro%20%E2%80%94%20interested">
+                    <span className="flex items-center gap-2"><FaEnvelope size={12} /> Interested? Email me to join</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                </Button>
+                <p className="text-[11px] mt-2 opacity-70 font-bold">Private project · a walkthrough or collaboration is available on request.</p>
+              </div>
+            </motion.div>
+
+            {/* Highlights grid */}
+            <div className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                ['Parallel Agents', 'Many at once, each in its own worktree', 'var(--accent-lavender)'],
+                ['Automatic Test Gate', 'Vitest · pytest · lint. No merge till green', 'var(--accent-peach)'],
+                ['One-Window Cockpit', 'Agent · editor · terminal · preview · git', 'var(--accent-sky)'],
+                ['Worktree Isolation', 'Every agent boxed in a disposable branch', 'var(--accent-peach)'],
+                ['Bring-Your-Own-Agent', 'Claude Code, or a local Ollama model', 'var(--accent-sky)'],
+                ['Local-First', 'SQLite + local git · no cloud OAuth', 'var(--accent-lavender)'],
+              ].map(([t, d, bg], i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: i * 0.05 }}
+                  style={{ background: bg }}
+                  className="border-2 border-border shadow-shadow p-4 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                >
+                  <p className="font-display text-sm md:text-base uppercase leading-tight">{t}</p>
+                  <p className="text-[11px] mt-1.5 leading-snug opacity-80">{d}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tech stack */}
+          <div className="flex flex-wrap gap-1.5 mb-12">
+            {['Python', 'FastAPI', 'asyncio', 'React', 'TypeScript', 'Vite', 'WebSockets', 'SQLite', 'Electron', 'Monaco', 'xterm.js', 'Vitest', 'Git Worktrees'].map((t, i) => (
+              <Badge key={i} variant="neutral" className="text-[10px]">{t}</Badge>
+            ))}
+          </div>
+
+          {/* Screenshot carousel */}
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={-1} bg="var(--accent-peach)">Inside the cockpit</Sticker>
+            <span className="text-xs tracking-[0.25em] uppercase opacity-50">Live screenshots · click to zoom</span>
+          </div>
+          <ScreenshotShowcase slides={HARO_SLIDES} />
         </div>
       </section>
 
