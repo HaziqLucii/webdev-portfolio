@@ -625,28 +625,66 @@ export default function Home() {
               <Sticker rotate={-1} bg="var(--accent-lavender)">Personal Projects</Sticker>
             </div>
             <div className="grid md:grid-cols-2 gap-5">
-              {personalProjectsData.map((p, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  style={{ background: 'var(--secondary-background)', transform: `rotate(${idx % 2 === 0 ? -0.5 : 0.5}deg)` }}
-                  className="border-2 border-border shadow-shadow p-5"
-                >
-                  <div className="flex items-baseline justify-between gap-3 mb-2">
-                    <h3 className="font-display text-lg uppercase leading-tight">{p.title}</h3>
-                    <span className="text-[10px] opacity-60 shrink-0">{p.period}</span>
-                  </div>
-                  <p className="text-xs leading-relaxed mb-3">{p.description}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {p.tech.map((t, ti) => (
-                      <span key={ti} className="text-[10px] border-2 border-border bg-secondary-background text-foreground px-1.5 py-0.5 font-bold">{t}</span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
+              {personalProjectsData.map((p, idx) => {
+                const clickable = !!(p.href || p.internal)
+                const anim = {
+                  initial: { opacity: 0, y: 12 },
+                  whileInView: { opacity: 1, y: 0 },
+                  viewport: { once: true },
+                  transition: { duration: 0.4, delay: idx * 0.05 },
+                }
+                const cardStyle = { background: 'var(--secondary-background)', transform: `rotate(${idx % 2 === 0 ? -0.5 : 0.5}deg)` }
+                const cardCls = `block h-full border-2 border-border shadow-shadow p-5 ${clickable ? 'cursor-pointer hover:shadow-none transition-shadow' : ''}`
+                const content = (
+                  <>
+                    <div className="flex items-baseline justify-between gap-3 mb-2">
+                      <h3 className="font-display text-lg uppercase leading-tight flex items-center gap-1.5">
+                        {p.title}
+                        {p.href && <ArrowUpRight size={14} className="opacity-60" />}
+                      </h3>
+                      <span className="text-[10px] opacity-60 shrink-0">{p.period}</span>
+                    </div>
+                    <p className="text-xs leading-relaxed mb-3">{p.description}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {p.tech.map((t, ti) => (
+                        <span key={ti} className="text-[10px] border-2 border-border bg-secondary-background text-foreground px-1.5 py-0.5 font-bold">{t}</span>
+                      ))}
+                    </div>
+                    {p.internal && (
+                      <span style={{ background: 'var(--main)', color: 'var(--main-foreground)' }} className="inline-flex items-center gap-1 mt-3 text-[10px] tracking-[0.15em] uppercase font-black border-2 border-border px-2 py-1">
+                        ★ See spotlight below
+                      </span>
+                    )}
+                  </>
+                )
+                if (p.href) {
+                  return (
+                    <motion.a key={idx} href={p.href} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} (opens in a new tab)`} {...anim} style={cardStyle} className={cardCls}>
+                      {content}
+                    </motion.a>
+                  )
+                }
+                if (p.internal) {
+                  return (
+                    <motion.button
+                      key={idx}
+                      type="button"
+                      onClick={() => document.getElementById(p.internal)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                      aria-label={`${p.title} (jump to spotlight)`}
+                      {...anim}
+                      style={cardStyle}
+                      className={`${cardCls} w-full text-left`}
+                    >
+                      {content}
+                    </motion.button>
+                  )
+                }
+                return (
+                  <motion.div key={idx} {...anim} style={cardStyle} className={cardCls}>
+                    {content}
+                  </motion.div>
+                )
+              })}
             </div>
           </div>
         </div>

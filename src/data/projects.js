@@ -62,11 +62,48 @@ export const projectsData = [
     tech: ['AWS', 'Kubernetes', 'Draw.io', 'Modular Monolith Architecture'],
     period: '2024 - 2025',
     highlights: ['Infrastructure Design', 'Cloud Architecture', 'Technical Consultancy', 'Strategic Guidance']
+  },
+  {
+    color: "#060010",
+    title: "Production Infrastructure & DevOps",
+    description: "Deployed and operate production infrastructure at Meekco.Asia on a Webdock VPS: the BigBang automation platform, Materia SaaS, Lago (usage-based billing), Mautic (email marketing), and Peppermint (ticketing), via Docker Compose, Traefik/Let's Encrypt, and custom multi-arch images. Set up infrastructure-as-code and observability with OpenTofu, Ansible, and Prometheus/Grafana.",
+    label: "DevOps / Infrastructure",
+    tech: ['Docker Compose', 'Traefik', 'OpenTofu', 'Ansible', 'Prometheus', 'Grafana'],
+    period: '2025',
+    highlights: ['Production VPS Ops', 'TLS Automation', 'IaC & Observability', 'CKA Certified']
+  },
+  {
+    color: "#060010",
+    title: "Raspberry Pi CM5 Kiosk Platform",
+    description: "Engineered a Raspberry Pi Compute Module 5 kiosk platform for Meekco.Asia: custom carrier PCB, 13.3\" DSI capacitive touchscreen, enclosure assembly, and Linux touchscreen calibration/provisioning. Packaged and deployed the kiosk as a PWA/APK on Honeywell retail tablets, solving Shopify CDN service-worker scoping for reliable operation.",
+    label: "Hardware / Kiosk",
+    tech: ['Raspberry Pi CM5', 'DSI/MIPI', 'libinput', 'PWA', 'Linux'],
+    period: '2025',
+    highlights: ['Custom Carrier PCB', 'Touchscreen Provisioning', 'PWA Deployment']
   }
 ];
 
 // Personal projects data
 export const personalProjectsData = [
+  {
+    color: "#060010",
+    title: "KDE Plasma Prayer-Times Widget",
+    description: "Built a KDE Plasma 6 prayer-times widget backed by the JAKIM e-solat API, with offline caching and azan playback, demonstrating cross-platform desktop breadth beyond web and mobile.",
+    label: "Desktop Widget",
+    tech: ['KDE Plasma 6', 'QML', 'JAKIM e-solat API'],
+    period: '2025',
+    highlights: ['Offline Caching', 'Azan Playback', 'Cross-platform']
+  },
+  {
+    color: "#060010",
+    title: "haro",
+    description: "A local-first, Linux-first orchestrator for AI coding agents. Runs multiple agents in parallel, each isolated in its own git worktree, behind an automatic test gate: no work is mergeable until the tests are green. Designed and built from zero. See the full spotlight below.",
+    label: "Own Product",
+    tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'SQLite', 'Electron'],
+    period: '2025 - Present',
+    highlights: ['Parallel Agents', 'Test Gate', 'One-Window Cockpit'],
+    internal: 'haro'
+  },
   {
     color: "#060010",
     title: "Supplement Tracker AI",
@@ -78,29 +115,12 @@ export const personalProjectsData = [
   },
   {
     color: "#060010",
-    title: "Raspberry Pi CM5 Kiosk Platform",
-    description: "Engineered a Raspberry Pi Compute Module 5 kiosk platform: custom carrier PCB, 13.3\" DSI capacitive touchscreen, enclosure assembly, and Linux touchscreen calibration/provisioning. Packaged and deployed the kiosk as a PWA/APK on Honeywell retail tablets, solving Shopify CDN service-worker scoping for reliable operation.",
-    label: "Hardware / Kiosk",
-    tech: ['Raspberry Pi CM5', 'DSI/MIPI', 'libinput', 'PWA', 'Linux'],
+    title: "Acoustic Treats",
+    description: "Designed and built the marketing site for Precision HiFi Acoustics, an acoustic-treatment business selling acoustic panels, diffusers, and soundproofing for home theaters, studios, and audiophile rooms. A responsive Next.js site deployed on Vercel.",
+    label: "Family Business",
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
     period: '2025',
-    highlights: ['Custom Carrier PCB', 'Touchscreen Provisioning', 'PWA Deployment']
-  },
-  {
-    color: "#060010",
-    title: "Self-Hosted Infrastructure",
-    description: "Deployed and operate production infrastructure on the company Webdock VPS: the BigBang automation platform, Materia SaaS, Lago (usage-based billing), Mautic (email marketing), and Peppermint (ticketing) via Docker Compose, Traefik/Let's Encrypt, and custom multi-arch images. Built a homelab IaC and observability setup with OpenTofu, Ansible, and Prometheus/Grafana.",
-    label: "DevOps / Self-Hosting",
-    tech: ['Docker Compose', 'Traefik', 'OpenTofu', 'Ansible', 'Prometheus', 'Grafana'],
-    period: '2025',
-    highlights: ['Production VPS Ops', 'TLS Automation', 'IaC & Observability']
-  },
-  {
-    color: "#060010",
-    title: "KDE Plasma Prayer-Times Widget",
-    description: "Built a KDE Plasma 6 prayer-times widget backed by the JAKIM e-solat API, with offline caching and azan playback, demonstrating cross-platform desktop breadth beyond web and mobile.",
-    label: "Desktop Widget",
-    tech: ['KDE Plasma 6', 'QML', 'JAKIM e-solat API'],
-    period: '2025',
-    highlights: ['Offline Caching', 'Azan Playback', 'Cross-platform']
+    highlights: ['Marketing Site', 'Responsive', 'Vercel Deploy'],
+    href: 'https://acoustic-treats.vercel.app/'
   }
 ];
