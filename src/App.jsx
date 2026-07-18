@@ -655,6 +655,11 @@ export default function Home() {
                         ★ See spotlight below
                       </span>
                     )}
+                    {p.href && (
+                      <span style={{ background: 'var(--accent-sky)' }} className="inline-flex items-center gap-1 mt-3 text-[10px] tracking-[0.15em] uppercase font-black border-2 border-border px-2 py-1">
+                        Visit site
+                      </span>
+                    )}
                   </>
                 )
                 if (p.href) {
