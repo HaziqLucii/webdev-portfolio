@@ -21,11 +21,11 @@ export const projectsData = [
   {
     color: "#060010",
     title: "JD Sports Self-Checkout Kiosk",
-    description: "Built a cashier-less self-checkout kiosk for JD Sports Malaysia end to end, from the device to the checkout. Engineered the hardware platform on a Raspberry Pi Compute Module 5: custom carrier PCB, 13.3\" DSI capacitive touchscreen, enclosure assembly, and Linux touchscreen calibration and provisioning.\n\nThe checkout is a Shopify Checkout UI Extension with a Remix/TypeScript backend that renders inline DuitNow QR via Fiuu, auto-detects payment, and marks orders paid with no cashier involvement. A rigorous payment-gateway evaluation selected the only viable inline DuitNow QR provider, and the storefront ships as a PWA, solving Shopify CDN service-worker scoping for reliable operation.",
+    description: "Built a cashier-less self-checkout kiosk for JD Sports Malaysia end to end, from the device to the checkout. Engineered the hardware platform on a Raspberry Pi Compute Module 5: custom carrier PCB, 13.3\" DSI capacitive touchscreen, enclosure assembly, and Linux touchscreen calibration and provisioning.\n\nThe checkout is a Shopify Checkout UI Extension with a Remix/TypeScript backend that auto-detects payment and marks orders paid with no cashier involvement. It supports inline DuitNow QR and tap-to-pay, tested across Fiuu (with a Kozen terminal) and Stripe. A rigorous payment-gateway evaluation selected the only viable inline DuitNow QR provider, and the storefront ships as a PWA, solving Shopify CDN service-worker scoping for reliable operation.",
     label: "Kiosk · Payments",
-    tech: ['Shopify Checkout UI Extension', 'Remix', 'TypeScript', 'Fiuu', 'DuitNow QR', 'Raspberry Pi CM5', 'PWA', 'Linux'],
+    tech: ['Shopify Checkout UI Extension', 'Raspberry Pi CM5', 'DuitNow QR', 'Tap to Pay', 'Stripe', 'Fiuu', 'Kozen Terminal', 'Remix', 'TypeScript', 'PWA', 'Linux'],
     period: '2025',
-    highlights: ['Cashier-less Checkout', 'Inline DuitNow QR', 'Custom Carrier PCB', 'Hardware to Checkout']
+    highlights: ['Cashier-less Checkout', 'DuitNow QR + Tap to Pay', 'Custom Carrier PCB', 'Hardware to Checkout']
   },
   {
     color: "#060010",
