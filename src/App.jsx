@@ -179,9 +179,93 @@ function ScreenshotShowcase({ slides }) {
   )
 }
 
+/* ─── Case-study deep-dive modal ───────────────────── */
+function CaseStudyModal({ project, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+  }, [onClose])
+
+  const cs = project.caseStudy || {}
+
+  return (
+    <div onClick={onClose} className="fixed inset-0 z-[100] bg-black/90 flex items-start sm:items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e) => e.stopPropagation()}
+        style={{ background: 'var(--secondary-background)' }}
+        className="relative w-full max-w-3xl my-4 border-4 border-border shadow-shadow-lg"
+      >
+        {/* Header */}
+        <div style={{ background: 'var(--main)', color: 'var(--main-foreground)' }} className="border-b-4 border-border p-5 md:p-6">
+          <div className="flex items-center gap-3 mb-3 flex-wrap pr-12">
+            <Badge variant="neutral">{project.label}</Badge>
+            {cs.role && (
+              <span style={{ background: 'var(--secondary-background)', color: 'var(--foreground)' }} className="text-[10px] tracking-[0.2em] uppercase font-black border-2 border-border px-2 py-0.5">
+                {cs.role}
+              </span>
+            )}
+            <span className="text-xs ml-auto opacity-70">{project.period}</span>
+          </div>
+          <h3 className="font-display text-2xl md:text-4xl uppercase leading-[0.95]">{project.title}</h3>
+        </div>
+
+        {/* Close */}
+        <button onClick={onClose} aria-label="Close case study" style={{ background: 'var(--accent-peach)' }} className="absolute top-4 right-4 border-2 border-border shadow-shadow-sm p-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer">
+          <X size={18} />
+        </button>
+
+        {/* Body */}
+        <div className="p-5 md:p-8 space-y-7">
+          {cs.problem && (
+            <section>
+              <Sticker rotate={-2} bg="var(--accent-peach)">Problem</Sticker>
+              <p className="text-sm md:text-base leading-relaxed mt-3">{cs.problem}</p>
+            </section>
+          )}
+          {cs.approach?.length > 0 && (
+            <section>
+              <Sticker rotate={2} bg="var(--accent-sky)">Approach</Sticker>
+              <ul className="mt-3 space-y-2.5">
+                {cs.approach.map((a, ai) => (
+                  <li key={ai} className="flex gap-2.5 text-sm leading-relaxed">
+                    <span className="font-black shrink-0">→</span>
+                    <span>{a}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {cs.impact?.length > 0 && (
+            <section>
+              <Sticker rotate={-1} bg="var(--main)">Impact</Sticker>
+              <div className="mt-3 grid sm:grid-cols-2 gap-2.5">
+                {cs.impact.map((im, ii) => (
+                  <div key={ii} style={{ background: 'var(--background)' }} className="border-2 border-border p-3 text-sm font-bold leading-snug">★ {im}</div>
+                ))}
+              </div>
+            </section>
+          )}
+          <section>
+            <p className="text-[10px] tracking-[0.3em] uppercase font-black opacity-60 mb-2">Stack</p>
+            <div className="flex flex-wrap gap-1.5">
+              {project.tech.map((t, ti) => <Badge key={ti} variant="neutral" className="text-[10px]">{t}</Badge>)}
+            </div>
+          </section>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home')
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
+  const [caseProject, setCaseProject] = useState(null)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -556,8 +640,12 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
+                onClick={() => setCaseProject(f)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCaseProject(f) } }}
                 style={{ background: 'var(--main)' }}
-                className="border-4 border-border shadow-shadow-lg p-6 md:p-8 mb-12"
+                className="border-4 border-border shadow-shadow-lg p-6 md:p-8 mb-12 cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all"
               >
                 <div className="flex items-center gap-3 mb-4 flex-wrap">
                   <span className="text-[10px] tracking-[0.3em] uppercase font-black opacity-70">Featured · 01</span>
@@ -580,6 +668,11 @@ export default function Home() {
                     <Badge key={ti} variant="neutral" className="text-[10px]">{t}</Badge>
                   ))}
                 </div>
+                <div className="mt-6">
+                  <span style={{ background: 'var(--secondary-background)' }} className="inline-flex items-center gap-1.5 border-2 border-border shadow-shadow-sm text-xs font-black uppercase tracking-[0.15em] px-3 py-1.5">
+                    Read case study <ArrowUpRight size={14} />
+                  </span>
+                </div>
               </motion.div>
             )
           })()}
@@ -597,8 +690,12 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: (idx % 2) * 0.08 }}
+                  onClick={() => setCaseProject(p)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCaseProject(p) } }}
                   style={{ background: palette[idx % palette.length], transform: `rotate(${rotate}deg)` }}
-                  className="border-2 border-border shadow-shadow p-5 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                  className="border-2 border-border shadow-shadow p-5 cursor-pointer hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
                 >
                   <div className="flex items-baseline justify-between gap-3 mb-3">
                     <span className="font-display text-2xl opacity-30">{String(idx + 2).padStart(2, '0')}</span>
@@ -617,6 +714,11 @@ export default function Home() {
                     {p.tech.length > 6 && (
                       <span className="text-[10px] px-1.5 py-0.5 font-bold opacity-50">+{p.tech.length - 6}</span>
                     )}
+                  </div>
+                  <div className="mt-4">
+                    <span style={{ background: 'var(--secondary-background)' }} className="inline-flex items-center gap-1.5 border-2 border-border shadow-shadow-sm text-[10px] font-black uppercase tracking-[0.15em] px-2.5 py-1">
+                      Read case study <ArrowUpRight size={12} />
+                    </span>
                   </div>
                 </motion.div>
               )
@@ -946,6 +1048,9 @@ export default function Home() {
           <p>Built with React + Neobrutalism.dev</p>
         </div>
       </footer>
+
+      {/* Case-study deep-dive */}
+      {caseProject && <CaseStudyModal project={caseProject} onClose={() => setCaseProject(null)} />}
     </div>
   )
 }
