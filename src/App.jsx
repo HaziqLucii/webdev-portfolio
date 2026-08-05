@@ -854,7 +854,7 @@ export default function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-display lowercase leading-[0.85] mb-3"
+            className="font-display lowercase leading-[0.85] mb-4"
             style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.03em' }}
           >
             haro<span style={{ color: 'var(--main)', WebkitTextStroke: '2px var(--border)' }}>.</span>
@@ -866,9 +866,34 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-sm md:text-lg max-w-2xl mb-10 leading-relaxed font-bold"
           >
-            A local-first, Linux-first orchestrator for AI coding agents. Designed and
-            engineered end-to-end, from zero.
+            A local-first, Linux-first orchestrator for AI coding agents. Run several
+            agents at once, each boxed in its own git worktree, and watch the work
+            happen live in one window. Designed and engineered end-to-end, from zero.
           </motion.p>
+
+          {/* Full-width product shot — theme-aware, soft shadow below */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-14"
+          >
+            <img
+              src="/haro/haro-screenshot-light.webp"
+              alt="The haro app: projects and backlog on the left, agent workspace on the right, in one window"
+              loading="lazy"
+              className="w-full h-auto dark:hidden"
+              style={{ filter: 'drop-shadow(0 30px 30px rgba(0,0,0,0.28))' }}
+            />
+            <img
+              src="/haro/haro-screenshot-dark.webp"
+              alt="The haro app: projects and backlog on the left, agent workspace on the right, in one window"
+              loading="lazy"
+              className="w-full h-auto hidden dark:block"
+              style={{ filter: 'drop-shadow(0 30px 30px rgba(0,0,0,0.55))' }}
+            />
+          </motion.div>
 
           {/* Intro: green feature card + highlights */}
           <div className="grid md:grid-cols-12 gap-6 mb-10 items-stretch">
