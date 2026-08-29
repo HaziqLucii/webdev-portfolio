@@ -76,11 +76,14 @@ function StatBlock({ value, suffix, label, bg, rotate = 0 }) {
 }
 
 /* ─── Sticker - rotated label tag ──────────────────── */
-function Sticker({ children, rotate = -3, bg = 'var(--main)', className = '' }) {
+// Kuro: a flat hairline chip. The `rotate` prop is kept so call sites don't all
+// have to change, but it is intentionally ignored — this rice has no tilt, no
+// shadow and no fill; a label is a box drawn in one line.
+function Sticker({ children, bg = 'transparent', className = '' }) {
   return (
     <span
-      style={{ background: bg, transform: `rotate(${rotate}deg)` }}
-      className={`inline-block border-2 border-border shadow-shadow-sm px-3 py-1 text-xs tracking-[0.2em] uppercase font-black ${className}`}
+      style={{ background: bg === 'var(--main)' ? 'transparent' : bg }}
+      className={`inline-block border border-border px-3 py-1 text-[10px] tracking-[0.25em] uppercase font-mono font-medium ${className}`}
     >
       {children}
     </span>
@@ -314,7 +317,7 @@ function CaseStudyModal({ project, onClose }) {
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home')
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
   const [caseProject, setCaseProject] = useState(null)
 
   useEffect(() => {

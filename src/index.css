@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Public+Sans:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -8,64 +8,61 @@
    Neobrutalism tokens - Lime + Lavender + Cream
    ══════════════════════════════════════════════════════ */
 :root {
-  /* Surfaces */
-  --background:            #FAF6E9;   /* warm cream */
-  --secondary-background:  #FFFFFF;   /* pure white card surface */
-  --foreground:            #000000;
-  --main-foreground:        #000000;
+  /* Kuro 黒 — light. The same language inverted: white ground, black ink,
+     hairlines. Strictly monochrome; every hue collapses to a grey ramp so
+     hierarchy survives on lightness and weight alone. */
+  --background:            #ffffff;
+  --secondary-background:  #fafafa;
+  --foreground:            #0a0a0a;
+  --main-foreground:       #ffffff;
 
-  /* Brutalist signature accent */
-  --main:                  #B8FF3D;   /* saturated lime */
+  /* The only accent. Used for inverted blocks, the ring and selection. */
+  --main:                  #0a0a0a;
 
-  /* Section/feature accent rotations */
-  --accent-lavender:       #C9B8FF;
-  --accent-peach:          #FFB8A4;
-  --accent-sky:            #A4DDFF;
-  --accent-cream:          #FAF6E9;
+  /* Section grounds — greys, not hues */
+  --accent-lavender:       #f2f2f2;
+  --accent-peach:          #ededed;
+  --accent-sky:            #f6f6f6;
+  --accent-cream:          #fafafa;
 
-  /* Structural ink */
-  --border:                #000000;
-  --ring:                  #000000;
-  --overlay:               rgba(0, 0, 0, 0.8);
+  --border:                #dcdcdc;
+  --ring:                  #0a0a0a;
+  --overlay:               rgba(255, 255, 255, 0.9);
 
-  /* Hard-offset shadow - the brutalist signature */
-  --shadow-x:              4px;
-  --shadow-y:              4px;
-  --shadow:                4px 4px 0px 0px var(--border);
-  --shadow-sm:             2px 2px 0px 0px var(--border);
-  --shadow-lg:             8px 8px 0px 0px var(--border);
+  /* No shadows. Structure is carried by hairlines and negative space. */
+  --shadow-x:              0px;
+  --shadow-y:              0px;
+  --shadow:                none;
+  --shadow-sm:             none;
+  --shadow-lg:             none;
 
-  /* Radii - brutalism prefers hard 0px, but allow a tiny 4-5px on soft variants */
-  --radius-base:           5px;
+  --radius-base:           0px;
 
-  /* Fonts */
-  --font-weight-base:      500;
-  --font-weight-heading:   900;
+  --font-weight-base:      400;
+  --font-weight-heading:   700;
 }
 
 .dark {
-  /* Warm near-black instead of cold grey-black - subtle brown undertone */
-  --background:            #1B1815;
-  --secondary-background:  #28231F;
-  --foreground:            #EFE6D2;   /* softened warm cream (not pure white) */
-  --main-foreground:       #0F0E0C;
+  /* Kuro 黒 — the desktop palette, unchanged. */
+  --background:            #090909;
+  --secondary-background:  #0f0f0f;
+  --foreground:            #ececec;
+  --main-foreground:       #000000;
 
-  /* Lime - slightly toned from pure electric to "still loud, less screaming" */
-  --main:                  #A5DE3F;
+  --main:                  #ffffff;
 
-  /* Accents - deepened to jewel-tones so cream text reads cleanly on them */
-  --accent-lavender:       #6856B8;   /* deep violet */
-  --accent-peach:          #B36959;   /* terracotta */
-  --accent-sky:            #527FA0;   /* slate blue */
-  --accent-cream:          #2E2823;   /* warm dark section bg */
+  --accent-lavender:       #141414;
+  --accent-peach:          #111111;
+  --accent-sky:            #171717;
+  --accent-cream:          #050505;
 
-  --border:                #EFE6D2;   /* warm cream - softer than pure white */
-  --ring:                  #EFE6D2;
-  --overlay:               rgba(0, 0, 0, 0.8);
+  --border:                #232323;
+  --ring:                  #ffffff;
+  --overlay:               rgba(0, 0, 0, 0.9);
 
-  --shadow:                4px 4px 0px 0px var(--border);
-  --shadow-sm:             2px 2px 0px 0px var(--border);
-  --shadow-lg:             8px 8px 0px 0px var(--border);
+  --shadow:                none;
+  --shadow-sm:             none;
+  --shadow-lg:             none;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -97,9 +94,14 @@
   --font-weight-base:    var(--font-weight-base);
   --font-weight-heading: var(--font-weight-heading);
 
-  --font-display: 'Archivo Black', 'Archivo', sans-serif;
-  --font-sans:    'Public Sans', system-ui, sans-serif;
-  --font-mono:    'JetBrains Mono', 'Space Mono', monospace;
+  /* Mono for chrome, labels and headings; Inter for long-form prose. Noto Sans
+     JP is pinned explicitly — neither JetBrains Mono nor Inter contains a single
+     kana or kanji, so without it the Japanese falls through to whatever the
+     system picks, which is usually the wrong regional glyph shapes. */
+  --font-display: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Noto Sans JP', ui-monospace, monospace;
+  --font-jp:      'Noto Sans JP', 'JetBrains Mono', sans-serif;
 
   /* Marquee animations (used by lib's Marquee component) */
   --animate-marquee:  marquee  32s linear infinite;
@@ -133,14 +135,14 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 900; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; }
 
 ::selection { background: var(--main); color: var(--main-foreground); }
 
-/* Scrollbar - brutalist chunky */
-::-webkit-scrollbar       { width: 12px; height: 12px; }
-::-webkit-scrollbar-track { background: var(--background); border-left: 2px solid var(--border); }
-::-webkit-scrollbar-thumb { background: var(--main); border: 2px solid var(--border); }
+/* Scrollbar — a hairline rail */
+::-webkit-scrollbar       { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--background); border-left: 1px solid var(--border); }
+::-webkit-scrollbar-thumb { background: var(--border); border: none; }
 ::-webkit-scrollbar-thumb:hover { background: var(--foreground); }
 
 /* ══════════════════════════════════════════════════════
@@ -164,21 +166,16 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 900; }
    ══════════════════════════════════════════════════════ */
 .brutal-card {
   background: var(--secondary-background);
-  border: 2px solid var(--border);
-  box-shadow: var(--shadow);
-  transition: transform 120ms ease, box-shadow 120ms ease;
+  border: 1px solid var(--border);
+  box-shadow: none;
+  transition: border-color 140ms ease, background 140ms ease;
 }
 .brutal-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px 0px var(--border);
+  border-color: var(--ring);
+  background: var(--background);
 }
-.brutal-press {
-  transition: transform 120ms ease, box-shadow 120ms ease;
-}
-.brutal-press:hover {
-  transform: translate(2px, 2px);
-  box-shadow: none !important;
-}
+.brutal-press { transition: border-color 140ms ease; }
+.brutal-press:hover { border-color: var(--ring); }
 
 /* Typing caret for the role cycler */
 .type-caret {
@@ -202,4 +199,37 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 900; }
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   Kuro 黒 — structural layer
+
+   The markup was written for neo-brutalism: 2-4px borders, hard offset
+   shadows, rounded-ish corners. Rather than touch every element, the
+   structure is flattened here — one place, and the JSX stays readable.
+   ══════════════════════════════════════════════════════ */
+
+/* Every border becomes a hairline. */
+.border-2, .border-4                 { border-width: 1px; }
+.border-t-2, .border-t-4             { border-top-width: 1px; }
+.border-b-2, .border-b-4             { border-bottom-width: 1px; }
+.border-l-2, .border-l-4             { border-left-width: 1px; }
+.border-r-2, .border-r-4             { border-right-width: 1px; }
+
+/* No shadows anywhere, including the hover states baked into utilities. */
+[class*="shadow-shadow"]             { box-shadow: none !important; }
+
+/* Square corners. */
+*, *::before, *::after               { border-radius: 0 !important; }
+
+/* Uppercase micro-labels and chrome ride on mono, tracked out. */
+.font-display                        { font-family: var(--font-display); }
+
+/* A Japanese label, for the spec-sheet pairing used across the rice. */
+.jp {
+  font-family: var(--font-jp);
+  font-weight: 400;
+  opacity: 0.45;
+  letter-spacing: 0.05em;
 }
