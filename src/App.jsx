@@ -97,6 +97,13 @@ const HARO_SLIDES = [
   { src: '/haro/preview.png', tag: 'Live Preview', caption: 'The running app, previewed inside haro' },
 ]
 
+const KURO_SLIDES = [
+  { src: '/kuro/desktop.jpg', tag: 'Desktop', caption: 'Spec-sheet widget column, numbered panel modules, dithered wallpaper' },
+  { src: '/kuro/vault.png', tag: 'Obsidian', caption: 'The same design tokens carried into a knowledge base' },
+  { src: '/kuro/tiled.jpg', tag: 'Tiled', caption: 'Dithered focus edge on the active window; sites left un-restyled' },
+  { src: '/kuro/nvim.png', tag: 'Neovim', caption: 'Neovim in the same monochrome scheme, syntax on a grey ramp' },
+]
+
 function ScreenshotShowcase({ slides }) {
   const [i, setI] = useState(0)
   const [zoom, setZoom] = useState(false)
@@ -317,7 +324,7 @@ export default function Home() {
 
   useEffect(() => {
     const onScroll = () => {
-      const ids = ['home', 'about', 'projects', 'haro', 'skills', 'contact']
+      const ids = ['home', 'about', 'projects', 'haro', 'kuro', 'skills', 'contact']
       const y = window.scrollY + 100
       for (const id of ids) {
         const el = document.getElementById(id)
@@ -977,6 +984,41 @@ export default function Home() {
             <span className="text-xs tracking-[0.25em] uppercase opacity-50">Live screenshots · click to zoom</span>
           </div>
           <ScreenshotShowcase slides={HARO_SLIDES} />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════ */}
+      {/* KURO - dotfiles                                */}
+      {/* ══════════════════════════════════════════════ */}
+      <section id="kuro" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--accent-cream)' }}>
+        <div className="max-w-6xl mx-auto">
+
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={2} bg="var(--accent-sky)">Dotfiles</Sticker>
+            <Sticker rotate={-2} bg="var(--accent-lavender)">Linux</Sticker>
+          </div>
+          <motion.h2
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-display lowercase leading-[0.85] mb-4"
+            style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.03em' }}
+          >
+            kuro<span style={{ color: 'var(--main)', WebkitTextStroke: '2px var(--border)' }}>.</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-sm md:text-lg max-w-2xl mb-10 leading-relaxed font-bold"
+          >
+            My KDE Plasma rice on CachyOS, kept as dotfiles. A monochrome theme
+            across the desktop, terminals, Neovim and the boot menu.
+          </motion.p>
+
+          <ScreenshotShowcase slides={KURO_SLIDES} />
         </div>
       </section>
 

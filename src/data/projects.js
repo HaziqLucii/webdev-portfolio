@@ -208,6 +208,16 @@ export const personalProjectsData = [
   },
   {
     color: "#060010",
+    title: "Kuro — KDE Plasma Rice",
+    description: "My KDE Plasma 6 desktop on CachyOS, kept as dotfiles. A monochrome theme applied across the desktop, terminals, Neovim and the boot menu, with a few custom widgets. See the screenshots below.",
+    label: "Dotfiles",
+    tech: ['KDE Plasma 6', 'QML', 'Bash', 'Lua'],
+    period: '2026',
+    highlights: ['Monochrome Theme', 'Custom Widgets', 'Dotfiles'],
+    internal: 'kuro'
+  },
+  {
+    color: "#060010",
     title: "Acoustic Treats",
     description: "Designed and built the marketing site for Precision HiFi Acoustics, an acoustic-treatment business selling acoustic panels, diffusers, and soundproofing for home theaters, studios, and audiophile rooms. A responsive Next.js site deployed on Vercel.",
     label: "Family Business",
