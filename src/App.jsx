@@ -780,7 +780,6 @@ export default function Home() {
             </div>
             <div className="grid md:grid-cols-2 gap-5">
               {personalProjectsData.map((p, idx) => {
-                const clickable = !!(p.href || p.internal)
                 const anim = {
                   initial: { opacity: 0, y: 12 },
                   whileInView: { opacity: 1, y: 0 },
@@ -788,14 +787,11 @@ export default function Home() {
                   transition: { duration: 0.4, delay: idx * 0.05 },
                 }
                 const cardStyle = { background: 'var(--secondary-background)', transform: `rotate(${idx % 2 === 0 ? -0.5 : 0.5}deg)` }
-                const cardCls = `block h-full border-2 border-border shadow-shadow p-5 ${clickable ? 'cursor-pointer hover:shadow-none transition-shadow' : ''}`
-                const content = (
-                  <>
+                const pillCls = "inline-flex items-center gap-1 text-[10px] tracking-[0.15em] uppercase font-black border-2 border-border px-2 py-1"
+                return (
+                  <motion.div key={idx} {...anim} style={cardStyle} className="block h-full border-2 border-border shadow-shadow p-5">
                     <div className="flex items-baseline justify-between gap-3 mb-2">
-                      <h3 className="font-display text-lg uppercase leading-tight flex items-center gap-1.5">
-                        {p.title}
-                        {p.href && <ArrowUpRight size={14} className="opacity-60" />}
-                      </h3>
+                      <h3 className="font-display text-lg uppercase leading-tight">{p.title}</h3>
                       <span className="text-[10px] opacity-60 shrink-0">{p.period}</span>
                     </div>
                     <div className="text-xs leading-relaxed mb-3 space-y-2">
@@ -806,43 +802,30 @@ export default function Home() {
                         <span key={ti} className="text-[10px] border-2 border-border bg-secondary-background text-foreground px-1.5 py-0.5 font-bold">{t}</span>
                       ))}
                     </div>
-                    {p.internal && (
-                      <span style={{ background: 'var(--main)', color: 'var(--main-foreground)' }} className="inline-flex items-center gap-1 mt-3 text-[10px] tracking-[0.15em] uppercase font-black border-2 border-border px-2 py-1">
-                        ★ See spotlight below
-                      </span>
+                    {(p.internal || p.href || p.github) && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {p.internal && (
+                          <button
+                            type="button"
+                            onClick={() => document.getElementById(p.internal)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                            style={{ background: 'var(--main)', color: 'var(--main-foreground)' }}
+                            className={`${pillCls} cursor-pointer`}
+                          >
+                            ★ See spotlight below
+                          </button>
+                        )}
+                        {p.href && (
+                          <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ background: 'var(--accent-sky)' }} className={pillCls}>
+                            Visit site <ArrowUpRight size={10} />
+                          </a>
+                        )}
+                        {p.github && (
+                          <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ background: 'var(--foreground)', color: 'var(--background)' }} className={pillCls}>
+                            <FaGithub size={11} /> GitHub <ArrowUpRight size={10} />
+                          </a>
+                        )}
+                      </div>
                     )}
-                    {p.href && (
-                      <span style={{ background: 'var(--accent-sky)' }} className="inline-flex items-center gap-1 mt-3 text-[10px] tracking-[0.15em] uppercase font-black border-2 border-border px-2 py-1">
-                        Visit site
-                      </span>
-                    )}
-                  </>
-                )
-                if (p.href) {
-                  return (
-                    <motion.a key={idx} href={p.href} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} (opens in a new tab)`} {...anim} style={cardStyle} className={cardCls}>
-                      {content}
-                    </motion.a>
-                  )
-                }
-                if (p.internal) {
-                  return (
-                    <motion.button
-                      key={idx}
-                      type="button"
-                      onClick={() => document.getElementById(p.internal)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                      aria-label={`${p.title} (jump to spotlight)`}
-                      {...anim}
-                      style={cardStyle}
-                      className={`${cardCls} w-full text-left`}
-                    >
-                      {content}
-                    </motion.button>
-                  )
-                }
-                return (
-                  <motion.div key={idx} {...anim} style={cardStyle} className={cardCls}>
-                    {content}
                   </motion.div>
                 )
               })}

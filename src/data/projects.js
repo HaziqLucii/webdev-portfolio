@@ -204,7 +204,8 @@ export const personalProjectsData = [
     tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'SQLite', 'Electron'],
     period: '2025 - Present',
     highlights: ['Parallel Agents', 'Test Gate', 'One-Window Cockpit'],
-    internal: 'haro'
+    internal: 'haro',
+    github: 'https://github.com/HaziqLucii/haro'
   },
   {
     color: "#060010",
@@ -214,7 +215,8 @@ export const personalProjectsData = [
     tech: ['KDE Plasma 6', 'QML', 'Bash', 'Lua'],
     period: '2026',
     highlights: ['Monochrome Theme', 'Custom Widgets', 'Dotfiles'],
-    internal: 'kuro'
+    internal: 'kuro',
+    github: 'https://github.com/HaziqLucii/kuro'
   },
   {
     color: "#060010",
@@ -224,7 +226,8 @@ export const personalProjectsData = [
     tech: ['Quickshell', 'QML', 'niri', 'Wayland', 'PipeWire'],
     period: '2026',
     highlights: ['Dynamic Island', 'Widget Canvas', 'Wallpaper Carousel'],
-    internal: 'kuroshima'
+    internal: 'kuroshima',
+    github: 'https://github.com/HaziqLucii/kuroshima'
   },
   {
     color: "#060010",
@@ -234,6 +237,7 @@ export const personalProjectsData = [
     tech: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
     period: '2025',
     highlights: ['Marketing Site', 'Responsive', 'Vercel Deploy'],
-    href: 'https://acoustic-treats.vercel.app/'
+    href: 'https://acoustic-treats.vercel.app/',
+    github: 'https://github.com/HaziqLucii/hifi-shop'
   }
 ];
