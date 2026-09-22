@@ -205,7 +205,7 @@ export const personalProjectsData = [
     period: '2025 - Present',
     highlights: ['Parallel Agents', 'Test Gate', 'One-Window Cockpit'],
     internal: 'haro',
-    github: 'https://github.com/HaziqLucii/haro'
+    github: 'https://github.com/HaziqLucii/haro-oss'
   },
   {
     color: "#060010",
