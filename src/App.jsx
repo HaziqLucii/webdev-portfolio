@@ -89,12 +89,12 @@ function Sticker({ children, rotate = -3, bg = 'var(--main)', className = '' }) 
 
 /* ─── haro screenshot carousel + click-to-zoom lightbox ─ */
 const HARO_SLIDES = [
-  { src: '/haro/cockpit.png', tag: 'Cockpit', caption: 'Agent stream, gate & live preview in one window' },
+  { src: '/haro/cockpit.png', tag: 'Cockpit', caption: 'Agent stream, editor, terminal & the gate in one window' },
   { src: '/haro/dashboard.png', tag: 'Parallel', caption: 'Multiple agents running concurrently + the backlog' },
   { src: '/haro/gate.png', tag: 'The Gate', caption: 'Live test grid, green before anything can merge' },
-  { src: '/haro/impact.png', tag: 'Impact Map', caption: 'Changed files → the exact tests they affect' },
+  { src: '/haro/tamper-alarm.png', tag: 'Tamper Alarm', caption: 'A suite that went green by getting weaker gets flagged, not missed' },
   { src: '/haro/code-editor.png', tag: 'Diff Review', caption: 'Full-screen Monaco diff, split view and per-commit' },
-  { src: '/haro/preview.png', tag: 'Live Preview', caption: 'The running app, previewed inside haro' },
+  { src: '/haro/workflow.png', tag: 'haro. workflow', caption: 'Plan → scout → build → refute, its own model per step' },
 ]
 
 const KURO_SLIDES = [
@@ -887,17 +887,10 @@ export default function Home() {
             className="mb-14"
           >
             <img
-              src="/haro/haro-screenshot-light.webp"
-              alt="The haro app: projects and backlog on the left, agent workspace on the right, in one window"
+              src="/haro/hero.png"
+              alt="The haro app: the agent stepper, agent stream, editor/terminal and the gate in one window"
               loading="lazy"
-              className="w-full h-auto dark:hidden"
-              style={{ filter: 'drop-shadow(0 30px 30px rgba(0,0,0,0.28))' }}
-            />
-            <img
-              src="/haro/haro-screenshot-dark.webp"
-              alt="The haro app: projects and backlog on the left, agent workspace on the right, in one window"
-              loading="lazy"
-              className="w-full h-auto hidden dark:block"
+              className="w-full h-auto"
               style={{ filter: 'drop-shadow(0 30px 30px rgba(0,0,0,0.55))' }}
             />
           </motion.div>
@@ -919,8 +912,7 @@ export default function Home() {
                 Runs multiple AI coding agents <b>in parallel</b>, each isolated in its own{' '}
                 <b>git worktree</b>, behind an <b>automatic test gate</b>: no agent's work is
                 mergeable until its tests pass. You watch it happen live in <b>one window</b>:
-                agent stream, Monaco editor, terminal, live preview, and the gate. Then commit,
-                merge, and ship.
+                agent stream, Monaco editor, terminal, and the gate. Then commit, merge, and ship.
               </p>
 
               {/* North star callout */}
