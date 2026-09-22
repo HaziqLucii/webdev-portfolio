@@ -39,7 +39,7 @@ export const skills = [
     name: 'Integration & ERP',
     items: [
       { name: 'SAP Business One' },
-      { name: 'ActivePieces' },
+      { name: 'Workflow Automation' },
       { name: 'Delta Sync' },
       { name: 'ETL & Reconciliation' },
       { name: 'MCP' },
@@ -86,6 +86,14 @@ export const skills = [
       { name: 'Gemini / Vertex' },
       { name: 'RESTful API' },
       { name: 'GraphQL' }
+    ]
+  },
+  {
+    id: 'certifications',
+    name: 'Certifications',
+    items: [
+      { name: 'CKA' },
+      { name: 'CCSD' }
     ]
   }
 ];

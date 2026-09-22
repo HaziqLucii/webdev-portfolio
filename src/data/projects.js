@@ -3,9 +3,9 @@ export const projectsData = [
   {
     color: "#060010",
     title: "SAP Business One to Shopify Integration",
-    description: "CTO-appointed Person-In-Charge of a bidirectional SAP Business One to Shopify integration spanning 12 data domains. Built the orchestration layer on a customized ActivePieces fork with custom Pieces, Actions, and Triggers against the SAP B1 Service Layer and Shopify Admin GraphQL API, and designed a delta-sync architecture using high-water-mark polling and reconciliation. Shipped a React/Hono ops dashboard, 4 Shopify admin UI extensions, a B2B pricing engine as a Shopify Function, and an MCP server exposing SAP B1 docs.",
+    description: "CTO-appointed Person-In-Charge of a bidirectional SAP Business One to Shopify integration spanning 12 data domains. Built the orchestration layer on our in-house workflow-automation platform with custom actions and triggers against the SAP B1 Service Layer and Shopify Admin GraphQL API, and designed a delta-sync architecture using high-water-mark polling and reconciliation. Shipped a React/Hono ops dashboard, 4 Shopify admin UI extensions, a B2B pricing engine as a Shopify Function, and an MCP server exposing SAP B1 docs.",
     label: "Flagship · Integration",
-    tech: ['SAP B1 Service Layer', 'Shopify Admin GraphQL', 'ActivePieces', 'Gadget', 'Hono', 'React', 'shadcn/ui', 'Preact', 'Shopify Functions', 'DBML', 'MCP', 'PostHog'],
+    tech: ['SAP B1 Service Layer', 'Shopify Admin GraphQL', 'Workflow Automation', 'Gadget', 'Hono', 'React', 'shadcn/ui', 'Preact', 'Shopify Functions', 'DBML', 'MCP', 'PostHog'],
     period: '2025 - Present',
     highlights: ['Person-In-Charge / Lead', '12 Data Domains', 'Delta-Sync Architecture', 'Ops Dashboard', 'B2B Pricing Engine', 'MCP Server'],
     caseStudy: {
@@ -13,7 +13,7 @@ export const projectsData = [
       problem: "The company ran operations in SAP Business One but sold on Shopify. Products, pricing, inventory, orders, and customers lived in two systems that constantly drifted apart, with no reliable bridge between them.",
       approach: [
         "Appointed by the CTO as Person-In-Charge; mapped 12 data domains and the sync direction each one needed.",
-        "Built the orchestration layer on a customized ActivePieces fork with custom Pieces, Actions, and Triggers against the SAP B1 Service Layer and the Shopify Admin GraphQL API.",
+        "Built the orchestration layer on our in-house workflow-automation platform with custom actions and triggers against the SAP B1 Service Layer and the Shopify Admin GraphQL API.",
         "Designed a delta-sync architecture using high-water-mark polling and reconciliation so syncs stay incremental and self-healing.",
         "Shipped a React/Hono ops dashboard, 4 Shopify admin UI extensions, a B2B pricing engine as a Shopify Function, and an MCP server exposing SAP B1 docs.",
       ],

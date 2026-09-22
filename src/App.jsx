@@ -516,9 +516,10 @@ export default function Home() {
       <Marquee items={[
         '◆ SHOPIFY',
         '◆ SAP INTEGRATION',
-        '◆ ACTIVEPIECES',
+        '◆ WORKFLOW AUTOMATION',
         '◆ DEVOPS',
         '◆ CKA CERTIFIED',
+        '◆ CCSD CERTIFIED',
         '◆ KUBERNETES',
         '◆ GADGET',
         '◆ REACT',
