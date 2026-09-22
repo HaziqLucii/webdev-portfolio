@@ -93,7 +93,9 @@ export const skills = [
     name: 'Certifications',
     items: [
       { name: 'CKA' },
-      { name: 'CCSD' }
+      { name: 'Shopify Dev Fundamentals' },
+      { name: 'CCSD' },
+      { name: 'TryHackMe Jr Pentester' }
     ]
   }
 ];
