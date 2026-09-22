@@ -24,8 +24,8 @@ A modern, interactive portfolio website showcasing my professional experience, p
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/dev-portfolio.git
-cd dev-portfolio
+git clone https://github.com/HaziqLucii/webdev-portfolio.git
+cd webdev-portfolio
 ```
 
 2. Install dependencies
@@ -54,10 +54,7 @@ npm run build
 
 ## Deployment
 
-This project is optimized for deployment on:
-- **Vercel** (Recommended)
-- **Netlify**
-- **GitHub Pages**
+Live at [haziqdev.vercel.app](https://haziqdev.vercel.app), deployed on Vercel.
 
 ## Components Used
 
