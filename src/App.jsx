@@ -104,6 +104,13 @@ const KURO_SLIDES = [
   { src: '/kuro/nvim.png', tag: 'Neovim', caption: 'Neovim in the same monochrome scheme, syntax on a grey ramp' },
 ]
 
+const KUROSHIMA_SLIDES = [
+  { src: '/kuroshima/compact.webp', tag: 'Compact pill', caption: 'Idle state: clock + tray, top-anchored on the desktop' },
+  { src: '/kuroshima/expanded.webp', tag: 'Dashboard', caption: 'Media, volume/brightness/mic, toggles, system stats & notification inbox' },
+  { src: '/kuroshima/notification.webp', tag: 'Notification peek', caption: 'A transient peek that morphs out of the pill and back' },
+  { src: '/kuroshima/wallpaper.webp', tag: 'Wallpaper carousel', caption: 'Live-previews on the real desktop before you commit' },
+]
+
 function ScreenshotShowcase({ slides }) {
   const [i, setI] = useState(0)
   const [zoom, setZoom] = useState(false)
@@ -324,7 +331,7 @@ export default function Home() {
 
   useEffect(() => {
     const onScroll = () => {
-      const ids = ['home', 'about', 'projects', 'haro', 'kuro', 'skills', 'contact']
+      const ids = ['home', 'about', 'projects', 'haro', 'kuro', 'kuroshima', 'skills', 'contact']
       const y = window.scrollY + 100
       for (const id of ids) {
         const el = document.getElementById(id)
@@ -1011,6 +1018,44 @@ export default function Home() {
           </motion.p>
 
           <ScreenshotShowcase slides={KURO_SLIDES} />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════ */}
+      {/* KUROSHIMA - dynamic island for niri            */}
+      {/* ══════════════════════════════════════════════ */}
+      <section id="kuroshima" className="px-5 py-24 relative border-t-4 border-border">
+        <div className="max-w-6xl mx-auto">
+
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={2} bg="var(--accent-peach)">Quickshell · QML</Sticker>
+            <Sticker rotate={-2} bg="var(--accent-sky)">niri</Sticker>
+          </div>
+          <motion.h2
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-display lowercase leading-[0.85] mb-4"
+            style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.03em' }}
+          >
+            kuroshima<span style={{ color: 'var(--main)', WebkitTextStroke: '2px var(--border)' }}>.</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-sm md:text-lg max-w-2xl mb-10 leading-relaxed font-bold"
+          >
+            An Apple-style Dynamic Island for the niri Wayland compositor, built with
+            Quickshell/QML. A single top-anchored capsule that morphs between an idle
+            pill and transient peeks (volume, brightness, media, notifications), plus
+            a full dashboard on expand: media controls, quick toggles, system stats,
+            and a notification inbox.
+          </motion.p>
+
+          <ScreenshotShowcase slides={KUROSHIMA_SLIDES} />
         </div>
       </section>
 

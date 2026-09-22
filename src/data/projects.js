@@ -218,6 +218,16 @@ export const personalProjectsData = [
   },
   {
     color: "#060010",
+    title: "Kuroshima — Dynamic Island for niri",
+    description: "An Apple-style Dynamic Island for the niri Wayland compositor, built with Quickshell/QML. A single top-anchored capsule morphs between an idle pill and transient peeks (volume, brightness, media, notifications), plus a full dashboard on expand. See the screenshots below.",
+    label: "Own Product",
+    tech: ['Quickshell', 'QML', 'niri', 'Wayland', 'PipeWire'],
+    period: '2026',
+    highlights: ['Dynamic Island', 'Widget Canvas', 'Wallpaper Carousel'],
+    internal: 'kuroshima'
+  },
+  {
+    color: "#060010",
     title: "Acoustic Treats",
     description: "Designed and built the marketing site for Precision HiFi Acoustics, an acoustic-treatment business selling acoustic panels, diffusers, and soundproofing for home theaters, studios, and audiophile rooms. A responsive Next.js site deployed on Vercel.",
     label: "Family Business",
