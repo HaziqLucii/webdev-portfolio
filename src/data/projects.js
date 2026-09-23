@@ -215,8 +215,7 @@ export const personalProjectsData = [
     tech: ['KDE Plasma 6', 'QML', 'Bash', 'Lua'],
     period: '2026',
     highlights: ['Monochrome Theme', 'Custom Widgets', 'Dotfiles'],
-    internal: 'kuro',
-    github: 'https://github.com/HaziqLucii/kuro'
+    internal: 'kuro'
   },
   {
     color: "#060010",
