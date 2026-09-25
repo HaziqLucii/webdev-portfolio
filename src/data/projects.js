@@ -210,11 +210,11 @@ export const personalProjectsData = [
   {
     color: "#060010",
     title: "Sampai: Nag-Until-Done Reminders",
-    description: "An Android reminder app that rings again every 1 to 60 minutes until you tap Done. Flutter for the UI with a native Kotlin alarm layer: a chain of system alarm-clock alarms that survives Doze, app kills, reboots and time-zone changes, a full-screen lock-screen alert, five home-screen widgets, and a built-in reliability check that runs a real test ring. Offline, no account, in English, Malay and Indonesian. Launching on Google Play. See the spotlight below.",
+    description: "A reminder app for Android that keeps ringing until you tap Done. Offline, no account, in English, Malay and Indonesian.",
     label: "Own Product",
-    tech: ['Flutter', 'Dart', 'Kotlin', 'Android AlarmManager', 'Pigeon', 'drift', 'Riverpod', 'GSAP'],
+    tech: ['Flutter', 'Kotlin', 'Android'],
     period: '2026',
-    highlights: ['Alarm-Clock Chain', 'Lock-Screen Alert', '5 Widgets', 'EN · MS · ID'],
+    highlights: ['Reminder App', 'Lock-Screen Alert', 'Widgets'],
     internal: 'sampai',
     href: 'https://haziqlucii.github.io/sampai-site/'
   },

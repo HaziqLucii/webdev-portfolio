@@ -1031,9 +1031,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-sm md:text-lg max-w-2xl mb-6 leading-relaxed font-bold"
           >
-            A reminder that rings again until you tap Done. Built because Android phones
-            quietly kill reminder apps: the nag loop runs on native alarm-clock alarms, not
-            in Flutter, so it keeps ringing through battery savers, restarts and locked screens.
+            A reminder app that keeps ringing until you tap Done.
           </motion.p>
           <div className="flex flex-wrap gap-3 mb-10">
             <a
