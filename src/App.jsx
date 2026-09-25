@@ -100,7 +100,7 @@ const HARO_SLIDES = [
 const SAMPAI_PHONES = [
   { src: '/sampai/reliability.jpg', tag: 'Setup', caption: 'A real 10-second test ring proves the phone can be woken' },
   { src: '/sampai/create.jpg', tag: 'Create', caption: 'Title, a time chip, Save' },
-  { src: '/sampai/alert.jpg', tag: 'Lock screen', caption: 'Ignored? It rings again, alert 4' },
+  { src: '/sampai/alert.jpg', tag: 'Lock screen', caption: 'Ignored? It rings again (screenshot showing the app alerting for the 4th time)' },
   { src: '/sampai/home.jpg', tag: 'Due', caption: 'Everything due, grouped by day' },
   { src: '/sampai/widgets.jpg', tag: 'Widgets', caption: 'Next up and Upcoming on the home screen' },
 ]
