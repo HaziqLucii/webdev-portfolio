@@ -1,4 +1,4 @@
-import { FaHome, FaUser, FaProjectDiagram, FaTerminal, FaDesktop, FaWindowMaximize, FaCode, FaEnvelope } from 'react-icons/fa';
+import { FaHome, FaUser, FaProjectDiagram, FaTerminal, FaBell, FaWindowMaximize, FaCode, FaEnvelope } from 'react-icons/fa';
 
 // Navigation utility function
 const scrollToSection = (sectionId) => {
@@ -33,10 +33,10 @@ export const navItems = [
     onClick: () => scrollToSection('haro')
   },
   {
-    iconComponent: FaDesktop,
-    label: 'kuro',
-    sectionId: 'kuro',
-    onClick: () => scrollToSection('kuro')
+    iconComponent: FaBell,
+    label: 'sampai',
+    sectionId: 'sampai',
+    onClick: () => scrollToSection('sampai')
   },
   {
     iconComponent: FaWindowMaximize,

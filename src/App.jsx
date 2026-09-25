@@ -97,11 +97,10 @@ const HARO_SLIDES = [
   { src: '/haro/workflow.png', tag: 'haro. workflow', caption: 'Plan → scout → build → refute, its own model per step' },
 ]
 
-const KURO_SLIDES = [
-  { src: '/kuro/desktop.jpg', tag: 'Desktop', caption: 'Spec-sheet widget column, numbered panel modules, dithered wallpaper' },
-  { src: '/kuro/vault.png', tag: 'Obsidian', caption: 'The same design tokens carried into a knowledge base' },
-  { src: '/kuro/tiled.jpg', tag: 'Tiled', caption: 'Dithered focus edge on the active window; sites left un-restyled' },
-  { src: '/kuro/nvim.png', tag: 'Neovim', caption: 'Neovim in the same monochrome scheme, syntax on a grey ramp' },
+const SAMPAI_SLIDES = [
+  { src: '/sampai/flow.jpg', tag: 'Daily use', caption: 'Lock-screen alert on its 4th ring, the Due list, and the five-second create sheet' },
+  { src: '/sampai/setup.jpg', tag: 'Setup', caption: 'Four permissions in plain language, then a real 10-second test ring that proves the phone can be woken' },
+  { src: '/sampai/widgets.jpg', tag: 'Widgets', caption: 'Home-screen widgets drawn with the app fonts: Next up and Upcoming' },
 ]
 
 const KUROSHIMA_SLIDES = [
@@ -331,7 +330,7 @@ export default function Home() {
 
   useEffect(() => {
     const onScroll = () => {
-      const ids = ['home', 'about', 'projects', 'haro', 'kuro', 'kuroshima', 'skills', 'contact']
+      const ids = ['home', 'about', 'projects', 'haro', 'sampai', 'kuroshima', 'skills', 'contact']
       const y = window.scrollY + 100
       for (const id of ids) {
         const el = document.getElementById(id)
@@ -971,14 +970,14 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════ */}
-      {/* KURO - dotfiles                                */}
+      {/* SAMPAI - Android app                           */}
       {/* ══════════════════════════════════════════════ */}
-      <section id="kuro" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--accent-cream)' }}>
+      <section id="sampai" className="px-5 py-24 relative border-t-4 border-border" style={{ background: 'var(--accent-cream)' }}>
         <div className="max-w-6xl mx-auto">
 
           <div className="flex items-center gap-3 mb-6 flex-wrap">
-            <Sticker rotate={2} bg="var(--accent-sky)">Dotfiles</Sticker>
-            <Sticker rotate={-2} bg="var(--accent-lavender)">Linux</Sticker>
+            <Sticker rotate={2} bg="var(--accent-sky)">Android · Flutter + Kotlin</Sticker>
+            <Sticker rotate={-2} bg="var(--accent-lavender)">Own Product</Sticker>
           </div>
           <motion.h2
             initial={{ opacity: 0, x: -16 }}
@@ -988,20 +987,35 @@ export default function Home() {
             className="font-display lowercase leading-[0.85] mb-4"
             style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.03em' }}
           >
-            kuro<span style={{ color: 'var(--main)', WebkitTextStroke: '2px var(--border)' }}>.</span>
+            sampai<span style={{ color: 'var(--main)', WebkitTextStroke: '2px var(--border)' }}>.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-sm md:text-lg max-w-2xl mb-10 leading-relaxed font-bold"
+            className="text-sm md:text-lg max-w-2xl mb-6 leading-relaxed font-bold"
           >
-            My KDE Plasma rice on CachyOS, kept as dotfiles. A monochrome theme
-            across the desktop, terminals, Neovim and the boot menu.
+            A reminder that rings again until you tap Done. Built because Android phones
+            quietly kill reminder apps: the nag loop runs on native alarm-clock alarms, not
+            in Flutter, so it keeps ringing through battery savers, restarts and locked screens.
           </motion.p>
+          <div className="flex flex-wrap gap-3 mb-10">
+            <a
+              href="https://haziqlucii.github.io/sampai-site/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ background: 'var(--main)', color: 'var(--main-foreground)' }}
+              className="inline-flex items-center gap-2 border-2 border-border shadow-shadow px-4 py-2 text-xs tracking-[0.15em] uppercase font-black hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all"
+            >
+              Visit the landing page <ArrowUpRight size={14} />
+            </a>
+            <span className="inline-flex items-center border-2 border-border px-4 py-2 text-xs tracking-[0.15em] uppercase font-black" style={{ background: 'var(--secondary-background)' }}>
+              Coming soon to Google Play
+            </span>
+          </div>
 
-          <ScreenshotShowcase slides={KURO_SLIDES} />
+          <ScreenshotShowcase slides={SAMPAI_SLIDES} />
         </div>
       </section>
 

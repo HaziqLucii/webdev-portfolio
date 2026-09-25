@@ -209,13 +209,14 @@ export const personalProjectsData = [
   },
   {
     color: "#060010",
-    title: "Kuro — KDE Plasma Rice",
-    description: "My KDE Plasma 6 desktop on CachyOS, kept as dotfiles. A monochrome theme applied across the desktop, terminals, Neovim and the boot menu, with a few custom widgets. See the screenshots below.",
-    label: "Dotfiles",
-    tech: ['KDE Plasma 6', 'QML', 'Bash', 'Lua'],
+    title: "Sampai: Nag-Until-Done Reminders",
+    description: "An Android reminder app that rings again every 1 to 60 minutes until you tap Done. Flutter for the UI with a native Kotlin alarm layer: a chain of system alarm-clock alarms that survives Doze, app kills, reboots and time-zone changes, a full-screen lock-screen alert, five home-screen widgets, and a built-in reliability check that runs a real test ring. Offline, no account, in English, Malay and Indonesian. Launching on Google Play. See the spotlight below.",
+    label: "Own Product",
+    tech: ['Flutter', 'Dart', 'Kotlin', 'Android AlarmManager', 'Pigeon', 'drift', 'Riverpod', 'GSAP'],
     period: '2026',
-    highlights: ['Monochrome Theme', 'Custom Widgets', 'Dotfiles'],
-    internal: 'kuro'
+    highlights: ['Alarm-Clock Chain', 'Lock-Screen Alert', '5 Widgets', 'EN · MS · ID'],
+    internal: 'sampai',
+    href: 'https://haziqlucii.github.io/sampai-site/'
   },
   {
     color: "#060010",
