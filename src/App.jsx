@@ -105,36 +105,99 @@ const SAMPAI_PHONES = [
   { src: '/sampai/widgets.jpg', tag: 'Widgets', caption: 'Next up and Upcoming on the home screen' },
 ]
 
+const PHONE_BEZEL = { background: '#161412', boxShadow: '0 0 0 2px #2b2724, 0 30px 50px -20px rgba(0,0,0,.55)' }
+
+function PhoneFrame({ src, alt, eager }) {
+  return (
+    <div className="relative rounded-[2.2rem] p-[7px]" style={PHONE_BEZEL}>
+      <span className="absolute -right-[4px] top-[22%] h-[9%] w-[4px] rounded-r" style={{ background: '#2b2724' }} />
+      <span className="absolute -right-[4px] top-[34%] h-[6%] w-[4px] rounded-r" style={{ background: '#2b2724' }} />
+      <img src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} draggable={false} className="block w-full rounded-[1.8rem] select-none" />
+    </div>
+  )
+}
+
 function FloatingPhones({ phones }) {
   const mid = Math.floor(phones.length / 2)
+  const [open, setOpen] = useState(null)
+  const n = phones.length
+  const go = (d) => setOpen((p) => (p + d + n) % n)
+
+  useEffect(() => {
+    if (open === null) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(null)
+      else if (e.key === 'ArrowRight') go(1)
+      else if (e.key === 'ArrowLeft') go(-1)
+    }
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+  }, [open])
+
+  const navBtn = 'border-2 border-border shadow-shadow-sm p-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer'
+  const active = open === null ? null : phones[open]
+
   return (
-    <div className="flex items-start justify-start md:justify-center gap-4 sm:gap-5 md:gap-7 overflow-x-auto md:overflow-visible pb-6 pt-10 -mx-5 px-5 snap-x snap-mandatory md:snap-none">
-      {phones.map((p, i) => {
-        const dist = Math.abs(i - mid)
-        return (
-          <figure
-            key={p.src}
-            className="shrink-0 snap-center m-0"
-            style={{ width: dist === 0 ? 'min(62vw, 240px)' : 'min(56vw, 214px)' }}
-          >
-            <div>
-              <div
-                className="relative rounded-[2.2rem] p-[7px]"
-                style={{ background: '#161412', boxShadow: '0 0 0 2px #2b2724, 0 30px 50px -20px rgba(0,0,0,.55)' }}
+    <>
+      <div className="flex items-start justify-start md:justify-center gap-4 sm:gap-5 md:gap-7 overflow-x-auto md:overflow-visible pb-6 pt-10 -mx-5 px-5 snap-x snap-mandatory md:snap-none">
+        {phones.map((p, i) => {
+          const dist = Math.abs(i - mid)
+          return (
+            <figure
+              key={p.src}
+              className="shrink-0 snap-center m-0"
+              style={{ width: dist === 0 ? 'min(62vw, 240px)' : 'min(56vw, 214px)' }}
+            >
+              <button
+                type="button"
+                onClick={() => setOpen(i)}
+                aria-label={`Zoom in: ${p.tag}`}
+                className="block w-full cursor-zoom-in transition-transform hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4"
               >
-                <span className="absolute -right-[4px] top-[22%] h-[9%] w-[4px] rounded-r" style={{ background: '#2b2724' }} />
-                <span className="absolute -right-[4px] top-[34%] h-[6%] w-[4px] rounded-r" style={{ background: '#2b2724' }} />
-                <img src={p.src} alt={`${p.tag}: ${p.caption}`} loading="lazy" draggable={false} className="block w-full rounded-[1.8rem] select-none" />
-              </div>
+                <PhoneFrame src={p.src} alt={`${p.tag}: ${p.caption}`} />
+              </button>
+              <figcaption className="mt-4 text-center">
+                <span style={{ background: 'var(--main)' }} className="inline-block text-[9px] tracking-[0.18em] uppercase font-black border-2 border-border px-1.5 py-0.5">{p.tag}</span>
+                <span className="block text-[11px] font-bold leading-snug mt-2 opacity-80">{p.caption}</span>
+              </figcaption>
+            </figure>
+          )
+        })}
+      </div>
+
+      {active && (
+        <div
+          onClick={() => setOpen(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.tag}
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 cursor-zoom-out"
+        >
+          <button onClick={(e) => { e.stopPropagation(); setOpen(null) }} aria-label="Close" style={{ background: 'var(--main)' }} className={`absolute top-4 right-4 ${navBtn}`}>
+            <X size={18} />
+          </button>
+          <span className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-10">
+            <button onClick={(e) => { e.stopPropagation(); go(-1) }} aria-label="Previous" style={{ background: 'var(--main)' }} className={navBtn}>
+              <ChevronLeft size={20} />
+            </button>
+          </span>
+          <span className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-10">
+            <button onClick={(e) => { e.stopPropagation(); go(1) }} aria-label="Next" style={{ background: 'var(--main)' }} className={navBtn}>
+              <ChevronRight size={20} />
+            </button>
+          </span>
+          <figure onClick={(e) => e.stopPropagation()} className="m-0 cursor-default flex flex-col items-center">
+            <div style={{ width: 'min(78vw, calc(82vh * 0.46))' }}>
+              <PhoneFrame src={active.src} alt={`${active.tag}: ${active.caption}`} eager />
             </div>
-            <figcaption className="mt-4 text-center">
-              <span style={{ background: 'var(--main)' }} className="inline-block text-[9px] tracking-[0.18em] uppercase font-black border-2 border-border px-1.5 py-0.5">{p.tag}</span>
-              <span className="block text-[11px] font-bold leading-snug mt-2 opacity-80">{p.caption}</span>
+            <figcaption className="mt-4 text-center text-white/85 text-xs sm:text-sm font-bold max-w-md">
+              {active.tag}: {active.caption}
             </figcaption>
           </figure>
-        )
-      })}
-    </div>
+        </div>
+      )}
+    </>
   )
 }
 
