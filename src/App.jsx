@@ -97,11 +97,46 @@ const HARO_SLIDES = [
   { src: '/haro/workflow.png', tag: 'haro. workflow', caption: 'Plan → scout → build → refute, its own model per step' },
 ]
 
-const SAMPAI_SLIDES = [
-  { src: '/sampai/flow.jpg', tag: 'Daily use', caption: 'Lock-screen alert on its 4th ring, the Due list, and the five-second create sheet' },
-  { src: '/sampai/setup.jpg', tag: 'Setup', caption: 'Four permissions in plain language, then a real 10-second test ring that proves the phone can be woken' },
-  { src: '/sampai/widgets.jpg', tag: 'Widgets', caption: 'Home-screen widgets drawn with the app fonts: Next up and Upcoming' },
+const SAMPAI_PHONES = [
+  { src: '/sampai/reliability.jpg', tag: 'Setup', caption: 'A real 10-second test ring proves the phone can be woken' },
+  { src: '/sampai/create.jpg', tag: 'Create', caption: 'Title, a time chip, Save' },
+  { src: '/sampai/alert.jpg', tag: 'Lock screen', caption: 'Ignored? It rings again, alert 4' },
+  { src: '/sampai/home.jpg', tag: 'Due', caption: 'Everything due, grouped by day' },
+  { src: '/sampai/widgets.jpg', tag: 'Widgets', caption: 'Next up and Upcoming on the home screen' },
 ]
+
+function FloatingPhones({ phones }) {
+  const mid = Math.floor(phones.length / 2)
+  return (
+    <div className="flex items-start justify-start md:justify-center gap-4 sm:gap-5 md:gap-7 overflow-x-auto md:overflow-visible pb-6 pt-10 -mx-5 px-5 snap-x snap-mandatory md:snap-none">
+      {phones.map((p, i) => {
+        const dist = Math.abs(i - mid)
+        return (
+          <figure
+            key={p.src}
+            className="shrink-0 snap-center m-0"
+            style={{ width: dist === 0 ? 'min(62vw, 240px)' : 'min(56vw, 214px)' }}
+          >
+            <div>
+              <div
+                className="relative rounded-[2.2rem] p-[7px]"
+                style={{ background: '#161412', boxShadow: '0 0 0 2px #2b2724, 0 30px 50px -20px rgba(0,0,0,.55)' }}
+              >
+                <span className="absolute -right-[4px] top-[22%] h-[9%] w-[4px] rounded-r" style={{ background: '#2b2724' }} />
+                <span className="absolute -right-[4px] top-[34%] h-[6%] w-[4px] rounded-r" style={{ background: '#2b2724' }} />
+                <img src={p.src} alt={`${p.tag}: ${p.caption}`} loading="lazy" draggable={false} className="block w-full rounded-[1.8rem] select-none" />
+              </div>
+            </div>
+            <figcaption className="mt-4 text-center">
+              <span style={{ background: 'var(--main)' }} className="inline-block text-[9px] tracking-[0.18em] uppercase font-black border-2 border-border px-1.5 py-0.5">{p.tag}</span>
+              <span className="block text-[11px] font-bold leading-snug mt-2 opacity-80">{p.caption}</span>
+            </figcaption>
+          </figure>
+        )
+      })}
+    </div>
+  )
+}
 
 const KUROSHIMA_SLIDES = [
   { src: '/kuroshima/compact.webp', tag: 'Compact pill', caption: 'Idle state: clock + tray, top-anchored on the desktop' },
@@ -1015,7 +1050,7 @@ export default function Home() {
             </span>
           </div>
 
-          <ScreenshotShowcase slides={SAMPAI_SLIDES} />
+          <FloatingPhones phones={SAMPAI_PHONES} />
         </div>
       </section>
 
