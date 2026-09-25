@@ -200,7 +200,7 @@ export const personalProjectsData = [
     color: "#060010",
     title: "haro",
     description: "A local-first, Linux-first orchestrator for AI coding agents. Runs multiple agents in parallel, each isolated in its own git worktree, behind an automatic test gate: no work is mergeable until the tests are green. Designed and built from zero. See the full spotlight below.",
-    label: "Own Product",
+    label: "Open Source",
     tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'SQLite', 'Electron'],
     period: '2025 - Present',
     highlights: ['Parallel Agents', 'Test Gate', 'One-Window Cockpit'],

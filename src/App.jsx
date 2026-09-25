@@ -943,6 +943,7 @@ export default function Home() {
             <Sticker rotate={-3} bg="var(--main)">★ Spotlight</Sticker>
             <Sticker rotate={2} bg="var(--accent-lavender)">Own Product</Sticker>
             <Sticker rotate={-2} bg="var(--accent-sky)">Linux-First</Sticker>
+            <Sticker rotate={3} bg="var(--accent-peach)">Open Source · MIT</Sticker>
           </div>
           <motion.h2
             initial={{ opacity: 0, x: -16 }}
@@ -1016,12 +1017,12 @@ export default function Home() {
 
               <div className="mt-5">
                 <Button asChild variant="neutral" className="w-full sm:w-auto justify-between">
-                  <a href="mailto:ikhmalhaziq2907@gmail.com?subject=haro%20%E2%80%94%20interested">
-                    <span className="flex items-center gap-2"><FaEnvelope size={12} /> Interested? Email me to join</span>
+                  <a href="https://github.com/HaziqLucii/haro-oss" target="_blank" rel="noopener noreferrer">
+                    <span className="flex items-center gap-2"><FaGithub size={13} /> View on GitHub</span>
                     <ArrowUpRight size={14} />
                   </a>
                 </Button>
-                <p className="text-[11px] mt-2 opacity-70 font-bold">Private project · a walkthrough or collaboration is available on request.</p>
+                <p className="text-[11px] mt-2 opacity-70 font-bold">Open source under the MIT licence · issues and pull requests welcome.</p>
               </div>
             </motion.div>
 
