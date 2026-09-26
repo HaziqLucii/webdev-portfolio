@@ -105,6 +105,14 @@ const SAMPAI_PHONES = [
   { src: '/sampai/widgets.jpg', tag: 'Widgets', caption: 'Next up and Upcoming on the home screen' },
 ]
 
+const JADUAL_PHONES = [
+  { src: '/jadual/week.jpg', tag: 'Week', caption: 'Sixteen classes, typed once, each subject in its own highlighter' },
+  { src: '/jadual/today.jpg', tag: 'Today', caption: 'The class you are in, the next one, and the free gap between' },
+  { src: '/jadual/lock.jpg', tag: 'Lock screen', caption: 'The day drawn as a wallpaper around the clock' },
+  { src: '/jadual/next.jpg', tag: 'Next class', caption: 'A lock-screen poster for where to go next' },
+  { src: '/jadual/sheet.jpg', tag: 'Edit', caption: 'Chips for common times, then Save' },
+]
+
 const PHONE_BEZEL = { background: '#161412', boxShadow: '0 0 0 2px #2b2724, 0 30px 50px -20px rgba(0,0,0,.55)' }
 
 function PhoneFrame({ src, alt, eager }) {
@@ -428,7 +436,7 @@ export default function Home() {
 
   useEffect(() => {
     const onScroll = () => {
-      const ids = ['home', 'about', 'projects', 'haro', 'sampai', 'kuroshima', 'skills', 'contact']
+      const ids = ['home', 'about', 'projects', 'haro', 'sampai', 'jadual', 'kuroshima', 'skills', 'contact']
       const y = window.scrollY + 100
       for (const id of ids) {
         const el = document.getElementById(id)
@@ -1113,6 +1121,54 @@ export default function Home() {
           </div>
 
           <FloatingPhones phones={SAMPAI_PHONES} />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════ */}
+      {/* JADUAL - Android app                           */}
+      {/* ══════════════════════════════════════════════ */}
+      <section id="jadual" className="px-5 py-24 relative border-t-4 border-border">
+        <div className="max-w-6xl mx-auto">
+
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <Sticker rotate={-2} bg="var(--accent-peach)">Android · Flutter + Kotlin</Sticker>
+            <Sticker rotate={2} bg="var(--accent-sky)">Own Product</Sticker>
+          </div>
+          <motion.h2
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-display lowercase leading-[0.85] mb-4"
+            style={{ fontSize: 'clamp(44px, 12vw, 140px)', letterSpacing: '-0.03em' }}
+          >
+            jadual<span style={{ color: 'var(--main)', WebkitTextStroke: '2px var(--border)' }}>.</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-sm md:text-lg max-w-2xl mb-6 leading-relaxed font-bold"
+          >
+            Type your timetable once. See it on your home screen and your lock screen.
+          </motion.p>
+          <div className="flex flex-wrap gap-3 mb-10">
+            <a
+              href="https://haziqlucii.github.io/jadual-site/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ background: 'var(--main)', color: 'var(--main-foreground)' }}
+              className="inline-flex items-center gap-2 border-2 border-border shadow-shadow px-4 py-2 text-xs tracking-[0.15em] uppercase font-black hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all"
+            >
+              Visit the landing page <ArrowUpRight size={14} />
+            </a>
+            <span className="inline-flex items-center border-2 border-border px-4 py-2 text-xs tracking-[0.15em] uppercase font-black" style={{ background: 'var(--secondary-background)' }}>
+              Coming soon to Google Play
+            </span>
+          </div>
+
+          <FloatingPhones phones={JADUAL_PHONES} />
         </div>
       </section>
 

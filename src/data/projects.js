@@ -220,6 +220,17 @@ export const personalProjectsData = [
   },
   {
     color: "#060010",
+    title: "Jadual: Class Timetable",
+    description: "An Android class timetable for students: type it once and see it as home-screen widgets and a lock-screen wallpaper. Offline, no account, in English, Malay and Indonesian.",
+    label: "Own Product",
+    tech: ['Flutter', 'Kotlin', 'Android'],
+    period: '2026',
+    highlights: ['Timetable App', 'Lock-Screen Wallpaper', 'Widgets'],
+    internal: 'jadual',
+    href: 'https://haziqlucii.github.io/jadual-site/'
+  },
+  {
+    color: "#060010",
     title: "Kuroshima — Dynamic Island for niri",
     description: "An Apple-style Dynamic Island for the niri Wayland compositor, built with Quickshell/QML. A single top-anchored capsule morphs between an idle pill and transient peeks (volume, brightness, media, notifications), plus a full dashboard on expand. See the screenshots below.",
     label: "Own Product",
