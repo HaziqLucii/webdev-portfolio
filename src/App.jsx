@@ -89,12 +89,12 @@ function Sticker({ children, rotate = -3, bg = 'var(--main)', className = '' }) 
 
 /* ─── haro screenshot carousel + click-to-zoom lightbox ─ */
 const HARO_SLIDES = [
-  { src: '/haro/cockpit.png', tag: 'Cockpit', caption: 'Agent stream, editor, terminal & the gate in one window' },
-  { src: '/haro/dashboard.png', tag: 'Parallel', caption: 'Multiple agents running concurrently + the backlog' },
-  { src: '/haro/gate.png', tag: 'The Gate', caption: 'Live test grid, green before anything can merge' },
-  { src: '/haro/tamper-alarm.png', tag: 'Tamper Alarm', caption: 'A suite that went green by getting weaker gets flagged, not missed' },
-  { src: '/haro/code-editor.png', tag: 'Diff Review', caption: 'Full-screen Monaco diff, split view and per-commit' },
-  { src: '/haro/workflow.png', tag: 'haro. workflow', caption: 'Plan → scout → build → refute, its own model per step' },
+  { src: '/haro/cockpit.jpg', tag: 'Cockpit', caption: 'The agent at work, the four steps and the gate in one window' },
+  { src: '/haro/dashboard.jpg', tag: 'Triage', caption: "What needs you first, what's running, what's ready to ship" },
+  { src: '/haro/ship.jpg', tag: 'Ship', caption: 'Merge on green, with a gate receipt' },
+  { src: '/haro/tamper-alarm.jpg', tag: 'Tamper Alarm', caption: 'A suite that went green by getting weaker gets flagged, not missed' },
+  { src: '/haro/code-editor.jpg', tag: 'Diff Review', caption: 'Every added line marked ran or never ran under the green suite' },
+  { src: '/haro/workflow.jpg', tag: 'haro. workflow', caption: 'Plan → scout → build → refute, its own model per step' },
 ]
 
 const SAMPAI_PHONES = [
@@ -984,8 +984,8 @@ export default function Home() {
             className="mb-14"
           >
             <img
-              src="/haro/hero.png"
-              alt="The haro app: the agent stepper, agent stream, editor/terminal and the gate in one window"
+              src="/haro/hero.jpg"
+              alt="The haro app: the verify step on a green gate, with the four steps, the mutation score and the gate rail"
               loading="lazy"
               className="w-full h-auto"
               style={{ filter: 'drop-shadow(0 30px 30px rgba(0,0,0,0.55))' }}
